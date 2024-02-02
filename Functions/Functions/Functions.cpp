@@ -31,13 +31,13 @@ int main()
 			{
 				std::cin.clear();
 				std::cin.ignore(std::cin.rdbuf()->in_avail());
-				std::cout << "Your input was invalid, please try again" << std::endl;
+				std::cout << "Your input was invalid, please try again aaaaaaaaaaaaaaaaaaaa" << std::endl;
 				continue;
 			}
 		}
 		else
 		{
-			runningTotal 
+			runningTotal;
 		}
 	}
 }

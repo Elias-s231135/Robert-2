@@ -1,2 +1,2 @@
 ﻿  Functions.cpp
-C:\Users\s231135\Documents\GitHub\Robert-2\Functions\Functions\Functions.cpp(41,3): error C2143: syntax error: missing ';' before '}'
+C:\Users\s231135\Documents\GitHub\Robert-2\Functions\Functions\Functions.cpp : fatal  error C1041: cannot open program database 'C:\Users\s231135\Documents\GitHub\Robert-2\Functions\Functions\x64\Debug\vc143.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
