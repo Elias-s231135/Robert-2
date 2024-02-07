@@ -30,8 +30,24 @@
 //	Player p4("Jerry"); //d
 //	Player p5; //e
 //}
+//
+//Player::~Player()
+//{
+//	delete[] bullets;
+//};
+//
+//TileMap::~TileMap()
+//{
+//	delete[] tiles;
+//	for (int row_index = 0;
+//		row_index < height;
+//		++row_index)
+//	{
+//		delete[] tiles[row_index];
+//	}
+//};
 
-Player::~Player()
+Texture::~Texture()
 {
-	delete[] bullets;
-};
+
+}
