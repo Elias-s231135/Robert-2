@@ -3,113 +3,50 @@
 
 String::String()
 {
+	//Create some new memory space to fill with data - new keyword
+	//Fill that char[] with whatever data you want
+
 }
 
 String::String(const char* c)
 {
-	//Dynamically allocating space for this object
-	
+	m_string = new char[(strlen(c)) + 1];
+	strcpy_s(m_string, (strlen(c)) + 1, c);
+
+	std::cout << c << std::endl;
 }
 
-String::String(const String& _other)
+String::String(String& st)
 {
+
 }
 
 String::~String()
 {
+
 }
 
-size_t String::Length() const
+char String::CharacterAt(size_t _index)
 {
-	return size_t();
+	if (_index < 0 || _index > this->Length()) return '\0';
+	else return m_string[_index]; /*Returns a char representing
+	the character at the location. If index is less than 0 or 
+	greater than length, return '\0'*/
 }
 
-char& String::CharacterAt(size_t _index)
+int String::Length()
 {
-	// TODO: insert return statement here
+	return strlen(m_string); /* Returns an integer representing
+	 the count of characters up to the null termination character */
 }
 
-const char& String::CharacterAt(size_t _index) const
+bool String::EqualTo(const String& st) const
 {
-	// TODO: insert return statement here
+	if (strcmp(m_string, st.m_string) == 0) { return true; }
+	else return false; /*Returns true if str contains the same characters.*/
 }
 
-bool String::EqualTo(const String& _other) const
+String& String::Append(const String& c)
 {
-	return false;
-}
-
-String& String::Append(const String& _str)
-{
-	// TODO: insert return statement here
-}
-
-String& String::Prepend(const String& _str)
-{
-	// TODO: insert return statement here
-}
-
-const char* String::CStr() const
-{
-	return nullptr;
-}
-
-String& String::ToLower()
-{
-	// TODO: insert return statement here
-}
-
-String& String::ToUpper()
-{
-	// TODO: insert return statement here
-}
-
-size_t String::Find(const String& _str)
-{
-	return size_t();
-}
-
-size_t String::Find(size_t _startIndex, const String& _str)
-{
-	return size_t();
-}
-
-String& String::Replace(const String& _find, const String& _replace)
-{
-	// TODO: insert return statement here
-}
-
-String& String::ReadFromConsole()
-{
-	// TODO: insert return statement here
-}
-
-String& String::WriteToConsole()
-{
-	// TODO: insert return statement here
-}
-
-bool String::operator==(const String& _other)
-{
-	return false;
-}
-
-bool String::operator!=(const String& _other)
-{
-	return false;
-}
-
-String& String::operator=(const String& _str)
-{
-	// TODO: insert return statement here
-}
-
-char& String::operator[](size_t _index)
-{
-	// TODO: insert return statement here
-}
-
-const char& String::operator[](size_t _index) const
-{
-	// TODO: insert return statement here
+	/*Adds str to the end of the string*/
 }
