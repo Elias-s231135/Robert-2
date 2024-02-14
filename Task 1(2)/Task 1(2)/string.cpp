@@ -46,7 +46,19 @@ bool String::EqualTo(const String& st) const
 	else return false; /*Returns true if str contains the same characters.*/
 }
 
-String& String::Append(const String& c)
+String String::Append(const String& c)
 {
+	String tempString(m_string);
+
+	int newLength = Length() + c Length() + 1;
+
+	delete String;
+
+	string[newLength];
+
+	Append()
+
+	//m_string;
+	//c;
 	/*Adds str to the end of the string*/
 }

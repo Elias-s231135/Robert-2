@@ -7,7 +7,7 @@ int main()
 
 	std::cout << "Your letter is " << st.CharacterAt(1) << std::endl;
 
-	if (st.EqualTo("Hello, World"))
+	if (st.EqualTo("He World"))
 	{
 		std::cout << "true :)" << std::endl;
 	}

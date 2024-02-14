@@ -18,7 +18,7 @@ public:
 
 	bool EqualTo(const String& st) const;
 
-	String& Append(const String& c);
+	String Append(const String& c);
 
 private:
 	char* m_string;
