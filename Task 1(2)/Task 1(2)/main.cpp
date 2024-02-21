@@ -1,18 +1,31 @@
 #include <iostream>
 #include "StringTester.h"
 
+using namespace std;
+
 int main()
 {
-	String st("Hello, World");
+	String st("Hello, ");
+	String st2("World");
 
-	std::cout << "Your letter is " << st.CharacterAt(1) << std::endl;
+	cout << "Your letter is " << st.CharacterAt(1) << endl;
 
-	if (st.EqualTo("He World"))
+	if (st.EqualTo("Hello, World"))
 	{
-		std::cout << "true :)" << std::endl;
+		cout << "true :)" << endl;
 	}
 	else
 	{
-		std::cout << "false >:(" << std::endl;
+		cout << "false >:(" << endl;
+	}
+
+	st.Append(st2);
+	{
+		cout << st.CStr() << endl;
+	}
+
+	st.Prepend(st);
+	{
+		cout << st2.CStr() << endl;
 	}
 }

@@ -14,11 +14,17 @@ public:
 
 	char CharacterAt(size_t _index);
 
-	int Length();
+	int Length() const;
 
 	bool EqualTo(const String& st) const;
 
 	String Append(const String& c);
+
+	String Prepend(const String& c);
+
+	const char* CStr() const;
+
+	String ToLower();
 
 private:
 	char* m_string;

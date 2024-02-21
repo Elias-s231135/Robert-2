@@ -1,5 +1,6 @@
 #include "StringTester.h"
 #include <iostream> //Access to strlen, strcpy, strcat, strcmp
+#include "ctype.h"
 
 String::String()
 {
@@ -34,7 +35,7 @@ char String::CharacterAt(size_t _index)
 	greater than length, return '\0'*/
 }
 
-int String::Length()
+int String::Length() const
 {
 	return strlen(m_string); /* Returns an integer representing
 	 the count of characters up to the null termination character */
@@ -48,17 +49,44 @@ bool String::EqualTo(const String& st) const
 
 String String::Append(const String& c)
 {
-	String tempString(m_string);
+	int newLength = Length() + c.Length() + 1;
+	char* string = new char[newLength];
 
-	int newLength = Length() + c Length() + 1;
+	strcpy_s(string, newLength, m_string); //copies first part of string to new string
+	strcat_s(string, newLength, c.m_string); //appends 2nd part of string to new string
 
-	delete String;
+	delete[] m_string;
+	m_string = string;
 
-	string[newLength];
-
-	Append()
-
-	//m_string;
-	//c;
+	return string;
 	/*Adds str to the end of the string*/
+}
+
+String String::Prepend(const String& c)
+{
+	int newLength = Length() + c.Length() + 1;
+	char* string = new char[newLength];
+
+	strcpy_s(string, newLength, c.m_string);
+	strcat_s(string, newLength, m_string);
+
+	delete[] m_string;
+	m_string = string;
+
+	return string; 
+	//Adds str to the beginning of the string
+}
+
+const char* String::CStr() const
+{
+	/*Return the const char* that is useable with std::cout.eg: std::cout << str.cstr() << std::endl;*/
+	
+	return m_string;
+}
+
+String String::ToLower()
+{
+
+
+	;
 }
