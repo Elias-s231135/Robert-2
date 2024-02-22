@@ -19,12 +19,14 @@ public:
 	bool EqualTo(const String& st) const;
 
 	String Append(const String& c);
-
 	String Prepend(const String& c);
 
 	const char* CStr() const;
 
-	String ToLower();
+	void ToLower();
+	void ToUpper();
+
+	size_t Find(const String& c);
 
 private:
 	char* m_string;

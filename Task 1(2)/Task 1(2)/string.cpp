@@ -84,9 +84,49 @@ const char* String::CStr() const
 	return m_string;
 }
 
-String String::ToLower()
+void String::ToLower()
 {
+	//for (m_string[0] = tolower(m_string[0]))
+	//{
+	//	;
+	//}
+
+	for (int i = 0; i < Length(); i = i + 1)
+	{
+		m_string[i] = tolower(m_string[i]); //Translate current index into potential lowercase variation
+	} //This is where i++ happens
 
 
-	;
+	// use this logic inside a for loop for entire length of m_string
+	//For everyone char in m_string
+	//thisChar = tolower(thisChar)
+
+	//Convert all characters to lowercase
+}
+
+void String::ToUpper()
+{
+	for (int i = 0; i < Length(); i = i + 1)
+	{
+		m_string[i] = toupper(m_string[i]);
+	}
+	//Convert all characters to uppercase
+}
+
+size_t String::Find(const String& c)
+{
+	for (int i = 0 (strlen(m_string) - strlen(fStr)) i++)
+	{
+		bool compareflag = true
+			for (int j = 0 j(strlen(fStr)j++)
+			{
+				if (m_string[i + j] != fStr[j])
+				{
+					compareflag = false
+				}
+			}
+		compareflag ? true => return i;
+	}
+	return -1;
+	//Returns the location of the findString.If not found, return -1
 }

@@ -1,12 +1,14 @@
 #include <iostream>
 #include "StringTester.h"
+#include "ctype.h"
 
 using namespace std;
 
 int main()
 {
-	String st("Hello, ");
-	String st2("World");
+	String st("Hello, World");
+	String sta("Hello, ");
+	String stb("World");
 
 	cout << "Your letter is " << st.CharacterAt(1) << endl;
 
@@ -19,13 +21,23 @@ int main()
 		cout << "false >:(" << endl;
 	}
 
-	st.Append(st2);
+	st.Append(stb);
+	{
+		cout << sta.CStr() << endl;
+	}
+
+	st.Prepend(sta);
+	{
+		cout << stb.CStr() << endl;
+	}
+
+	st.ToLower();
 	{
 		cout << st.CStr() << endl;
 	}
 
-	st.Prepend(st);
+	st.ToUpper();
 	{
-		cout << st2.CStr() << endl;
+		cout << st.CStr() << endl;
 	}
 }
