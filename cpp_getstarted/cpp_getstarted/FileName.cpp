@@ -657,16 +657,247 @@ int main() {
 
 	// Multi-Dimensional Arrays
 
-	string letters[2][4] = {
-		{ "A", "B", "C", "D" },
-		{ "E", "F", "G", "H" }
-	};
+	//string letters[2][4] = {
+	//	{ "A", "B", "C", "D" },
+	//	{ "E", "F", "G", "H" }
+	//};
 
-	cout << letters[0][2]; // Outputs "C"
+	////cout << letters[0][2]; // Outputs "C"
 
-	// Arrays can have any number of dimensions.
+	//// Arrays can have any number of dimensions.
 
-	// refer to the index number of the element in each of the dimensions to change the value of an element.
+	//// refer to the index number of the element in each of the dimensions to change the value of an element.
+
+	//// Loop through a multi-dimensional array
+
+	//for (int i = 0; i < 2; i++) {
+	//	for (int j = 0; j < 4; j++) {
+	//		cout << letters[i][j] << "\n";
+	//	}
+	//}
+
+	//// Looping through a three-dimensional array
+	//string letters[2][2][2] = {
+	//	{
+	//		{ "A", "B" },
+	//		{ "C", "D" }
+	//	},
+	//	{
+	//		{ "E", "F" },
+	//		{ "G", "H" }
+	//	}
+	//};
+
+	//for (int i = 0; i < 2; i++) {
+	//	for (int j = 0; j < 2; j++) {
+	//		for (int k = 0; k < 2; k++) {
+	//			cout << letters[i][j][k] << "\n";
+	//		}
+	//	}
+	//}
+
+	//// Multi-dimensional arrays are great at representing grids
+	
+	/* C++ Structures */
+
+	//// Create a structure variable called myStructure
+	//struct {				// Structure declaration
+	//	int myNum;			// Member (int variable)
+	//	string myString;	// Member (string variable)
+	//} myStructure;			// Structure variable
+
+	//// Assign values to members of myStructure
+	//myStructure.myNum = 1;
+	//myStructure.myString = "Hello World!";
+
+	//// Print members of myStructure
+	//cout << myStructure.myNum << "\n";
+	//cout << myStructure.myString << "\n";
+
+	// One Structure in Multiple Variables
+	
+	//struct {
+	//	int myNum;
+	//	string myString;
+	//} myStruct1, myStruct2, myStruct3; // Multiple structure variables separated with commas
+
+	//// Example:
+
+	//struct {
+	//	string brand;
+	//	string model;
+	//	int year;
+	//} myCar1, myCar2; // We can add variables by separating them with a comma here
+
+	//// Put data into the first structure
+	//myCar1.brand = "BMW";
+	//myCar1.model = "X5";
+	//myCar1.year = 1999;
+
+	//// Put data into the second structure
+	//myCar2.brand = "Ford";
+	//myCar2.model = "Mustang";
+	//myCar2.year = 1969;
+
+	//// Print the structure members
+	//cout << myCar1.brand << " " << myCar1.model << " " << myCar1.year << "\n";
+	//cout << myCar2.brand << " " << myCar2.model << " " << myCar2.year << "\n";
+
+	//// Named Structures
+
+	//struct myDataType { // This structure is named "myDataType"
+	//	int myNum;
+	//	string myString;
+	//};
+
+	//myDataType myVar; // Declared variable that uses the structure's name as the data type of the variable.
+
+	//// Example:
+
+	//// Declare a structure named "car"
+	//struct car {
+	//	string brand;
+	//	string model;
+	//	int year;
+	//};
+
+
+	////Create a car structure and store it in myCar1;
+	//car myCar1;
+	//myCar1.brand = "BMW";
+	//myCar1.model = "X5";
+	//myCar1.year = 1999;
+
+	////Create another car structure and store it in myCar2;
+	//car myCar2;
+	//myCar2.brand = "Ford";
+	//myCar2.model = "Mustang";
+	//myCar2.year = 1969;
+
+	//// Print the structure members
+	//cout << myCar1.brand << " " << myCar1.model << " " << myCar1.year << "\n";
+	//cout << myCar2.brand << " " << myCar2.model << " " << myCar2.year << "\n";
+
+	///* C++ References */
+	//
+	//// Creating References
+
+	//string food = "Pizza";	// food variable
+	//string& meal = food;	// reference to food
+
+	//cout << food << "\n";	// Outputs Pizza
+	//cout << meal << "\n";	// Outputs Pizza
+
+	//// Memory Address
+	//cout << &food; // Outputs 0x6dfed4
+
+	/* C++ Pointers */
+
+	// Creating Pointers
+
+	// Example of & operater
+
+	//string food = "Pizza"; // A food variable of type string
+
+	//cout << food; // Outputs the value of food (Pizza)
+	//cout << &food; // Outputs the memory address of food (0x6dfed4)
+
+	//// Example
+
+	//string food = "Pizza";	// A food variable of type string
+	//string* ptr = &food;	// A pointer variable, with the name ptr, that stores the address of food
+
+	//// Output the value of food (Pizza)
+	//cout << food << "\n";
+
+	//// Out put the memory address of food (0x6dfed4)
+	//cout << &food << "\n";
+
+	////Output the memory of food with the pointer (0x6fed4)
+	//cout << ptr << "\n";
+
+	//// Three ways to declare pointer variables (the first is preferred)
+
+	//string* mystring; // Preferred
+	//string* mystring;
+	//string* mystring;
+
+	// Dereference
+
+	// Get Memory Address and Value
+
+	// Example
+
+	//string food = "Pizza";	// Variable declaration
+	//string* ptr = &food;	// Pointer declaration
+
+	//// Reference: Output the memory address of food with the pointer (0x6fed4)
+	//cout << ptr << "\n";
+
+	//// Dereference: Output the value of food with the pointer (Pizza)
+	//cout << *ptr << "\n";
+
+	//// Example
+
+	//string food = "Pizza";
+	//string* ptr = &food;
+
+	//// Output the value of food (Pizza)
+	//cout << food << "\n";
+
+	//// Output the memory address of food (0x6fed4)
+	//cout << &food << "\n";
+
+	//// Access the memory address of food and output its value (Pizza)
+	//cout << *ptr << "\n";
+
+	//// Change the value of the pointer
+	//*ptr = "Hamburger";
+
+	//// Output the new value of the pointer (Hamburger)
+	//cout << *ptr << "\n";
+
+	//// Output the new value of the food variable (Hamburger)
+	//cout << food << "\n";
+
+	///* C++ FUNCTIONS */
+
+	///* Functions */
+
+	//// Create a Function
+
+	//// Syntax
+
+	//void myFunction() {
+	//	// code to be executed
+	//}
+
+	// Call a Function
+
+	// A function can be called multiple times
+
+	// Example:
+
+	//void myFunction() {
+	//	cout << "I just got executed!\n";
+	//}
+
+	//int main() {
+	//	myFunction();
+	//	myFunction();
+	//	myFunction();
+	//	return 0;
+	//}
+
+	//// I just got executed!
+	//// I just got executed!
+	//// I just got executed!
+
+	// Function Declaration and Definition
+
+
+
+	
 
 	return 0;
 }
