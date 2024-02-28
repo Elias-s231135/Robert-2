@@ -2,6 +2,8 @@
 #include <iostream> //Access to strlen, strcpy, strcat, strcmp
 #include "ctype.h"
 
+using namespace std;
+
 String::String()
 {
 	//Create some new memory space to fill with data - new keyword
@@ -47,13 +49,13 @@ bool String::EqualTo(const String& st) const
 	else return false; /*Returns true if str contains the same characters.*/
 }
 
-String String::Append(const String& c)
+String String::Append(const String& otherString)
 {
-	int newLength = Length() + c.Length() + 1;
+	int newLength = Length() + otherString.Length() + 1;
 	char* string = new char[newLength];
 
-	strcpy_s(string, newLength, m_string); //copies first part of string to new string
-	strcat_s(string, newLength, c.m_string); //appends 2nd part of string to new string
+	strcpy_s(string, newLength, this->m_string); //copies first part of string to new string
+	strcat_s(string, newLength, otherString.m_string); //appends 2nd part of string to new string
 
 	delete[] m_string;
 	m_string = string;
@@ -115,18 +117,47 @@ void String::ToUpper()
 
 size_t String::Find(const String& c)
 {
-	for (int i = 0 (strlen(m_string) - strlen(fStr)) i++)
+	for (int i = 0; i < (strlen(this->m_string) - strlen(c.m_string)); i++)
 	{
-		bool compareflag = true
-			for (int j = 0 j(strlen(fStr)j++)
+		bool compareflag = true;
+			for (int j = 0; j < (strlen(c.m_string)); j++)
 			{
-				if (m_string[i + j] != fStr[j])
+				if (m_string[i + j] != c.m_string[j])
 				{
-					compareflag = false
+					compareflag = false;
 				}
 			}
-		compareflag ? true => return i;
+			if (compareflag == true) {
+				return i;
+			}
 	}
 	return -1;
 	//Returns the location of the findString.If not found, return -1
+}
+
+//size_t String::Find(size_t _startIndex, const String _str)
+//{
+//	return size_t();
+//	// Returns the location of the strToFind. Beginning the search from startIndex. If not found, return -1
+//}
+
+//String String::Replace(const String _find, const String& _replace)
+//{
+//	/* TODO: insert return statement here */
+//	// Replaces all occurrences of findString with replaceString
+//}
+
+String String::ReadFromConsole()
+{
+	delete[] m_string;
+	m_string = new char[64];
+	cout << "Please Input" << endl;
+	cin.get (m_string,64);
+	return *this;
+	// Wait for input in the console window and store the result
+}
+
+void String::WriteToConsole()
+{
+	cout << m_string << endl;
 }

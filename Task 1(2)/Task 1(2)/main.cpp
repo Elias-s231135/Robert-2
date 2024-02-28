@@ -40,4 +40,17 @@ int main()
 	{
 		cout << st.CStr() << endl;
 	}
+
+	st.Find(sta);
+	{
+		cout << st.CStr() << endl;
+	}
+
+	st.ReadFromConsole();
+	{
+	}
+
+	st.WriteToConsole();
+	{
+	}
 }
