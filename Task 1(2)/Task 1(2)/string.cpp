@@ -49,13 +49,13 @@ bool String::EqualTo(const String& st) const
 	else return false; /*Returns true if str contains the same characters.*/
 }
 
-String String::Append(const String& otherString)
+String String::Append(const String& c)
 {
-	int newLength = Length() + otherString.Length() + 1;
+	int newLength = Length() + c.Length() + 1;
 	char* string = new char[newLength];
 
 	strcpy_s(string, newLength, this->m_string); //copies first part of string to new string
-	strcat_s(string, newLength, otherString.m_string); //appends 2nd part of string to new string
+	strcat_s(string, newLength, c.m_string); //appends 2nd part of string to new string
 
 	delete[] m_string;
 	m_string = string;
@@ -135,11 +135,17 @@ size_t String::Find(const String& c)
 	//Returns the location of the findString.If not found, return -1
 }
 
-//size_t String::Find(size_t _startIndex, const String _str)
-//{
-//	return size_t();
-//	// Returns the location of the strToFind. Beginning the search from startIndex. If not found, return -1
-//}
+size_t String::Find(size_t _startIndex, const String c)
+{
+	for (int i = 0; i < (strlen(this->m_string) - strlen(c.m_string)); i++)
+	{
+		bool compareflag = true;
+		for (int j = 0; j < (strlen(c.m_string)); j++)
+		{ }
+	}
+	return -1;
+	// Returns the location of the strToFind. Beginning the search from startIndex. If not found, return -1
+}
 
 //String String::Replace(const String _find, const String& _replace)
 //{
@@ -160,4 +166,15 @@ String String::ReadFromConsole()
 void String::WriteToConsole()
 {
 	cout << m_string << endl;
+}
+
+bool String::operator==(const String otherstring)
+{
+	if (strcmp(this->m_string, otherstring.m_string) == 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+	// Returns true if lhs == rhs.
 }

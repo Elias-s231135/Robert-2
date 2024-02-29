@@ -53,4 +53,10 @@ int main()
 	st.WriteToConsole();
 	{
 	}
+
+	st.operator==(sta);
+	{
+		if (st == sta) cout << "true\n";
+		else cout << "false\n";
+	}
 }
