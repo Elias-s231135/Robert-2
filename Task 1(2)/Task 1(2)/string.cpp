@@ -16,12 +16,15 @@ String::String(const char* c)
 	m_string = new char[(strlen(c)) + 1];
 	strcpy_s(m_string, (strlen(c)) + 1, c);
 
-	std::cout << c << std::endl;
+	cout << c << endl;
 }
 
 String::String(String& st)
 {
+	m_string = new char[(strlen(st.m_string)) + 1];
+	strcpy_s(m_string, (strlen(st.m_string)) + 1, st.m_string);
 
+	cout << st.m_string << endl;
 }
 
 String::~String()
@@ -135,23 +138,55 @@ size_t String::Find(const String& c)
 	//Returns the location of the findString.If not found, return -1
 }
 
-size_t String::Find(size_t _startIndex, const String c)
+size_t String::Find(int _startIndex, const String& c)
 {
-	for (int i = 0; i < (strlen(this->m_string) - strlen(c.m_string)); i++)
+	int startFrom = _startIndex;
+	//cout << "Please Input Start Index" << endl;
+	//cin >> startFrom;
+	for (int i = startFrom; i < (strlen(this->m_string) - strlen(c.m_string)); i++)
 	{
 		bool compareflag = true;
-		for (int j = 0; j < (strlen(c.m_string)); j++)
-		{ }
+			for (int j = 0; j < (strlen(c.m_string)); j++)
+			{	 
+				if (m_string[i + j] != c.m_string[j])
+				{
+					compareflag = false;
+				}
+		}
+		if (compareflag == true) {
+			return i;
+		}
 	}
 	return -1;
 	// Returns the location of the strToFind. Beginning the search from startIndex. If not found, return -1
 }
 
-//String String::Replace(const String _find, const String& _replace)
-//{
-//	/* TODO: insert return statement here */
-//	// Replaces all occurrences of findString with replaceString
-//}
+String String::Replace(const String _find, const String& _replace)
+{
+	int testFind = this->Find(_find);
+	if (testFind == -1)
+	{
+		return *this;
+	}
+	char* beforeF = new char[testFind + 1];
+	for (size_t i = 0; i < testFind + 1; i++)
+	{
+		beforeF[i] = m_string[i];
+		if (i == testFind)
+		{
+			beforeF[i] = '\0';
+		}
+	}
+	char* afterF = new char[strlen(m_string) - strlen(beforeF) - strlen(_find.m_string)];
+	int afterFIndex = 0;
+	for (int i = testFind + strlen(_find.m_string); i <= strlen(m_string); i++)
+	{
+		afterF[afterFIndex] = m_string[i];
+		afterFIndex++;
+	}
+	return *this;
+	// Replaces all occurrences of findString with replaceString
+}
 
 String String::ReadFromConsole()
 {

@@ -27,9 +27,9 @@ public:
 	void ToUpper();
 
 	size_t Find(const String& c);
-	size_t Find(size_t _startIndex, const String _str);
+	size_t Find(int _startIndex, const String& _str);
 
-	//String Replace(const String _find, const String& _replace);
+	String Replace(const String _find, const String& _replace);
 
 	String ReadFromConsole();
 	void WriteToConsole();

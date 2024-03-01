@@ -41,9 +41,19 @@ int main()
 		cout << st.CStr() << endl;
 	}
 
-	st.Find(sta);
+	int testFind = st.Find("O");
 	{
-		cout << st.CStr() << endl;
+		cout << "Found index was: " << testFind << endl;
+	}
+
+	testFind = st.Find(6, "O");
+	{
+		cout << "Found index was: " << testFind << endl;
+	}
+
+	st.Replace("W", "M");
+	{
+
 	}
 
 	st.ReadFromConsole();
