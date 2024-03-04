@@ -29,14 +29,14 @@ String::String(String& st)
 
 String::~String()
 {
-
+	// delete ?
 }
 
 char String::CharacterAt(size_t _index)
 {
-	if (_index < 0 || _index > this->Length()) return '\0';
-	else return m_string[_index]; /*Returns a char representing
-	the character at the location. If index is less than 0 or 
+	if (_index < 0 || _index > this->Length()) return '\0';	// prevents attempts to read outside the array
+	else return m_string[_index];
+	/*Returns a char representing the character at the location. If index is less than 0 or 
 	greater than length, return '\0'*/
 }
 
@@ -168,26 +168,40 @@ String String::Replace(const String _find, const String& _replace)
 	{
 		return *this;
 	}
-	char* beforeF = new char[testFind + 1];
-	for (size_t i = 0; i < testFind + 1; i++)
+
+	while (testFind != -1)		// allows Find to keep searching until it can't
 	{
-		beforeF[i] = m_string[i];
-		if (i == testFind)
+		char* beforeF = new char[testFind + 1];		// char pointer for everything before what needs to be replaced
+		for (size_t i = 0; i < testFind + 1; i++)
 		{
-			beforeF[i] = '\0';
+			beforeF[i] = m_string[i];
+			if (i == testFind)
+			{
+				beforeF[i] = '\0';
+			}
 		}
+		char* afterF = new char[strlen(m_string) - strlen(beforeF) - strlen(_find.m_string) + 1];	// char pointer for everything after what needs to be replaced
+		int afterFIndex = 0;
+		for (int i = testFind + strlen(_find.m_string); i <= strlen(m_string); i++)
+		{
+			afterF[afterFIndex] = m_string[i];
+			afterFIndex++;
+		}
+		char* replace = new char[strlen(beforeF) + strlen(m_string) + strlen(afterF) + 1];	// char pointer for what needs to be replaced
+		strcpy_s(replace, strlen(beforeF) + strlen(m_string) + strlen(afterF) + 1, beforeF);
+		strcat_s(replace, strlen(beforeF) + strlen(m_string) + strlen(afterF) + 1, _replace.m_string);
+		strcat_s(replace, strlen(beforeF) + strlen(m_string) + strlen(afterF) + 1, afterF);
+
+
+		delete[]m_string;
+
+		m_string = replace;
+
+		testFind = this->Find(strlen(beforeF) + strlen(_replace.m_string), _find);	// makes Find only search after previous replaces, prevents repeat replacing
+
+		delete[]beforeF;
+		delete[]afterF;
 	}
-	char* afterF = new char[strlen(m_string) - strlen(beforeF) - strlen(_find.m_string)];
-	int afterFIndex = 0;
-	for (int i = testFind + strlen(_find.m_string); i <= strlen(m_string); i++)
-	{
-		afterF[afterFIndex] = m_string[i];
-		afterFIndex++;
-	}
-	char* replace = new char[strlen(beforeF) + strlen(m_string) + strlen(afterF) + 1];
-	strcpy_s(replace, , beforeF);
-	strcat_s( , , );
-	strcat_s( , , afterF);
 
 	return *this;
 	// Replaces all occurrences of findString with replaceString
@@ -197,7 +211,7 @@ String String::ReadFromConsole()
 {
 	delete[] m_string;
 	m_string = new char[64];
-	cout << "Please Input" << endl;
+	cout << "Please Input String" << endl;
 	cin.get (m_string,64);
 	return *this;
 	// Wait for input in the console window and store the result
@@ -219,10 +233,35 @@ bool String::operator==(const String otherstring)
 	// Returns true if lhs == rhs.
 }
 
-//bool String::operator!=(const String otherstring)
-//{
-//		
-//
-//	return false;
-//	// Returns the character located at postition n.
-//}
+bool String::operator!=(const String otherstring)
+{
+	
+	if (strcmp(this->m_string, otherstring.m_string) != 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+	return false;
+	// Returns false if lhs == rhs.
+}
+
+char String::operator[](const int index)
+{
+		return CharacterAt(index);
+	// Returns the character located at position n.
+}
+
+void String::operator=(const String& _str)
+{
+	delete[] m_string;
+	m_string = new char[_str.Length() + 1];
+	strcpy_s(m_string, _str.Length() + 1, _str.CStr());
+	// Replaces the characters in lhs with the characters in rhs.
+}
+
+bool String::operator<(const String Roger)
+{
+
+}
+

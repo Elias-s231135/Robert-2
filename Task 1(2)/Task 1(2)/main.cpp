@@ -53,7 +53,7 @@ int main()
 
 	st.Replace("W", "M");
 	{
-
+		cout << st.CStr() << endl;
 	}
 
 	st.ReadFromConsole();
@@ -64,9 +64,41 @@ int main()
 	{
 	}
 
-	st.operator==(sta);
+	//st1 == st2
+	//st.operator==(sta);
 	{
-		if (st == sta) cout << "true\n";
-		else cout << "false\n";
+		if (st == sta)
+		{
+			cout << "true" << endl;
+		}
+		else
+		{
+			cout << "false" << endl;
+		}
+
+	}
+
+	//st.operator!=(stb);
+	{
+		if (st != stb) cout << "true" << endl;
+		else cout << "false" << endl;
+	}
+	cout << st.CStr() << endl;
+	//st.operator[8];
+	{
+		cout << st[2] << endl;
+	}
+
+	//st.operator=;
+	{
+		st = sta;
+		if (st == sta)
+		{
+			cout << "they are equal! :)" << endl;
+		}
+		else
+		{
+			cout << "they are not equal! :(" << endl;
+		}
 	}
 }
