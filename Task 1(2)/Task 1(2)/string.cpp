@@ -184,6 +184,11 @@ String String::Replace(const String _find, const String& _replace)
 		afterF[afterFIndex] = m_string[i];
 		afterFIndex++;
 	}
+	char* replace = new char[strlen(beforeF) + strlen(m_string) + strlen(afterF) + 1];
+	strcpy_s(replace, , beforeF);
+	strcat_s( , , );
+	strcat_s( , , afterF);
+
 	return *this;
 	// Replaces all occurrences of findString with replaceString
 }
@@ -213,3 +218,11 @@ bool String::operator==(const String otherstring)
 	}
 	// Returns true if lhs == rhs.
 }
+
+//bool String::operator!=(const String otherstring)
+//{
+//		
+//
+//	return false;
+//	// Returns the character located at postition n.
+//}

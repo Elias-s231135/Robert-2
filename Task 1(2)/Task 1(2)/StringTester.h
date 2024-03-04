@@ -36,6 +36,7 @@ public:
 
 public:
 	bool operator==(const String otherstring);
+	/*bool operator!=(const String otherstring);*/
 
 private:
 	char* m_string;
