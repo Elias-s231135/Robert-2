@@ -101,4 +101,9 @@ int main()
 			cout << "they are not equal! :(" << endl;
 		}
 	}
+
+	//st.operator<;
+	{
+
+	}
 }
