@@ -6,8 +6,7 @@ using namespace std;
 
 String::String()
 {
-	//Create some new memory space to fill with data - new keyword
-	//Fill that char[] with whatever data you want
+	m_string = new char[8] {"DEFAULT"};
 
 }
 
@@ -29,7 +28,7 @@ String::String(String& st)
 
 String::~String()
 {
-	// delete ?
+	delete m_string;
 }
 
 char String::CharacterAt(size_t _index)
@@ -239,10 +238,11 @@ bool String::operator!=(const String otherstring)
 	if (strcmp(this->m_string, otherstring.m_string) != 0) {
 		return true;
 	}
-	else {
+	else 
+	{
 		return false;
 	}
-	return false;
+	//return false;
 	// Returns false if lhs == rhs.
 }
 

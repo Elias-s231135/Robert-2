@@ -15,10 +15,12 @@ int main()
 	if (st.EqualTo("Hello, World"))
 	{
 		cout << "true :)" << endl;
+		cout << "Char At Succesful" << endl;
 	}
 	else
 	{
 		cout << "false >:(" << endl;
+		cout << "Char At Failed" << endl;
 	}
 
 	st.Append(stb);
@@ -42,6 +44,7 @@ int main()
 	}
 
 	int testFind = st.Find("O");
+	if(testFind == 4) // logical success / what I was expecting
 	{
 		cout << "Found index was: " << testFind << endl;
 	}
@@ -55,8 +58,10 @@ int main()
 	{
 		cout << st.CStr() << endl;
 	}
-
+	cout << "Please write the string \"Hello World\" exactly as is:" << endl;
 	st.ReadFromConsole();
+
+	if(st.EqualTo("Hello World"))
 	{
 	}
 
