@@ -104,6 +104,13 @@ int main()
 
 	//st.operator<;
 	{
-
+		if (st < stb)
+		{
+			cout << "lhs is before rhs" << endl;
+		}
+		else
+		{
+			cout << "rhs is before lhs" << endl;
+		}
 	}
 }

@@ -39,7 +39,7 @@ public:
 	bool operator!=(const String otherstring);
 	char operator[](const int index);
 	void operator=(const String& _str);
-	bool operatorst String Roger);
+	bool operator<(const String Roger);
 
 private:
 	char* m_string;
