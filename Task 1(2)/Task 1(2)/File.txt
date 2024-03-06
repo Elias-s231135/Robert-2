@@ -1,0 +1,34 @@
+Date: 6/3/2024 Time:14:0:14.
+CharAt Failed
+EqualTo Succesful
+Append Successful
+Prepend Successful
+ToLower Successful
+ToUpper Successful
+Find Successful
+Find(startIndex) Successful
+Replace Successful
+ReadFromConsole Successful
+operator== Successful
+operator!= Successful
+operator[] Successful
+operator= Successful
+operator< Successful
+Successful: 0.933333%.
+Date: 6/3/2024 Time:14:3:27.
+CharAt Successful
+EqualTo Succesful
+Append Successful
+Prepend Successful
+ToLower Successful
+ToUpper Successful
+Find Successful
+Find(startIndex) Successful
+Replace Successful
+ReadFromConsole Failed
+operator== Successful
+operator!= Successful
+operator[] Failed
+operator= Successful
+operator< Successful
+Successful: 86.6667%.

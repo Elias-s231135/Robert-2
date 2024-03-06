@@ -1,24 +1,50 @@
 #include <iostream>
 #include "StringTester.h"
 #include "ctype.h"
+#include <fstream>
 
 using namespace std;
 
+std::fstream file;
+
+void PrintDateAndTime()
+{
+	struct tm newtime;
+	time_t now = time(0);
+	localtime_s(&newtime, &now);
+	int sec = newtime.tm_sec;
+	int minute = newtime.tm_min;
+	int hour = newtime.tm_hour;
+	int day = newtime.tm_mday;
+	int month = 1 + newtime.tm_mon;
+	int year = newtime.tm_year;
+
+	file << "Date: " << day << "/" << month << "/" << year + 1900 << " ";
+	file << "Time:" << hour << ":" << minute << ":" << sec << "." << endl;
+
+}
+
 int main()
 {
+	float successRate = 0;
+	file.open("File.txt", std::ios::app);
+
+	PrintDateAndTime();
+
 	String st("Hello, World");
 	String sta("Hello, ");
 	String stb("World");
 	
 	{
-		if (st.CharacterAt(8) == 'W')
+		if (st.CharacterAt(7) == 'W')
 		{
 			//cout << "Your letter is " << st.CharacterAt(1) << endl;
-			cout << "CharAt Successful" << endl;
+			file << "CharAt Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
-			cout << "CharAt Failed" << endl;
+			file << "CharAt Failed" << endl;
 		}
 	}
 
@@ -26,12 +52,13 @@ int main()
 		if (st.EqualTo("Hello, World"))
 		{
 			//cout << "true :)" << endl;
-			cout << "EqualTo Succesful" << endl;
+			file << "EqualTo Succesful" << endl;
+			successRate += 1;
 		}
 		else
 		{
 			//cout << "false >:(" << endl;
-			cout << "EqualTo Failed" << endl;
+			file << "EqualTo Failed" << endl;
 		}
 	}
 
@@ -39,11 +66,12 @@ int main()
 		if (st.Append(stb) == "Hello, WorldWorld")
 		{
 			//cout << sta.CStr() << endl;
-			cout << "Append Successful" << endl;
+			file << "Append Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
-			cout << "Append Failed" << endl;
+			file << "Append Failed" << endl;
 		}
 	}
 
@@ -51,11 +79,12 @@ int main()
 		if (st.Prepend(sta) == "Hello, Hello, WorldWorld")
 		{
 			//cout << stb.CStr() << endl;
-			cout << "Prepend Successful" << endl;
+			file << "Prepend Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
-			cout << "Prepend Failed" << endl;
+			file << "Prepend Failed" << endl;
 		}
 	}
 
@@ -64,11 +93,12 @@ int main()
 		if (st == "hello, hello, worldworld")
 		{
 			//cout << st.CStr() << endl;
-			cout << "ToLower Successful" << endl;
+			file << "ToLower Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
-			cout << "ToLower Failed" << endl;
+			file << "ToLower Failed" << endl;
 		}
 	}
 
@@ -77,11 +107,12 @@ int main()
 		if (st == "HELLO, HELLO, WORLDWORLD")
 		{
 			//cout << st.CStr() << endl;
-			cout << "ToUpper Successful" << endl;
+			file << "ToUpper Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
-			cout << "ToUpper Failed" << endl;
+			file << "ToUpper Failed" << endl;
 		}
 	}
 
@@ -90,11 +121,12 @@ int main()
 		if (testFind == 4) // logical success / what I was expecting
 		{
 			//cout << "Found index was: " << testFind << endl;
-			cout << "Find Successful" << endl;
+			file << "Find Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
-			cout << "Find Failed" << endl;
+			file << "Find Failed" << endl;
 		}
 	}
 
@@ -103,11 +135,12 @@ int main()
 		if (testFind == 11)
 		{
 			//cout << "Found index was: " << testFind << endl;
-			cout << "Find(startIndex) Successful" << endl;
+			file << "Find(startIndex) Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
-			cout << "Find(startIndex) Failed" << endl;
+			file << "Find(startIndex) Failed" << endl;
 		}
 	}
 
@@ -115,11 +148,12 @@ int main()
 		if (st.Replace("W", "M") == "HELLO, HELLO, MORLDMORLD")
 		{
 			//cout << st.CStr() << endl;
-			cout << "Replace Successful" << endl;
+			file << "Replace Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
-			cout << "Replace Failed" << endl;
+			file << "Replace Failed" << endl;
 		}
 	}
 
@@ -128,11 +162,12 @@ int main()
 		st.ReadFromConsole();
 		if (st == "Hello, World")
 		{
-			cout << "ReadFromConsole Successful" << endl;
+			file << "ReadFromConsole Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
-			cout << "ReadFromConsole Failed" << endl;
+			file << "ReadFromConsole Failed" << endl;
 		}
 	}
 	
@@ -148,12 +183,13 @@ int main()
 		if (st == sta)
 		{
 			//cout << "true" << endl;
-			cout << "operator== Failed" << endl;
+			file << "operator== Failed" << endl;
 		}
 		else
 		{
 			//cout << "false" << endl;
-			cout << "operator== Successful" << endl;
+			file << "operator== Successful" << endl;
+			successRate += 1;
 		}
 
 	}
@@ -163,12 +199,13 @@ int main()
 		if (st != stb)
 		{
 			//cout << "true" << endl;
-			cout << "operator!= Successful" << endl;
+			file << "operator!= Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
 			//cout << "false" << endl;
-			cout << "operator!= Failed" << endl;
+			file << "operator!= Failed" << endl;
 		}
 	}
 
@@ -178,11 +215,12 @@ int main()
 		 if (st[2] == 'l')
 		{
 			//cout << st[2] << endl;
-			 cout << "operator[] Successful" << endl;
+			 file << "operator[] Successful" << endl;
+			 successRate += 1;
 		}
 		 else
 		 {
-			 cout << "operator[] Failed" << endl;
+			 file << "operator[] Failed" << endl;
 		 }
 	}
 
@@ -192,12 +230,13 @@ int main()
 		if (st == sta)
 		{
 			//cout << "they are equal! :)" << endl;
-			cout << "operator= Successful" << endl;
+			file << "operator= Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
 			//cout << "they are not equal! :(" << endl;
-			cout << "operator= Failed" << endl;
+			file << "operator= Failed" << endl;
 		}
 	}
 
@@ -206,12 +245,21 @@ int main()
 		if (st < stb)
 		{
 			//cout << "lhs is before rhs" << endl;
-			cout << "operator< Successful" << endl;
+			file << "operator< Successful" << endl;
+			successRate += 1;
 		}
 		else
 		{
 			//cout << "rhs is before lhs" << endl;
-			cout << "operator< Failed" << endl;
+			file << "operator< Failed" << endl;
 		}
 	}
+
+	successRate /= 15;
+	successRate *= 100;
+	file << "Successful: " << successRate << "%." << endl;
+
+	file.close();
+
 }
+
