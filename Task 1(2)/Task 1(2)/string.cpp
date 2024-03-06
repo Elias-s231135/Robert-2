@@ -210,7 +210,7 @@ String String::ReadFromConsole()
 {
 	delete[] m_string;
 	m_string = new char[64];
-	cout << "Please Input String" << endl;
+	//cout << "Please Input String" << endl;
 	cin.get (m_string,64);
 	return *this;
 	// Wait for input in the console window and store the result
