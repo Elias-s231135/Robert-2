@@ -1,6 +1,6 @@
 #include "Item.h"
 
-const void Item::iDescription()
+const void Item::Description()
 {
 	return void();
 }

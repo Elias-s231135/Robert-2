@@ -1,16 +1,19 @@
 #pragma once
+#include "StringTester.h"
 
-class String;
 class Item;
+class Enemy;
 
 class Room
 {
 public:
-	Room(String describe, Item*);
+	Room();
 	~Room();
-	const void rDescription();
+	void SetUp(int typeOfEnemy, int typeOfItem, String describe);
+	const void Description();
 public:
-	Item* robert3;
+	Item* item;
+	Enemy* enemy;
 private:
-
+	String* describe;
 };

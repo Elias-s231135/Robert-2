@@ -27,19 +27,19 @@
     <ClInclude Include="StickyMince.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Left-HandedMince.h">
+    <ClInclude Include="LeftHandedMince.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Right-HandedMince.h">
+    <ClInclude Include="RightHandedMince.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CrabThatEatsMince.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Left-HandedShopOwner.h">
+    <ClInclude Include="LeftHandedShopOwner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Right-HandedShopOwner.h">
+    <ClInclude Include="RightHandedShopOwner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MincedMan.h">
@@ -60,6 +60,12 @@
     <ClInclude Include="Item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Spells.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -68,10 +74,10 @@
     <ClCompile Include="CrabThatEatsMince.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Left-HandedMince.cpp">
+    <ClCompile Include="LeftHandedMince.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Left-HandedShopOwner.cpp">
+    <ClCompile Include="LeftHandedShopOwner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MincedMan.cpp">
@@ -83,10 +89,10 @@
     <ClCompile Include="PointyMince.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Right-HandedMince.cpp">
+    <ClCompile Include="RightHandedMince.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Right-HandedShopOwner.cpp">
+    <ClCompile Include="RightHandedShopOwner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="StickyMince.cpp">
@@ -105,6 +111,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Spells.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

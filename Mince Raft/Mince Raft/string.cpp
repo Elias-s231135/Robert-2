@@ -272,3 +272,4 @@ bool String::operator<(const String Roger)
 	}
 	// Returns true if this string comes before rhs in the alphabet
 }
+

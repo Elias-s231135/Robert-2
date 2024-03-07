@@ -2,10 +2,10 @@
 
 class Item;
 
-class SturdyMince 
+class LeftHandedMince
 {
 public:
-	SturdyMince();
+	LeftHandedMince();
 	const void Description();
 	void Use();
 private:

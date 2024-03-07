@@ -2,6 +2,6 @@
 
 class Item
 {
-	const void iDescription();
+	const void Description();
 	void Use();
 };

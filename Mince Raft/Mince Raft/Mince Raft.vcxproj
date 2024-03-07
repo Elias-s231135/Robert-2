@@ -128,34 +128,39 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CrabThatEatsMince.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Item.h" />
-    <ClInclude Include="Left-HandedMince.h" />
-    <ClInclude Include="Left-HandedShopOwner.h" />
+    <ClInclude Include="LeftHandedMince.h" />
+    <ClInclude Include="LeftHandedShopOwner.h" />
     <ClInclude Include="MincedMan.h" />
     <ClInclude Include="MinceMeister.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointyMince.h" />
-    <ClInclude Include="Right-HandedMince.h" />
-    <ClInclude Include="Right-HandedShopOwner.h" />
+    <ClInclude Include="RightHandedMince.h" />
+    <ClInclude Include="RightHandedShopOwner.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Spells.h" />
     <ClInclude Include="StickyMince.h" />
     <ClInclude Include="StringTester.h" />
     <ClInclude Include="SturdyMince.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrabThatEatsMince.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Item.cpp" />
-    <ClCompile Include="Left-HandedMince.cpp" />
-    <ClCompile Include="Left-HandedShopOwner.cpp" />
+    <ClCompile Include="LeftHandedMince.cpp" />
+    <ClCompile Include="LeftHandedShopOwner.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="MincedMan.cpp" />
     <ClCompile Include="MinceMeister.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointyMince.cpp" />
-    <ClCompile Include="Right-HandedMince.cpp" />
-    <ClCompile Include="Right-HandedShopOwner.cpp" />
+    <ClCompile Include="RightHandedMince.cpp" />
+    <ClCompile Include="RightHandedShopOwner.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="Spells.cpp" />
     <ClCompile Include="StickyMince.cpp" />
     <ClCompile Include="string.cpp" />
     <ClCompile Include="SturdyMince.cpp" />

@@ -1,6 +1,6 @@
 #pragma once
+#include "Room.h"
 
-class Room;
 class Player;
 class String;
 
@@ -12,6 +12,6 @@ public:
 
 	void Run();
 private:
-	Room[3][3];
-	Player*;
+	Room map[3][3];
+	Player* player;
 };
