@@ -15,7 +15,7 @@ String::String(const char* c)
 	m_string = new char[(strlen(c)) + 1];
 	strcpy_s(m_string, (strlen(c)) + 1, c);
 
-	cout << c << endl;
+	//cout << c << endl;
 }
 
 String::String(String& st)
@@ -23,7 +23,7 @@ String::String(String& st)
 	m_string = new char[(strlen(st.m_string)) + 1];
 	strcpy_s(m_string, (strlen(st.m_string)) + 1, st.m_string);
 
-	cout << st.m_string << endl;
+	//cout << st.m_string << endl;
 }
 
 String::~String()
@@ -119,7 +119,7 @@ void String::ToUpper()
 
 size_t String::Find(const String& c)
 {
-	for (int i = 0; i < (strlen(this->m_string) - strlen(c.m_string)); i++)
+	for (int i = 0; i < (strlen(this->m_string) - strlen(c.m_string)) + 1; i++)
 	{
 		bool compareflag = true;
 			for (int j = 0; j < (strlen(c.m_string)); j++)
@@ -142,7 +142,7 @@ size_t String::Find(int _startIndex, const String& c)
 	int startFrom = _startIndex;
 	//cout << "Please Input Start Index" << endl;
 	//cin >> startFrom;
-	for (int i = startFrom; i < (strlen(this->m_string) - strlen(c.m_string)); i++)
+	for (int i = startFrom; i < (strlen(this->m_string) - strlen(c.m_string)) + 1; i++)
 	{
 		bool compareflag = true;
 			for (int j = 0; j < (strlen(c.m_string)); j++)
@@ -208,6 +208,10 @@ String String::Replace(const String _find, const String& _replace)
 
 String String::ReadFromConsole()
 {
+	std::cin.clear();
+	std::cin.ignore(std::cin.rdbuf()->in_avail());
+
+
 	delete[] m_string;
 	m_string = new char[64];
 	//cout << "Please Input String" << endl;

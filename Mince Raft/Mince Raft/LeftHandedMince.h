@@ -1,8 +1,7 @@
 #pragma once
+#include "Item.h"
 
-class Item;
-
-class LeftHandedMince
+class LeftHandedMince : public Item
 {
 public:
 	LeftHandedMince();

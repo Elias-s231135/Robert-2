@@ -1,8 +1,7 @@
 #pragma once
+#include "Item.h"
 
-class Item;
-
-class StickyMince
+class StickyMince : public Item
 {
 public:
 	StickyMince();
