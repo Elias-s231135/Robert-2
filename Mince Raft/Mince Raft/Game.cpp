@@ -77,9 +77,29 @@ void Game::Run()
 	case 'u': //Player attempting to use
 		if (uInput.Find("use") != -1)
 		{
-			if (uInput.Find("use") != -1)
+			if (uInput.Find("lefthandedmince") != -1)
 			{
-				AttemptToUse(l);
+				AttemptToUse('l');
+			}
+			else if (uInput.Find("pointymince") != -1)
+			{
+				AttemptToUse('p');
+			}
+			else if (uInput.Find("righthandedmince") != -1)
+			{
+				AttemptToUse('r');
+			}
+			else if (uInput.Find("stickymince") != -1)
+			{
+				AttemptToUse('c');
+			}
+			else if (uInput.Find("sturdymince") != -1)
+			{
+				AttemptToUse('u');
+			}
+			else
+			{
+				cout << "Couldn't find that." << endl;
 			}
 		}
 	}
@@ -143,8 +163,70 @@ void Game::AttemptToUse(char c)
 	{
 	case 'l':
 	{
-
+		LeftHandedMince* leftMince = dynamic_cast<LeftHandedMince*>(map[xPos][yPos].item);
+		if (leftMince != nullptr)
+		{
+			leftMince->Use();
+		}
+		else
+		{
+			cout << "Couldn't find that item." << endl;
+		}
+		break;
 	}
+	case 'p':
+	{
+		PointyMince* pMince = dynamic_cast<PointyMince*>(map[xPos][yPos].item);
+		if (pMince != nullptr)
+		{
+			pMince->Use();
+		}
+		else
+		{
+			cout << "Couldn't find that item." << endl;
+		}
+		break;
+	}
+	case 'r':
+	{
+		RightHandedMince* rightMince = dynamic_cast<RightHandedMince*>(map[xPos][yPos].item);
+		if (rightMince != nullptr)
+		{
+			rightMince->Use();
+		}
+		else
+		{
+			cout << "Couldn't find that item." << endl;
+		}
+		break;
+	}
+	case 'c':
+	{
+		StickyMince* stickMince = dynamic_cast<StickyMince*>(map[xPos][yPos].item);
+		if (stickMince != nullptr)
+		{
+			stickMince->Use();
+		}
+		else
+		{
+			cout << "Couldn't find that item." << endl;
+		}
+		break;
+	}
+	case 'u':
+	{
+		SturdyMince* toughMince = dynamic_cast<SturdyMince*>(map[xPos][yPos].item);
+		if (toughMince != nullptr)
+		{
+			toughMince->Use();
+		}
+		else
+		{
+			cout << "Couldn't find that item." << endl;
+		}
+		break;
+	}
+	break;
 	}
 }
 

@@ -2,6 +2,6 @@
 
 class Item
 {
-	const void Description();
-	void Use();
+	virtual const void Description() = 0;
+	virtual void Use() = 0;
 };
