@@ -119,6 +119,12 @@ void String::ToUpper()
 
 size_t String::Find(const String& c)
 {
+
+	//logical safety, if strlen(c) > strlen(m_string) should not ever be found so return early
+	if (strlen(c.m_string)> strlen(m_string))
+	{
+		return -1;
+	}
 	for (int i = 0; i < (strlen(this->m_string) - strlen(c.m_string)) + 1; i++)
 	{
 		bool compareflag = true;

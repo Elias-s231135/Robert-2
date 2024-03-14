@@ -9,10 +9,10 @@ StickyMince::StickyMince()
 
 const void StickyMince::Description()
 {
-	return void();
+	cout << "A piece of mince that appears very sticky. If it wasn't in this mince cave, it would probably accumulate a lot of junk." << endl;
 }
 
 void StickyMince::Use()
 {
-	cout << "It sticks to your hand. You try to shake it off, but it clings tighter. Finally, you scrape it off your hand with some nearby mince." << endl;
+	cout << "You poke it, and it clings to your finger. It releases after a firm shake." << endl;
 }

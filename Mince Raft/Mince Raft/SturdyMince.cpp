@@ -9,7 +9,7 @@ SturdyMince::SturdyMince()
 
 const void SturdyMince::Description()
 {
-	return void();
+	cout << "A piece of mince that is hard to break. it appears to be what the fortress and the Mince Meister's armour are made out of." << endl;
 }
 
 void SturdyMince::Use()

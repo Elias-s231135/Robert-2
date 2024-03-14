@@ -9,7 +9,7 @@ RightHandedMince::RightHandedMince()
 
 const void RightHandedMince::Description()
 {
-    return void();
+    cout << "A piece of mince that fits perfectly in a right hand." << endl;
 }
 
 void RightHandedMince::Use()
