@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "Spells.h"
 
 using namespace std;
 
@@ -11,8 +12,15 @@ public:
 	Player();
 	~Player();
 
-	bool FindSpell(String spell);
+	bool FindSpell(Spell spell);
+public:
+	Spell epSpell;
+	Spell fSpell;
+	Spell gSpell;
+	Spell mSpell;
+	Spell pSpell;
+	Spell rSpell;
 
 private:
-	std::vector<String> spellList;// = { "rock", "pocket sand", "friarball", "expensive petroleum", "match", "Graham" }; //char[]
+	std::vector<Spell> spellList; //= { "expensive petroleum", "friarball", "graham", "match", "pocket sand", "rock" }; //char[]
 };

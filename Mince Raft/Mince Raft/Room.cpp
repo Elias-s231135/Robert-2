@@ -75,13 +75,13 @@ void Room::SetUp(int xPos, int yPos)
 	{
 		this->item = new PointyMince();
 		this->enemy = new CrabThatEatsMince();
-		this->describe = "You are at a rocky beack. There's a crab trying to eat mince, but it's too pointy. If you don't kill the crab, it may try to eat your raft. \nThere's a shop to the south, and the shore to the west.";
+		this->describe = "You are at a rocky beack. There's a crab trying to eat mince, but it's too pointy. \nThere's a shop to the south, and the shore to the west. You can see a crab and a pointy mince";
 	}
 	else if (xPos == 0 && yPos == 1)
 	{
 		this->item = nullptr;
 		this->enemy = nullptr;
-		this->describe = "You are deeper in the cave. The odour is identifiable as raw beef, and the squelching sound is louder. \nYou get the feeling you should have the rest of the raft prepared before going deeper. \nYou can go north to return to the entrance, or go south to go deeper.";
+		this->describe = "You are deeper in the cave. The odour is identifiable as raw beef, and the squelching sound is louder. \nYou can go north to return to the entrance, or go south to go deeper.";
 	}
 	else if (xPos == 1 && yPos == 1)
 	{
@@ -93,25 +93,25 @@ void Room::SetUp(int xPos, int yPos)
 	{
 		this->item = new LeftHandedMince();
 		this->enemy = new LeftHandedShopOwner();
-		this->describe = "You are in a store. \n\"Hey! You can't be here, I just closed up! You must want to steal my Left-Handed Mince!\" \nThe Shopkeeper is angry at you, and won't let you leave.";
+		this->describe = "You are in a store. \n\"Welcome to my shop! I sell things that are easier to hold in your left hand, like this Left-Handed Mince!\" \nYou can go north to the beach, west to the forest, or south to another shop. You can see a left shop owner and a left handed mince";
 	}
 	else if (xPos == 0 && yPos == 2)
 	{
 		this->item = new StickyMince();
 		this->enemy = new MincedMan();
-		this->describe = "You are at the deepest part of the cave. Your steps sound squishy, and the ground is spongey. The stench of raw beef is overpowering, but the squelching sound has stopped. \nAs you look around, you realise this deep part of the cave is all mince. \nAs you turn to leave, you find that your exit has been blocked. The Minced Man stands in your way.";
+		this->describe = "You are at the deepest part of the cave. Your steps sound squishy, and the ground is spongey. The stench of raw beef is overpowering, but the squelching sound has stopped. \nAs you look around, you realise this deep part of the cave is all mince. \nAs you turn to leave, you find that your exit has been blocked. The Minced Man stands in your way... \n\n...But you could probably walk around him. \nYou can see a minced man and a sticky mince";
 	}
 	else if (xPos == 1 && yPos == 2)
 	{
 		this->item = new SturdyMince();
 		this->enemy = new MinceMeister();
-		this->describe = "You are in the fortress. It's made of a stone that looks shockingly similar to mince. \n \"Halt! You dare enter MY fortress? Clearly you expect a fight, and I shall deliver!\" \nThe Mince Meister blocks you from leaving.";
+		this->describe = "You are in the fortress. It's made of a stone that looks shockingly similar to mince. \n \"Halt! You dare enter MY fortress? Surely you expect a fight, but I refuse to fight an unarmed foe!\" \nThe Mince Meister wants to block you from leaving, but won't force you to stay. \nYou can see a mince meister and a sturdy mince";
 	}
 	else if (xPos == 2 && yPos == 2)
 	{
 		this->item = new RightHandedMince();
 		this->enemy = new RightHandedShopOwner();
-		this->describe = "You are in another store. \n\"What?! You aren't allowed in my store yet, I haven't opened up for the day! You plot a theft of this Right-Handed Mince!\" \nThis Shop Owner is quite cross, and denies your attempts to exit.";
+		this->describe = "You are in another store. \n\"Welcome to my shop! I sell things that are easier to hold in your right hand, like this Right-Handed Mince!\" \nYou can go north to return to the other shop. You can see a right shop owner and a right handed mince";
 	}
 	else
 	{

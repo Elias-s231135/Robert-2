@@ -40,6 +40,7 @@ public:
 	char operator[](const int index);
 	void operator=(const String& _str);
 	bool operator<(const String Roger);
+	bool operator>(const String Roger);
 
 private:
 	char* m_string;

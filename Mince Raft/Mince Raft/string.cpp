@@ -283,3 +283,16 @@ bool String::operator<(const String Roger)
 	// Returns true if this string comes before rhs in the alphabet
 }
 
+bool String::operator>(const String Roger)
+{
+	if (strcmp(this->m_string, Roger.m_string) == 1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+	// Returns true if this string comes after rhs in the alphabet
+}

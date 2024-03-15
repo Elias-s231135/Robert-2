@@ -21,6 +21,8 @@ using namespace std;
 
 Game::Game()
 {
+	player = new Player();
+
 	for (int x = 0; x < 3; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -32,14 +34,14 @@ Game::Game()
 
 Game::~Game()
 {
-
+	delete player;
 }
 
 void Game::Run()
 {
 	map[xPos][yPos].Description();
 
-	cout << "What will you do? (go <direction> / use <item> / inspect <item> |or| <enemy> / cast <spell> <enemy>)" << endl;
+	cout << "What will you do? (go <direction> / use <item> / inspect <item> |or| <character> / cast <spell>)" << endl;
 
 	String uInput;
 
@@ -104,7 +106,7 @@ void Game::Run()
 		}
 		break;
 	case 'i': //Player attempting to inspect
-		if (uInput.Find("use"))
+		if (uInput.Find("inspect") != -1)
 		{
 			if (uInput.Find("left") != -1 && uInput.Find("mince") != -1)
 			{
@@ -149,6 +151,39 @@ void Game::Run()
 			else
 			{
 				cout << "Couldn't find that." << endl;
+			}
+		}
+		break;
+	case 'c': //player attempting to cast a spell
+		if (uInput.Find("cast") != -1)
+		{
+			if (uInput.Find("expensive petroleum") != -1)
+			{
+				AttemptToCast('e');
+			}
+			else if (uInput.Find("friarball") != -1)
+			{
+				AttemptToCast('f');
+			}
+			else if (uInput.Find("graham") != -1)
+			{
+				AttemptToCast('g');
+			}
+			else if (uInput.Find("match") != -1)
+			{
+				AttemptToCast('m');
+			}
+			else if (uInput.Find("pocket sand") != -1)
+			{
+				AttemptToCast('p');
+			}
+			else if (uInput.Find("rock") != -1)
+			{
+				AttemptToCast('r');
+			}
+			else
+			{
+				cout << "You don't know that spell." << endl;
 			}
 		}
 		break;
@@ -418,6 +453,77 @@ void Game::AttemptToInspect(char c)
 	}
 }
 
-void Game::AttemptToCast(char c)
+void Game::AttemptToCast(char d)
 {
+	switch (d)
+	{
+	case 'e':
+	{
+		//FindSpell("graham");
+		if (player->FindSpell(player->epSpell))		
+		{
+			player->epSpell.Cast();
+		}
+		else
+		{
+			cout << "You don't know that spell." << endl;
+		}
+	}
+	case 'f':
+	{
+		if (player->FindSpell(player->fSpell))
+		{
+			player->fSpell.Cast();
+		}
+		else
+		{
+			cout << "You don't know that spell." << endl;
+		}
+	}
+	case 'g':
+	{
+		if (player->FindSpell(player->gSpell))
+		{
+			player->gSpell.Cast();
+		}
+		else
+		{
+			cout << "You don't know that spell." << endl;
+		}
+	}
+	case 'm':
+	{
+		if (player->FindSpell(player->mSpell))
+		{
+			player->mSpell.Cast();
+		}
+		else
+		{
+			cout << "You don't know that spell." << endl;
+		}
+	}
+	case 'p':
+	{
+		if (player->FindSpell(player->pSpell))
+		{
+			player->pSpell.Cast();
+		}
+		else
+		{
+			cout << "You don't know that spell." << endl;
+		}
+	}
+	case 'r':
+	{
+		if (player->FindSpell(player->rSpell))
+		{
+			player->rSpell.Cast();
+		}
+		else
+		{
+			cout << "You don't know that spell." << endl;
+		}
+	}
+	break;
+	}
 }

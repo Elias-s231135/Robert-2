@@ -5,5 +5,5 @@ using namespace std;
 
 const void LeftHandedShopOwner::Description()
 {
-    cout << "A shop owner who doesn't want you in their store. They appear to be primarily using their left hand." << endl;
+    cout << "A shop owner who sells left-handed things. They appear to be primarily using their left hand." << endl;
 }
