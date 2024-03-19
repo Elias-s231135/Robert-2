@@ -23,6 +23,8 @@ Game::Game()
 {
 	player = new Player();
 
+	cout << "You find yourself waking on the shore of an island. You can't explain it, but you feel the urge to construct a raft made out of mince. \nIn your pocket, you find a Book Of Obscure Spells, all but 6 of its pages have been torn out. \nYour available spells are: \nexpensive petroleum - creates a bucket of petroleum. \nfriarball - summons a ball of friars. \ngraham - summons Graham. \nmatch - creates a match. \npocket sand - creates some sand to throw. \nrock - locates a rock to throw." << endl;
+
 	for (int x = 0; x < 3; x++)
 	{
 		for (int y = 0; y < 3; y++)
@@ -30,6 +32,9 @@ Game::Game()
 			map[x][y].SetUp(x, y);
 		}
 	}
+	map[xPos][yPos].Description();
+
+	cout << "What will you do? (go <direction> / use <item> / inspect <item> |or| <character> / cast <spell>)" << endl;
 }
 
 Game::~Game()
@@ -39,10 +44,6 @@ Game::~Game()
 
 void Game::Run()
 {
-	map[xPos][yPos].Description();
-
-	cout << "What will you do? (go <direction> / use <item> / inspect <item> |or| <character> / cast <spell>)" << endl;
-
 	String uInput;
 
 	uInput.ReadFromConsole();
@@ -57,18 +58,30 @@ void Game::Run()
 			if (uInput.Find("north") != -1)
 			{
 				AttemptToGo('n');
+				map[xPos][yPos].Description();
+
+				cout << "What will you do? (go <direction> / use <item> / inspect <item> |or| <character> / cast <spell>)" << endl;
 			}
 			else if (uInput.Find("east") != -1)
 			{
 				AttemptToGo('e');
+				map[xPos][yPos].Description();
+
+				cout << "What will you do? (go <direction> / use <item> / inspect <item> |or| <character> / cast <spell>)" << endl;
 			}
 			else if (uInput.Find("south") != -1)
 			{
 				AttemptToGo('s');
+				map[xPos][yPos].Description();
+
+				cout << "What will you do? (go <direction> / use <item> / inspect <item> |or| <character> / cast <spell>)" << endl;
 			}
 			else if (uInput.Find("west") != -1)
 			{
 				AttemptToGo('w');
+				map[xPos][yPos].Description();
+
+				cout << "What will you do? (go <direction> / use <item> / inspect <item> |or| <character> / cast <spell>)" << endl;
 			}
 			else
 			{
@@ -468,6 +481,7 @@ void Game::AttemptToCast(char d)
 		{
 			cout << "You don't know that spell." << endl;
 		}
+		break;
 	}
 	case 'f':
 	{
@@ -479,6 +493,7 @@ void Game::AttemptToCast(char d)
 		{
 			cout << "You don't know that spell." << endl;
 		}
+		break;
 	}
 	case 'g':
 	{
@@ -490,6 +505,7 @@ void Game::AttemptToCast(char d)
 		{
 			cout << "You don't know that spell." << endl;
 		}
+		break;
 	}
 	case 'm':
 	{
@@ -501,6 +517,7 @@ void Game::AttemptToCast(char d)
 		{
 			cout << "You don't know that spell." << endl;
 		}
+		break;
 	}
 	case 'p':
 	{
@@ -512,6 +529,7 @@ void Game::AttemptToCast(char d)
 		{
 			cout << "You don't know that spell." << endl;
 		}
+		break;
 	}
 	case 'r':
 	{
@@ -523,6 +541,7 @@ void Game::AttemptToCast(char d)
 		{
 			cout << "You don't know that spell." << endl;
 		}
+		break;
 	}
 	break;
 	}
