@@ -1,10 +1,11 @@
 #include <iostream>;
 #include <cstdint>
 
+using Byte = unsigned char;
 using namespace std;
 
-struct colour {
-	unsigned int colour;
+struct Colour {
+	uint32_t int colour;
 }
 ;
 
