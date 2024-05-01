@@ -67,7 +67,7 @@ namespace MathClasses
 
         bool operator==(Colour& rhs)
         {
-          return  rhs.colour == colour;
+          return rhs.colour == colour;
         }
 
     };
