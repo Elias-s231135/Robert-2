@@ -1,4 +1,4 @@
-#/*include "CppUnitTest.h"
+#include "CppUnitTest.h"
 #include "TestToString.h"
 
 #include "Utils.h"
@@ -196,4 +196,4 @@ namespace MathLibraryTests_OPTIONAL
 			Assert::AreEqual(q[8], 3.f);
 		}
 	};
-}*/
+}

@@ -1,4 +1,4 @@
-/*#include "CppUnitTest.h"
+#include "CppUnitTest.h"
 #include "TestToString.h"
 
 #include "Utils.h"
@@ -13,29 +13,29 @@ namespace MathLibraryTests
 	TEST_CLASS(Matrix3TransformTests)
 	{
 	public:
-		// make trans from floats
-		TEST_METHOD(MakeTranslationFloats)
-		{
-			Matrix3 actual = Matrix3::MakeTranslation(1.2f, 3.4f, 1.0f);
+		//// make trans from floats
+		//TEST_METHOD(MakeTranslationFloats)
+		//{
+		//	Matrix3 actual = Matrix3::MakeTranslation(1.2f, 3.4f, 1.0f);
 
-			Assert::AreEqual(
-				Matrix3(
-					1.0f, 0.0f, 0.0f,
-					0.0f, 1.0f, 0.0f,
-					1.2f, 3.4f, 1.0f),
-				actual);
-		}
-		// make trans from vector
-		TEST_METHOD(MakeTranslationVector)
-		{
-			Matrix3 actual = Matrix3::MakeTranslation(Vector3(1.2f, 3.4f, 1.0f));
+		//	Assert::AreEqual(
+		//		Matrix3(
+		//			1.0f, 0.0f, 0.0f,
+		//			0.0f, 1.0f, 0.0f,
+		//			1.2f, 3.4f, 1.0f),
+		//		actual);
+		//}
+		//// make trans from vector
+		//TEST_METHOD(MakeTranslationVector)
+		//{
+		//	Matrix3 actual = Matrix3::MakeTranslation(Vector3(1.2f, 3.4f, 1.0f));
 
-			Assert::AreEqual(
-				Matrix3(1.0f, 0.0f, 0.0f,
-					0.0f, 1.0f, 0.0f,
-					1.2f, 3.4f, 1.0f),
-				actual);
-		}
+		//	Assert::AreEqual(
+		//		Matrix3(1.0f, 0.0f, 0.0f,
+		//			0.0f, 1.0f, 0.0f,
+		//			1.2f, 3.4f, 1.0f),
+		//		actual);
+		//}
 		// make rotX from float
 		TEST_METHOD(MakeRotateXFloat)
 		{
@@ -128,4 +128,4 @@ namespace MathLibraryTests
 					0.0f, 0.0f, 4.0f), actual);
 		}
 	};
-}*/
+}
