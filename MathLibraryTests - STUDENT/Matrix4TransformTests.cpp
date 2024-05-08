@@ -1,4 +1,4 @@
-/*#include "CppUnitTest.h"
+#include "CppUnitTest.h"
 #include "TestToString.h"
 
 #include "Utils.h"
@@ -116,4 +116,4 @@ namespace MathLibraryTests
 					0, 0, 0, 1), actual);
 		}
 	};
-}*/
+}

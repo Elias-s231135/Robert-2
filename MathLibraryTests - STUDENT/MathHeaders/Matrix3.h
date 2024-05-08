@@ -233,6 +233,16 @@ namespace MathClasses
             return MakeScale(scale.x, scale.y, scale.z);
         }
 
+        static Matrix3 MakeTranslation(float tx, float ty, float tz)
+        {
+            return Matrix3(1.0f, 0.0f, 0.0f,
+                           0.0f, 1.0f, 0.0f,
+                           tx, ty, tz);
+        }
 
+        static Matrix3 MakeTranslation(Vector3 t)
+        {
+            return MakeTranslation(t.x, t.y, t.z);
+        }
   	};
 }
