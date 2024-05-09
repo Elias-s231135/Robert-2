@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace MathClasses
+namespace Mine
 {
     struct Vector3
     {
@@ -246,7 +246,7 @@ namespace MathClasses
             return x * other.x + y * other.y + z * other.z;
         }
 
-        Vector3 Vector3::Cross(const Vector3& other)
+        Vector3 Cross(const Vector3& other)
         {
             return Vector3(y * other.z - z * other.y,
                 z * other.x - x * other.z,

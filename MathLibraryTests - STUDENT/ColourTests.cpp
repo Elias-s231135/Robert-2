@@ -95,5 +95,13 @@ namespace MathLibraryTests
 			auto alpha = actual.GetAlpha();
 			Assert::AreEqual(alpha, (Byte)255);
 		}
+		// Bit Shift "Red 94 to Green 94"
+		TEST_METHOD(IsGreenBetter)
+		{
+			Colour actual(94, 0, 0, 0);
+			auto green = actual.colour>>8;
+			Colour betterGreen(0, 94, 0, 0);
+			Assert::AreEqual(green, betterGreen.colour);
+		}
 	};
 }

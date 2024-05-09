@@ -1,6 +1,6 @@
 #pragma once
 
-namespace MathClasses
+namespace Mine
 {
     struct Colour
     {

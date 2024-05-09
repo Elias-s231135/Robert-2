@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
+#include "Vector4.h"
 
-namespace MathClasses
+namespace Mine
 {
     struct Matrix4
     {
