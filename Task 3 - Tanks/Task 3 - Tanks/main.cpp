@@ -2,6 +2,8 @@
 #include "raylib-cpp.hpp"   // for raylib API
 #include "SpriteObject.h"   // for our drawable object
 #include "TankPlayer.h"     // for TankPlayer
+#include "TurretPlayer.h"   // for TurretPlayer
+#include "PivotPlayer.h"    // for PivotPlayer
 
 int main() {
     // Initialization
@@ -14,10 +16,21 @@ int main() {
     SetTargetFPS(60);
 
     raylib::Texture2D tankSprite("res/tankBody_red_outline.png");
-
+    raylib::Texture2D turretSprite("res/tankRed_barrel1_outline.png");
+    
     TankPlayer Player;
     Player.Sprite = &tankSprite;
     Player.SetLocalPosition(screenWidth / 2, screenHeight / 2);
+
+    PivotPlayer Point;
+    // No sprite necessary
+    Point.SetLocalPosition(6, 0);
+    Point.SetParent(&Player);
+
+    TurretPlayer Turret;
+    Turret.Sprite = &turretSprite;
+    Turret.SetLocalPosition(25, 0);
+    Turret.SetParent(&Point);
 
     //--------------------------------------------------------------------------------------
 
@@ -30,6 +43,8 @@ int main() {
         float deltaTime = window.GetFrameTime();
 
         Player.Update(deltaTime);
+        Point.Update(deltaTime);
+        Turret.Update(deltaTime);
 
         //-------------------------------------------------r---------------------------------
 
@@ -37,9 +52,10 @@ int main() {
         //----------------------------------------------------------------------------------
         BeginDrawing();
         {
-            window.ClearBackground(RAYWHITE);
+            window.ClearBackground(BEIGE);
 
             Player.Draw();
+            Turret.Draw();
         }
         EndDrawing();
         //----------------------------------------------------------------------------------
