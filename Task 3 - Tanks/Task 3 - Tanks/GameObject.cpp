@@ -31,7 +31,17 @@ void GameObject::Update(float deltaTime)
 {
 	OnUpdate(deltaTime);
 
-	// TODO: iterate through children and call Update on them
+	// TODO: iterate through children and call Update on them.
+
+	//get the size of the children vector by using .size()
+	//use a for loop to loop increment values of i until i >= size()
+	//we will iterate through every object in that vector
+	
+	//for(int i = 0; i < "vector name".size(); i++) 
+
+	//std::vector<Thing> things;
+	//things.push_back("Object of type <Thing>") //that object will be added "pushed back" to the vector
+
 }
 
 void GameObject::Draw()

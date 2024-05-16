@@ -4,6 +4,7 @@
 #include "TankPlayer.h"     // for TankPlayer
 #include "TurretPlayer.h"   // for TurretPlayer
 #include "PivotPlayer.h"    // for PivotPlayer
+#include "Bullet.h"         // for Bullet
 
 int main() {
     // Initialization
@@ -17,6 +18,7 @@ int main() {
 
     raylib::Texture2D tankSprite("res/tankBody_red_outline.png");
     raylib::Texture2D turretSprite("res/tankRed_barrel1_outline.png");
+    raylib::Texture2D bulletSprite("res/aie.png");
     
     TankPlayer Player;
     Player.Sprite = &tankSprite;
@@ -31,6 +33,9 @@ int main() {
     Turret.Sprite = &turretSprite;
     Turret.SetLocalPosition(25, 0);
     Turret.SetParent(&Point);
+
+    Turret.bulletTexture = &bulletSprite;
+
 
     //--------------------------------------------------------------------------------------
 
