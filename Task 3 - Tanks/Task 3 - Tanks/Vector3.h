@@ -241,7 +241,7 @@ namespace Mine
             return copy;
         }
 
-        float Dot(const Vector3& other)
+        float Dot(const Vector3& other) const
         {
             return x * other.x + y * other.y + z * other.z;
         }
@@ -261,6 +261,36 @@ namespace Mine
             float d = a.Dot(other);
 
             return acosf(d);
+        }
+
+        static constexpr float min(float a, float b)
+        {
+            return a < b ? a : b;
+        }
+
+        static constexpr float max(float a, float b)
+        {
+            return a > b ? a : b;
+        }
+
+        static Vector3 min(const Vector3& a, const Vector3& b)
+        {
+            return { min(a.x, b.x), min(a.y, b.y), min(a.z, b.z)};
+        }
+
+        static Vector3 max(const Vector3& a, const Vector3& b)
+        {
+            return { max(a.x, b.x), max(a.y, b.y), max(a.z, b.z) };
+        }
+
+        static constexpr float clamp(float t, float a, float b)
+        {
+            return max(a, min(b, t));
+        }
+
+       static Vector3 clamp(const Vector3& t, const Vector3& a, const Vector3& b)
+        {
+            return max(a, min(b, t));
         }
     };
 }

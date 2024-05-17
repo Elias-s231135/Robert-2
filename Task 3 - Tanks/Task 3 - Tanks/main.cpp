@@ -12,13 +12,13 @@ int main() {
     int screenWidth = 800;
     int screenHeight = 450;
     raylib::Color textColor = raylib::Color::LightGray();
-    raylib::Window window(screenWidth, screenHeight, "raylib [core] example - basic window");
+    raylib::Window window(screenWidth, screenHeight, "Tank");
 
     SetTargetFPS(60);
 
     raylib::Texture2D tankSprite("res/tankBody_red_outline.png");
     raylib::Texture2D turretSprite("res/tankRed_barrel1_outline.png");
-    raylib::Texture2D bulletSprite("res/aie.png");
+    raylib::Texture2D bulletSprite("res/bulletRed2_outline.png"); // change to a bullet before submitting
     
     TankPlayer Player;
     Player.Sprite = &tankSprite;
@@ -57,7 +57,7 @@ int main() {
         //----------------------------------------------------------------------------------
         BeginDrawing();
         {
-            window.ClearBackground(BEIGE);
+            window.ClearBackground(Color { 250, 217, 175, 255 });
 
             Player.Draw();
             Turret.Draw();
