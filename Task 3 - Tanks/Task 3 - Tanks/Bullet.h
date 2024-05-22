@@ -5,5 +5,10 @@
 class Bullet : public SpriteObject
 {
 protected:
+	
 	void OnUpdate(float deltaTime) override;
+
+public:
+
+	Bullet();
 };

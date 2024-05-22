@@ -4,7 +4,9 @@
 #include <vector>
 
 struct Collider {
-
+public:
+	virtual void CheckCollision(Collider collision)
+	{}
 };
 
 struct AABB : public Collider
@@ -196,7 +198,7 @@ struct AABB : public Collider
 		}
 	};
 
-	struct Sphere
+	struct Sphere : public Collider
 	{
 		Sphere()
 		{}
@@ -263,7 +265,7 @@ struct AABB : public Collider
 		}
 	};
 
-	struct Plane
+	struct Plane : public Collider
 	{
 		Plane() 
 		{

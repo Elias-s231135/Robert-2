@@ -4,6 +4,7 @@
 
 #include "Vector3.h"
 #include "Matrix3.h"
+#include "Colliders.h"
 
 class GameObject
 {
@@ -27,6 +28,9 @@ protected:
     GameObject* Parent;
     // Vector of children
     std::vector<GameObject*> Children;
+
+    // Collider
+    Collider* m_collider = nullptr;
 
 public:
     
@@ -107,4 +111,8 @@ public:
     void Scale(float x, float y);
     // Scale locally on X, Y, Z axes
     void Scale(Mine::Vector3 scalar);
+
+    void GetAllColliders(std::vector<Collider*> c);
+
+    virtual void OnCollision();
 };

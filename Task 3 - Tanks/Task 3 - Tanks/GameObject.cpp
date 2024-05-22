@@ -33,6 +33,11 @@ void GameObject::Update(float deltaTime)
 
 	// TODO: iterate through children and call Update on them.
 
+	for (size_t i = 0; i < Children.size(); i++)
+	{
+		Children[i]->Update(deltaTime);
+	}
+
 	//get the size of the children vector by using .size()
 	//use a for loop to loop increment values of i until i >= size()
 	//we will iterate through every object in that vector
@@ -49,6 +54,10 @@ void GameObject::Draw()
 	OnDraw();
 
 	// TODO: iterate through children and call Draw on them
+	for (size_t i = 0; i < Children.size(); i++)
+	{
+		Children[i]->Draw();
+	}
 }
 
 void GameObject::SetParent(GameObject* newParent)
@@ -210,4 +219,21 @@ void GameObject::Scale(float x, float y)
 void GameObject::Scale(Mine::Vector3 scaling)
 {
 	LocalScale *= scaling;
+}
+
+void GameObject::GetAllColliders(std::vector<Collider*> c)
+{
+	if (m_collider != nullptr)
+	{
+		c.push_back(m_collider);
+	}
+
+	for (size_t i = 0; i < Children.size(); i++)
+	{
+		Children[i]->GetAllColliders(c);
+	}
+}
+
+void GameObject::OnCollision()
+{
 }

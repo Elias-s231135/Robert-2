@@ -1,5 +1,6 @@
 #include "TankPlayer.h"
 
+
 void TankPlayer::OnUpdate(float deltaTime)
 {
 	const float MOVESPEED = 150.0f;
@@ -40,4 +41,18 @@ void TankPlayer::OnUpdate(float deltaTime)
 	Translate(finalMove);
 	// apply the rotate to the tank
 	Rotate(finalRotate);
+
+
+	//update collider
+	Sphere* sphere = static_cast<Sphere*>(m_collider);
+	sphere->center = GetWorldPosition();
+	DrawCircleLines(sphere->center.x, sphere->center.y, sphere->radius, YELLOW);
+
+	//PUT THIS IN ONDRAW OVERIDE
+	//DrawCircleLines(collider center x, collider center y, collider radius, YELLOW)
+}
+
+TankPlayer::TankPlayer()
+{
+	m_collider = new Sphere(GetWorldPosition(), 80);
 }
