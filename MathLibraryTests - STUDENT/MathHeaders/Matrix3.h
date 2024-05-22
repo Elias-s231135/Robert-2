@@ -2,7 +2,7 @@
 #include <string>
 #include "Vector3.h"
 
-namespace Mine
+namespace MathClasses
 {
     struct Matrix3
     {
