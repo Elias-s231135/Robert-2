@@ -130,6 +130,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AABB.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Colliders.h" />
     <ClInclude Include="Colour.h" />
@@ -137,6 +138,8 @@
     <ClInclude Include="Matrix3.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="PivotPlayer.h" />
+    <ClInclude Include="Plane.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="SpriteObject.h" />
     <ClInclude Include="TankPlayer.h" />
     <ClInclude Include="TurretPlayer.h" />
@@ -145,10 +148,14 @@
     <ClInclude Include="Vector4.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AABB.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Colliders.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PivotPlayer.cpp" />
+    <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="SpriteObject.cpp" />
     <ClCompile Include="TankPlayer.cpp" />
     <ClCompile Include="TurretPlayer.cpp" />

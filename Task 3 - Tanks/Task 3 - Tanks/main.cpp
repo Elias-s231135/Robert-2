@@ -26,6 +26,7 @@ int main() {
     raylib::Texture2D bulletSprite("res/bulletRed2_outline.png"); // change to a bullet before submitting
     
     GameObject root;
+    std::vector <Collider*> cols;
 
     TankPlayer Player;
     Player.Sprite = &tankSprite;

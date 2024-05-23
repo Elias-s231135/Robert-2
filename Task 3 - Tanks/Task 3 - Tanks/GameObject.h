@@ -4,7 +4,9 @@
 
 #include "Vector3.h"
 #include "Matrix3.h"
-#include "Colliders.h"
+// #include "Colliders.h"
+
+struct Collider;
 
 class GameObject
 {
