@@ -40,38 +40,31 @@ Mine::Vector3 Plane::ClosestPoint(const Mine::Vector3& p) const
 	return p - N * DistanceTo(p);
 }
 
-enum ePlaneResult : int
-{
-	FRONT = 1,
-	BACK = -1,
-	INTERSECTS = 0
-};
-
-ePlaneResult TestSide(const Mine::Vector3& p) const
+Plane::ePlaneResult Plane::TestSide(const Mine::Vector3& p) const
 {
 	float t = p.Dot(N) + d;
 
 	if (t < 0)
-		return ePlaneResult::BACK;
+		return Plane::ePlaneResult::BACK;
 	else if (t > 0)
-		return ePlaneResult::FRONT;
+		return Plane::ePlaneResult::FRONT;
 
-	return ePlaneResult::INTERSECTS;
+	return Plane::ePlaneResult::INTERSECTS;
 }
 
-ePlaneResult TestSide(const Sphere& sphere) const
+Plane::ePlaneResult Plane::TestSide(const Sphere& sphere) const
 {
 	float t = DistanceTo(sphere.center);
 
 	if (t > sphere.radius)
-		return ePlaneResult::FRONT;
+		return Plane::ePlaneResult::FRONT;
 	else if (t < -sphere.radius)
-		return ePlaneResult::BACK;
+		return Plane::ePlaneResult::BACK;
 
-	return ePlaneResult::INTERSECTS;
+	return Plane::ePlaneResult::INTERSECTS;
 }
 
-ePlaneResult TestSide(const AABB& aabb) const
+Plane::ePlaneResult Plane::TestSide(const AABB& aabb) const
 {
 	// tag if we find a corner on each side
 	bool side[2] = { false, false };
@@ -79,19 +72,45 @@ ePlaneResult TestSide(const AABB& aabb) const
 	// compare each corner
 	for (auto c : aabb.Corners())
 	{
-		auto result = TestSide(c);
-		if (result == ePlaneResult::FRONT)
+		auto result = Plane::TestSide(c);
+		if (result == Plane::ePlaneResult::FRONT)
 			side[0] = true;
-		else if (result == ePlaneResult::BACK)
+		else if (result == Plane::ePlaneResult::BACK)
 			side[1] = true;
 	}
 
 	// if front but not back
 	if (side[0] && !side[1])
-		return ePlaneResult::FRONT;
+		return Plane::ePlaneResult::FRONT;
 	// if back but not front
 	else if (!side[0] && !side[1])
-		return ePlaneResult::BACK;
+		return Plane::ePlaneResult::BACK;
 	// else overlapping
-	return ePlaneResult::INTERSECTS;
+	return Plane::ePlaneResult::INTERSECTS;
+}
+
+void Plane::CheckCollision(Collider* other)
+{
+	Sphere* sphere = static_cast<Sphere*>(other);
+	nullptr;
+	if (sphere == nullptr)
+	{
+		AABB* aabb = static_cast<AABB*>(other);
+		if (other == aabb)
+		{
+			//Checking to see if this plane 'collides" with an aabb
+			if (TestSide(*aabb) == Plane::ePlaneResult::INTERSECTS)
+			{
+				m_owner->OnCollision();
+			}
+		}
+	}
+	else if (other == sphere)
+	{
+		//Checking to see if this plane 'collides" with a sphere
+		if (TestSide(*sphere) == Plane::ePlaneResult::INTERSECTS)
+		{
+			m_owner->OnCollision();
+		}
+	}
 }

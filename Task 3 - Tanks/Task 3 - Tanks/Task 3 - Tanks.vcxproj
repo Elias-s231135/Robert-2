@@ -134,6 +134,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Colliders.h" />
     <ClInclude Include="Colour.h" />
+    <ClInclude Include="Crate.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Matrix3.h" />
     <ClInclude Include="Matrix4.h" />
@@ -151,6 +152,7 @@
     <ClCompile Include="AABB.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Colliders.cpp" />
+    <ClCompile Include="Crate.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PivotPlayer.cpp" />

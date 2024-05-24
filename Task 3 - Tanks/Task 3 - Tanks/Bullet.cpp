@@ -1,8 +1,9 @@
 #include "Bullet.h"
-#include "Colliders.h"
 #include "Sphere.h"
 #include "AABB.h"
 #include "Plane.h"
+
+//struct Plane;
 
 void Bullet::OnUpdate(float deltaTime)
 {
@@ -15,7 +16,15 @@ void Bullet::OnUpdate(float deltaTime)
 	Sphere* sphere = static_cast<Sphere*>(m_collider);
 	sphere->center = GetWorldPosition();
 	DrawCircleLines(sphere->center.x, sphere->center.y, sphere->radius, GREEN);
+
+	
+	/*if (CheckCollision(Plane) == INTERSECTS)	
+	{
+		Destroy();
+	}*/
 }
+
+
 
 Bullet::Bullet()
 {

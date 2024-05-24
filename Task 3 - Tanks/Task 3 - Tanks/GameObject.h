@@ -35,7 +35,9 @@ protected:
     Collider* m_collider = nullptr;
 
 public:
-    
+    static GameObject* GetRoot();
+
+    static void SetRoot(GameObject* go);
     //// Gets an angle
     //void AngleFrom2D(Mine::Vector3(fwd));
     
@@ -114,7 +116,9 @@ public:
     // Scale locally on X, Y, Z axes
     void Scale(Mine::Vector3 scalar);
 
-    void GetAllColliders(std::vector<Collider*> c);
+    void GetAllColliders(std::vector<Collider*>& c);
 
     virtual void OnCollision();
+
+    void Destroy();
 };

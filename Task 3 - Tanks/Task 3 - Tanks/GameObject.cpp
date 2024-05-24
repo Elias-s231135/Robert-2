@@ -8,6 +8,18 @@
 //	fwd = atan(fwd.x);
 //}
 
+static GameObject* m_root;
+
+GameObject* GameObject::GetRoot()
+{
+	return m_root;
+}
+
+void GameObject::SetRoot(GameObject* go)
+{
+	m_root = go;
+}
+
 GameObject::GameObject()
 {
 	Parent = nullptr;
@@ -221,7 +233,7 @@ void GameObject::Scale(Mine::Vector3 scaling)
 	LocalScale *= scaling;
 }
 
-void GameObject::GetAllColliders(std::vector<Collider*> c)
+void GameObject::GetAllColliders(std::vector<Collider*>& c)
 {
 	if (m_collider != nullptr)
 	{
@@ -237,3 +249,13 @@ void GameObject::GetAllColliders(std::vector<Collider*> c)
 void GameObject::OnCollision()
 {
 }
+
+void GameObject::Destroy()
+{
+
+	Parent->Children.erase(std::remove(Parent->Children.begin(), Parent->Children.end(), this), Parent->Children.end());
+	//SetParent(nullptr);
+	Parent = nullptr;
+	//delete this; ----- call deconstructor instead
+}
+

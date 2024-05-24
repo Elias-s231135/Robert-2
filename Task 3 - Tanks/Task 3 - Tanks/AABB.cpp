@@ -6,6 +6,7 @@ AABB::AABB()
 {
 
 }
+
 AABB::AABB(const Mine::Vector3& min, const Mine::Vector3& max) : min(min), max(max)
 {
 
@@ -59,6 +60,11 @@ bool AABB::Overlaps(const AABB& other) const
 	// test for not overlapped as it exits faster
 	return !(max.x < other.min.x || max.y < other.min.y ||
 		min.x > other.max.x || min.y > other.max.y);
+}
+
+bool AABB::Overlaps(const Sphere& sphere) const
+{
+	return sphere.Overlaps(*this);
 }
 
 Mine::Vector3 AABB::ClosestPoint(const Mine::Vector3& p) const
@@ -189,5 +195,43 @@ void AABB::SetToTransformedBox(const Mine::Matrix3& m)
 	{
 		min.x += m.m9 * max.x;
 		max.x += m.m9 * min.x;
+	}
+}
+
+void AABB::CheckCollision(Collider* other)
+{
+	Sphere* sphere = static_cast<Sphere*>(other);
+	nullptr;
+	if (sphere == nullptr)
+	{
+		AABB* aabb = static_cast<AABB*>(other);
+		if (aabb == nullptr)
+		{
+			Plane* plane = static_cast<Plane*>(other);
+			if (plane != nullptr)
+			{
+				//Checking to see if this AABB 'collides" with a plane
+				if (plane->TestSide(*this) == Plane::ePlaneResult::INTERSECTS)
+				{
+					m_owner->OnCollision();
+				}
+			}
+		}
+		else if (other == aabb)
+		{
+			//check to see if we collide with an aabb
+			if (this->Overlaps(*aabb) == true)
+			{
+				m_owner->OnCollision();
+			}
+		}
+	}
+	else if (other == sphere)
+	{
+		//check to see if we collide with another sphere
+		if (this->Overlaps(*sphere))
+		{
+			m_owner->OnCollision();
+		}
 	}
 }

@@ -6,6 +6,8 @@
 #include "PivotPlayer.h"    // for PivotPlayer
 #include "Bullet.h"         // for Bullet
 #include "Colliders.h"      // for Colliders
+#include "Crate.h"          // for Crate
+#include "Plane.h"          // for Plane
 
 int main() {
     // Initialization
@@ -14,18 +16,20 @@ int main() {
     int screenHeight = 450;
     raylib::Color textColor = raylib::Color::LightGray();
     raylib::Window window(screenWidth, screenHeight, "Tank");
-   /* Mine::Vector3 cornerTopLeft (0, 0, 0);
+    Mine::Vector3 cornerTopLeft (0, 0, 0);
     Mine::Vector3 cornerTopRight(800, 0, 0);
     Mine::Vector3 cornerBottomLeft(0, 450, 0);
-    Mine::Vector3 cornerBottomRight(800, 450, 0);*/
+    Mine::Vector3 cornerBottomRight(800, 450, 0);
 
     SetTargetFPS(60);
 
     raylib::Texture2D tankSprite("res/tankBody_red_outline.png");
     raylib::Texture2D turretSprite("res/tankRed_barrel1_outline.png");
     raylib::Texture2D bulletSprite("res/bulletRed2_outline.png"); // change to a bullet before submitting
-    
+    raylib::Texture2D crateSprite("res/crateWood.png");
+
     GameObject root;
+    GameObject::SetRoot(&root);
     std::vector <Collider*> cols;
 
     TankPlayer Player;
@@ -45,7 +49,16 @@ int main() {
 
     Turret.bulletTexture = &bulletSprite;
 
-    //Plane leftSide(cornerTopLeft, cornerBottomRight);
+    Crate crate;
+    crate.Sprite = &crateSprite;
+    crate.SetLocalPosition(screenWidth / 4, screenHeight / 4);
+    crate.SetParent(&root);
+
+    Plane leftSide(cornerTopLeft, cornerBottomLeft);
+    Plane rightSide(cornerTopRight, cornerBottomRight);
+    Plane topSide(cornerTopLeft, cornerTopRight);
+    Plane bottomSide(cornerBottomLeft, cornerBottomRight);
+
 
 
     //--------------------------------------------------------------------------------------
@@ -57,6 +70,26 @@ int main() {
         // Update your variables here
 
         float deltaTime = window.GetFrameTime();
+
+        root.GetAllColliders(cols);
+
+      /*  for (size_t i = 0; i < cols.size(); i++)
+        {
+            cols[i];
+            for (size_t j = 0; j < cols.size(); j++)
+            {
+                cols[j];
+
+                if (i == j)
+                {
+
+                }
+                else
+                {
+                    i->CheckCollision(j);
+                }
+            }
+        }*/
 
         //Player.Update(deltaTime);
         //Point.Update(deltaTime);

@@ -23,25 +23,26 @@ void TurretPlayer::OnUpdate(float deltaTime)
 			bullet->SetLocalRotation(this->GetWorldRotation());
 
 			//Add the bullet to a storage container in this object
-			bullets.push_back(bullet);
+			//bullets.push_back(bullet);
+			bullet->SetParent(GameObject::GetRoot());
 		};
 
-		//loop through all our stored bullets and update them
-		for (int i = 0; i < bullets.size(); i++)
-		{
-			bullets[i]->Update(deltaTime);
-		}
+		////loop through all our stored bullets and update them
+		//for (int i = 0; i < bullets.size(); i++)
+		//{
+		//	bullets[i]->Update(deltaTime);
+		//}
 }
 
 void TurretPlayer::OnDraw()
 {
 	SpriteObject::OnDraw();
 
-	//Loop through all our stored bullets and draw them here
-	for (int i = 0; i < bullets.size(); i++)
-	{
-		bullets[i]->Draw();
-	}
+	////Loop through all our stored bullets and draw them here
+	//for (int i = 0; i < bullets.size(); i++)
+	//{
+	//	bullets[i]->Draw();
+	//}
 
 }
 

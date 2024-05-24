@@ -4,18 +4,12 @@
 //#include <vector>
 #include "Colliders.h"
 
+struct AABB;
+struct Sphere;
+
 struct Plane : public Collider
 {
-	Plane();
-	Plane(float x, float y, float d) : N(x, y, 0), d(d);
-	Plane(const Mine::Vector3& n, float d) : N(n), d(d);
-
-	Mine::Vector3 N;
-	float d;
-
-	float DistanceTo(const Mine::Vector3& p) const;
-	
-	Mine::Vector3 ClosestPoint(const Mine::Vector3& p) const;
+public:
 
 	enum ePlaneResult : int
 	{
@@ -24,7 +18,22 @@ struct Plane : public Collider
 		INTERSECTS = 0
 	};
 
+public:
+	Plane();
+	Plane(float x, float y, float d);
+	Plane(const Mine::Vector3& n, float d);
+	Plane(const Mine::Vector3& p1, const Mine::Vector3& p2);
+
+	Mine::Vector3 N;
+	float d;
+
+	float DistanceTo(const Mine::Vector3& p) const;
+	
+	Mine::Vector3 ClosestPoint(const Mine::Vector3& p) const;
+
 	ePlaneResult TestSide(const Mine::Vector3& p) const;
 	ePlaneResult TestSide(const Sphere& sphere) const;
 	ePlaneResult TestSide(const AABB& aabb) const;
+
+	void CheckCollision(Collider* other) override;
 };

@@ -4,15 +4,19 @@
 //#include <vector>
 #include "Colliders.h"
 
+struct AABB;
+struct Plane;
+
 struct Sphere : public Collider
 {
+public:
+	
+	Mine::Vector3 center;
+	float radius;
+
 	Sphere();
 
 	Sphere(const Mine::Vector3& p, float r);
-
-
-	Mine::Vector3 center;
-	float radius;
 
 	void Fit(const Mine::Vector3* points, unsigned int count);
 	void Fit(const std::vector<Mine::Vector3>& points);
