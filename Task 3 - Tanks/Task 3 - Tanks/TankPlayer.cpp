@@ -46,9 +46,9 @@ void TankPlayer::OnUpdate(float deltaTime)
 
 
 	//update collider
-	Sphere* sphere = static_cast<Sphere*>(m_collider);
+	/*Sphere* sphere = static_cast<Sphere*>(m_collider);
 	sphere->center = GetWorldPosition();
-	DrawCircleLines(sphere->center.x, sphere->center.y, sphere->radius, YELLOW);
+	DrawCircleLines(sphere->center.x, sphere->center.y, sphere->radius, YELLOW);*/
 
 	//PUT THIS IN ONDRAW OVERIDE
 	//DrawCircleLines(collider center x, collider center y, collider radius, YELLOW)
@@ -56,5 +56,7 @@ void TankPlayer::OnUpdate(float deltaTime)
 
 TankPlayer::TankPlayer()
 {
-	m_collider = new Sphere(GetWorldPosition(), 80);
+	//m_collider = new Sphere(GetWorldPosition(), 80);
+	////set the owner of m_collider to this gameobject
+	//m_collider->m_owner = this;
 }

@@ -85,14 +85,13 @@ Mine::Vector3 Sphere::ClosestPoint(const Mine::Vector3& p) const
 
 void Sphere::CheckCollision(Collider* other)
 {
-	Sphere* sphere = static_cast<Sphere*>(other);
-	nullptr;
+	Sphere* sphere = dynamic_cast<Sphere*>(other);
 	if (sphere == nullptr)
 	{
-		AABB* aabb = static_cast<AABB*>(other);
+		AABB* aabb = dynamic_cast<AABB*>(other);
 		if (aabb == nullptr)
 		{
-			Plane* plane = static_cast<Plane*>(other);
+			Plane* plane = dynamic_cast<Plane*>(other);
 			if (plane != nullptr)
 			{
 				//Checking to see if this sphere 'collides" with a plane
@@ -102,7 +101,7 @@ void Sphere::CheckCollision(Collider* other)
 				}
 			}
 		}
-		else if (other == aabb)
+		else
 		{
 			//check to see if we collide with an aabb
 			if (this->Overlaps(*aabb) == true)
@@ -111,7 +110,7 @@ void Sphere::CheckCollision(Collider* other)
 			}
 		}
 	}
-	else if (other == sphere)
+	else
 	{
 		//check to see if we collide with another sphere
 		if (this->Overlaps(*sphere))

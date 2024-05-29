@@ -14,9 +14,9 @@ void TurretPlayer::OnUpdate(float deltaTime)
 
 		if (IsKeyPressed(KeyboardKey::KEY_SPACE))
 		{
-			Bullet* bullet = new Bullet();	//change to be heap allocated (new Keyword)		
+			Bullet* bullet = new Bullet();	//change to be heap allocated (new Keyword)	// No longer necessary
 			bullet->Sprite = bulletTexture;
-			cout << degRotation << endl;			
+			// cout << degRotation << endl;	//Debug
 			//bullet.Draw(); 
 			//bullet.Update();
 			bullet->SetLocalPosition(this->GetWorldPosition());

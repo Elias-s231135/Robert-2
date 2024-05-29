@@ -16,17 +16,15 @@ void Bullet::OnUpdate(float deltaTime)
 	Sphere* sphere = static_cast<Sphere*>(m_collider);
 	sphere->center = GetWorldPosition();
 	DrawCircleLines(sphere->center.x, sphere->center.y, sphere->radius, GREEN);
-
-	
-	/*if (CheckCollision(Plane) == INTERSECTS)	
-	{
-		Destroy();
-	}*/
 }
-
-
 
 Bullet::Bullet()
 {
 	m_collider = new Sphere(GetWorldPosition(), 20);
+	m_collider->m_owner = this;
+}
+
+void Bullet::OnCollision()
+{
+	this->Destroy();
 }

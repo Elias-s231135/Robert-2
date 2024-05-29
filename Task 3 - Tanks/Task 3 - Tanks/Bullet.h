@@ -11,4 +11,5 @@ protected:
 public:
 
 	Bullet();
+	void OnCollision() override;
 };

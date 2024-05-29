@@ -8,6 +8,7 @@
 #include "Colliders.h"      // for Colliders
 #include "Crate.h"          // for Crate
 #include "Plane.h"          // for Plane
+#include "Border.h"         // for Border
 
 int main() {
     // Initialization
@@ -20,6 +21,7 @@ int main() {
     Mine::Vector3 cornerTopRight(800, 0, 0);
     Mine::Vector3 cornerBottomLeft(0, 450, 0);
     Mine::Vector3 cornerBottomRight(800, 450, 0);
+    
 
     SetTargetFPS(60);
 
@@ -49,15 +51,12 @@ int main() {
 
     Turret.bulletTexture = &bulletSprite;
 
-    Crate crate;
+    Crate crate(Mine::Vector3(200, 112, 1));
     crate.Sprite = &crateSprite;
-    crate.SetLocalPosition(screenWidth / 4, screenHeight / 4);
     crate.SetParent(&root);
 
-    Plane leftSide(cornerTopLeft, cornerBottomLeft);
-    Plane rightSide(cornerTopRight, cornerBottomRight);
-    Plane topSide(cornerTopLeft, cornerTopRight);
-    Plane bottomSide(cornerBottomLeft, cornerBottomRight);
+    Border border;
+    border.SetParent(&root);
 
 
 
@@ -70,10 +69,10 @@ int main() {
         // Update your variables here
 
         float deltaTime = window.GetFrameTime();
-
+        cols.clear();
         root.GetAllColliders(cols);
 
-      /*  for (size_t i = 0; i < cols.size(); i++)
+        for (size_t i = 0; i < cols.size(); i++)
         {
             cols[i];
             for (size_t j = 0; j < cols.size(); j++)
@@ -86,10 +85,10 @@ int main() {
                 }
                 else
                 {
-                    i->CheckCollision(j);
+                    cols[i]->CheckCollision(cols[j]);
                 }
             }
-        }*/
+        }
 
         //Player.Update(deltaTime);
         //Point.Update(deltaTime);

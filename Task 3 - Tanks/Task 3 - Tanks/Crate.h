@@ -10,7 +10,17 @@ protected:
 
 public:
 
+	/*Mine::Vector3 locatedLocation;
+
+	void SetLocation(Mine::Vector3 location);
+	
+	Mine::Vector3 GetLocation() const;*/
+
 	Crate();
+
+	Crate(Mine::Vector3 pos);
+
+	void OnCollision() override;
 
 public:
 //	raylib::Texture2D crateReference("res/crateWood.png");

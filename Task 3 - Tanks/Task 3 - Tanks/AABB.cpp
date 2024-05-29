@@ -200,14 +200,13 @@ void AABB::SetToTransformedBox(const Mine::Matrix3& m)
 
 void AABB::CheckCollision(Collider* other)
 {
-	Sphere* sphere = static_cast<Sphere*>(other);
-	nullptr;
+	Sphere* sphere = dynamic_cast<Sphere*>(other);
 	if (sphere == nullptr)
 	{
-		AABB* aabb = static_cast<AABB*>(other);
+		AABB* aabb = dynamic_cast<AABB*>(other);
 		if (aabb == nullptr)
 		{
-			Plane* plane = static_cast<Plane*>(other);
+			Plane* plane = dynamic_cast<Plane*>(other);
 			if (plane != nullptr)
 			{
 				//Checking to see if this AABB 'collides" with a plane
@@ -231,7 +230,7 @@ void AABB::CheckCollision(Collider* other)
 		//check to see if we collide with another sphere
 		if (this->Overlaps(*sphere))
 		{
-			m_owner->OnCollision();
+ 			m_owner->OnCollision();
 		}
 	}
 }

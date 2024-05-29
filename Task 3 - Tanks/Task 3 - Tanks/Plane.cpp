@@ -92,7 +92,6 @@ Plane::ePlaneResult Plane::TestSide(const AABB& aabb) const
 void Plane::CheckCollision(Collider* other)
 {
 	Sphere* sphere = static_cast<Sphere*>(other);
-	nullptr;
 	if (sphere == nullptr)
 	{
 		AABB* aabb = static_cast<AABB*>(other);
@@ -101,7 +100,7 @@ void Plane::CheckCollision(Collider* other)
 			//Checking to see if this plane 'collides" with an aabb
 			if (TestSide(*aabb) == Plane::ePlaneResult::INTERSECTS)
 			{
-				m_owner->OnCollision();
+				other->m_owner->OnCollision();
 			}
 		}
 	}
@@ -110,7 +109,7 @@ void Plane::CheckCollision(Collider* other)
 		//Checking to see if this plane 'collides" with a sphere
 		if (TestSide(*sphere) == Plane::ePlaneResult::INTERSECTS)
 		{
-			m_owner->OnCollision();
+			other->m_owner->OnCollision();
 		}
 	}
 }
