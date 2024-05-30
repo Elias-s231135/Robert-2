@@ -16,11 +16,11 @@ public:
 	
 	Mine::Vector3 GetLocation() const;*/
 
-	Crate();
+	//Crate();
 
 	Crate(Mine::Vector3 pos);
 
-	void OnCollision() override;
+	//void OnCollision() override;
 
 public:
 //	raylib::Texture2D crateReference("res/crateWood.png");

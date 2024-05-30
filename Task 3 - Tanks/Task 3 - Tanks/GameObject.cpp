@@ -252,10 +252,13 @@ void GameObject::OnCollision()
 
 void GameObject::Destroy()
 {
-
+	if (Parent == nullptr)
+	{
+		return;
+	}
 	Parent->Children.erase(std::remove(Parent->Children.begin(), Parent->Children.end(), this), Parent->Children.end());
 	//SetParent(nullptr);
 	Parent = nullptr;
-	//delete this; ----- call deconstructor instead
+	//delete this; //----- call deconstructor instead
 }
 

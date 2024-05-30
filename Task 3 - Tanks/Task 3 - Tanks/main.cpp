@@ -7,7 +7,7 @@
 #include "Bullet.h"         // for Bullet
 #include "Colliders.h"      // for Colliders
 #include "Crate.h"          // for Crate
-#include "Plane.h"          // for Plane
+//#include "Plane.h"          // for Plane
 #include "Border.h"         // for Border
 
 int main() {
@@ -18,9 +18,9 @@ int main() {
     raylib::Color textColor = raylib::Color::LightGray();
     raylib::Window window(screenWidth, screenHeight, "Tank");
     Mine::Vector3 cornerTopLeft (0, 0, 0);
-    Mine::Vector3 cornerTopRight(800, 0, 0);
-    Mine::Vector3 cornerBottomLeft(0, 450, 0);
-    Mine::Vector3 cornerBottomRight(800, 450, 0);
+    Mine::Vector3 cornerTopRight(screenWidth, 0, 0);
+    Mine::Vector3 cornerBottomLeft(0, screenHeight, 0);
+    Mine::Vector3 cornerBottomRight(screenWidth, screenHeight, 0);
     
 
     SetTargetFPS(60);
@@ -28,7 +28,7 @@ int main() {
     raylib::Texture2D tankSprite("res/tankBody_red_outline.png");
     raylib::Texture2D turretSprite("res/tankRed_barrel1_outline.png");
     raylib::Texture2D bulletSprite("res/bulletRed2_outline.png"); // change to a bullet before submitting
-    raylib::Texture2D crateSprite("res/crateWood.png");
+    raylib::Texture2D crateSprite("res/crateMetal.png");
 
     GameObject root;
     GameObject::SetRoot(&root);
@@ -55,8 +55,19 @@ int main() {
     crate.Sprite = &crateSprite;
     crate.SetParent(&root);
 
-    Border border;
-    border.SetParent(&root);
+
+
+    Border borderLeft(cornerTopLeft, cornerBottomLeft);
+    borderLeft.SetParent(&root);
+    
+    Border borderRight(cornerTopRight, cornerBottomRight);
+    borderRight.SetParent(&root);
+    
+    Border borderTop(cornerTopLeft, cornerTopRight);
+    borderTop.SetParent(&root);
+    
+    Border borderBottom(cornerBottomLeft, cornerBottomRight);
+    borderBottom.SetParent(&root);
 
 
 
@@ -74,10 +85,10 @@ int main() {
 
         for (size_t i = 0; i < cols.size(); i++)
         {
-            cols[i];
+
             for (size_t j = 0; j < cols.size(); j++)
             {
-                cols[j];
+
 
                 if (i == j)
                 {

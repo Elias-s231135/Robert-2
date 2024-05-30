@@ -1,10 +1,8 @@
-#include <iostream>
+// #include <iostream>	// Debug
 #include "TurretPlayer.h"
 #include "Bullet.h"
-#include <thread>
 
-using namespace std;
-using namespace std::this_thread;
+// using namespace std;	// Debug
 
 void TurretPlayer::OnUpdate(float deltaTime)
 {

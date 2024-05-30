@@ -2,6 +2,7 @@
 #include "Sphere.h"
 #include "AABB.h"
 #include "Plane.h"
+#include <iostream>	// Debug
 
 //struct Plane;
 
@@ -26,5 +27,6 @@ Bullet::Bullet()
 
 void Bullet::OnCollision()
 {
+	std::cout << "colliding" << std::endl; // Debug
 	this->Destroy();
 }
