@@ -7,7 +7,8 @@ public:
 	DynamicArray(DynamicArray &m_array);
 	~DynamicArray();
 
-
+	DynamicArray Append(int m_new);
+	DynamicArray Unappend();
 
 	//CreateArray(initialSize);
 

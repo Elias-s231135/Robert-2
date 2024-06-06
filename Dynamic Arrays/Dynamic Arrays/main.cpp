@@ -6,9 +6,11 @@ using namespace std;
 int main()
 {
 
-	DynamicArray da;
-	
-	
+	DynamicArray dyAr(5);
+
+	cout << dyAr.data << endl;
+	cout << dyAr.capacity << endl;
+	cout << dyAr.usedCount << endl;
 	
 	
 	

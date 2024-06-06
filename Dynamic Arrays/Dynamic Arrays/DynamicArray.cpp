@@ -35,7 +35,34 @@ DynamicArray::~DynamicArray()
 	delete data;
 }
 
+DynamicArray DynamicArray::Append(int m_new)
+{
+	if (capacity == usedCount)
+	{
+		int* temp = new int[usedCount * 2];
+		for (int i = 0; i < usedCount; i = i + 1)
+		{
+			temp[i] = data[i];
+		}
 
+		delete[] data;
+		data = temp;
+
+		capacity = capacity * 2;
+	}
+
+	data[usedCount] = m_new;
+	usedCount += 1;
+
+	return *this;
+}
+
+DynamicArray DynamicArray::Unappend()
+{
+	usedCount -= 1;
+
+	return *this;
+}
 
 void DynamicArray::operator=(const DynamicArray assign)
 {
