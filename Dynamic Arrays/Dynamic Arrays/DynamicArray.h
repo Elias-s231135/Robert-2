@@ -7,8 +7,13 @@ public:
 	DynamicArray(DynamicArray &m_array);
 	~DynamicArray();
 
+	DynamicArray PrintAll();
+
 	DynamicArray Append(int m_new);
 	DynamicArray Unappend();
+
+	DynamicArray AddToMiddleU(int pos, int value);
+	DynamicArray AddToMiddleO(int pos, int value);
 
 	//CreateArray(initialSize);
 
