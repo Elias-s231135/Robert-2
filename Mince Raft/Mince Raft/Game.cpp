@@ -200,6 +200,8 @@ void Game::Run()
 			}
 		}
 		break;
+	default:
+		cout << "Can't do that." << endl;
 	}
 }
 
