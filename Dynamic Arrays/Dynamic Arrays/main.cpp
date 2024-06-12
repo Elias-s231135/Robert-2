@@ -36,6 +36,14 @@ int main()
 
 	dyAr.DynamicArray::PrintAll();
 
+	dyAr.DynamicArray::AddToMiddleOrdered(3, 1);
+
+	dyAr.DynamicArray::PrintAll();
+
+	dyAr.DynamicArray::AddToMiddleUnordered(4, 9);
+
+	dyAr.DynamicArray::PrintAll();
+
 	/*{
 		cout << data << endl;
 	};*/

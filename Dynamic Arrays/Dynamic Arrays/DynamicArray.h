@@ -12,8 +12,11 @@ public:
 	DynamicArray Append(int m_new);
 	DynamicArray Unappend();
 
-	DynamicArray AddToMiddleU(int pos, int value);
-	DynamicArray AddToMiddleO(int pos, int value);
+	DynamicArray AddToMiddleOrdered(int pos, int value);
+	DynamicArray AddToMiddleUnordered(int pos, int value);
+	
+	DynamicArray RemoveFromMiddleUnordered(int pos);
+	DynamicArray RemoveFromMiddleOrdered(int pos);
 
 	//CreateArray(initialSize);
 

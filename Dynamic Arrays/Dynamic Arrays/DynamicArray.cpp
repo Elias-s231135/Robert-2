@@ -44,7 +44,7 @@ DynamicArray DynamicArray::PrintAll()
 		/*std::cout << "UsedCount: " << usedCount << std::endl;
 		std::cout << "capacity: " << capacity << std::endl;*/
 	}
-	std::cout << capacity << std::endl;
+	std::cout << "\ncapacity is " << capacity << std::endl;
 	return usedCount;
 }
 
@@ -77,20 +77,96 @@ DynamicArray DynamicArray::Unappend()
 	return *this;
 }
 
-DynamicArray DynamicArray::AddToMiddleU(int pos, int value)
+DynamicArray DynamicArray::AddToMiddleOrdered(int pos, int value)
+{
+	// everything after pos moves 1+
+	if (capacity == usedCount)
+	{
+		int* temp = new int[capacity * 2];
+		for (int i = 0; i < usedCount; i++)
+		{
+			temp[i] = data[i];
+		}
+		delete[] data;
+		data = temp;
+
+		capacity = capacity * 2;
+	}
+
+	/*for (int j = pos; j < usedCount; j++)
+	{
+		temp[j] = data[j + 1];
+	}*/
+
+	//int* tempArray = new int[usedCount + 1];
+	for (int j = usedCount; j >= pos; j--)
+	{
+		//tempArray[j] = data[j + 1];
+		data[j + 1] = data[j];
+	}
+
+	usedCount += 1;
+
+	data[pos] = value;
+
+	return *this;
+}
+
+DynamicArray DynamicArray::AddToMiddleUnordered(int pos, int value)
 {
 	// pos moves to end
 
+	if (capacity == usedCount)
+	{
+		int* temp = new int[usedCount * 2];
+		for (int i = 0; i < usedCount; i = i + 1)
+		{
+			temp[i] = data[i];
+		}
+		delete[] data;
+		data = temp;
 
+		capacity = capacity * 2;
+	}
 
-	return;
+	//this[pos] = this[usedCount + 1];
+
+	this->data[usedCount] = this->data[pos];
+
+	data[pos] = value;
+
+	usedCount += 1;
+	/*this->data[pos] = value;*/
+
+	return *this;
 }
 
-DynamicArray DynamicArray::AddToMiddleO(int pos, int value)
+DynamicArray DynamicArray::RemoveFromMiddleUnordered(int pos)
 {
-	// everything after pos moves 1+
 
-	return;
+	
+	for (int i = 0; i < usedCount; i = i + 1)
+	{
+		temp[i] = data[i];
+	}
+	delete[] data;
+	data = temp;
+
+	capacity = capacity * 2;
+
+
+	this->data[usedCount] = this->data[pos];
+
+	data[pos] = value;
+
+	usedCount -= 1;
+
+	return *this;
+}
+
+DynamicArray DynamicArray::RemoveFromMiddleOrdered(int pos)
+{
+	return *this;
 }
 
 void DynamicArray::operator=(const DynamicArray assign)
