@@ -18,6 +18,11 @@ public:
 	DynamicArray RemoveFromMiddleUnordered(int pos);
 	DynamicArray RemoveFromMiddleOrdered(int pos);
 
+	DynamicArray AddCapacity(int add);
+	DynamicArray RemoveCapacity(int remove);
+
+	DynamicArray Clear();
+
 	//CreateArray(initialSize);
 
 public: //variables

@@ -6,7 +6,7 @@ using namespace std;
 int main()
 {
 
-	/*DynamicArray dyAr[5] = {4, 5, 2, 7, 1};*/
+	/*DynamicArray dyAr[5] = {8, 5, 7, 2, 4};*/
 
 	DynamicArray dyAr(5);
 
@@ -41,6 +41,26 @@ int main()
 	dyAr.DynamicArray::PrintAll();
 
 	dyAr.DynamicArray::AddToMiddleUnordered(4, 9);
+
+	dyAr.DynamicArray::PrintAll();
+
+	dyAr.DynamicArray::RemoveFromMiddleUnordered(5);
+
+	dyAr.DynamicArray::PrintAll();
+
+	dyAr.DynamicArray::RemoveFromMiddleOrdered(2);
+
+	dyAr.DynamicArray::PrintAll();
+
+	dyAr.DynamicArray::AddCapacity(5);
+
+	dyAr.DynamicArray::PrintAll();
+
+	dyAr.DynamicArray::RemoveCapacity(10);
+
+	dyAr.DynamicArray::PrintAll();
+
+	dyAr.DynamicArray::Clear();
 
 	dyAr.DynamicArray::PrintAll();
 

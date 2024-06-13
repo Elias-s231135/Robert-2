@@ -45,6 +45,7 @@ DynamicArray DynamicArray::PrintAll()
 		std::cout << "capacity: " << capacity << std::endl;*/
 	}
 	std::cout << "\ncapacity is " << capacity << std::endl;
+	std::cout << "usedCount is " << usedCount << std::endl;
 	return usedCount;
 }
 
@@ -143,29 +144,53 @@ DynamicArray DynamicArray::AddToMiddleUnordered(int pos, int value)
 
 DynamicArray DynamicArray::RemoveFromMiddleUnordered(int pos)
 {
+	data[pos] = data[usedCount - 1];
 
+	usedCount -= 1;
 	
-	for (int i = 0; i < usedCount; i = i + 1)
+	return *this;
+}
+
+DynamicArray DynamicArray::RemoveFromMiddleOrdered(int pos)
+{
+	for (int i = pos; i <= usedCount; i++)
 	{
-		temp[i] = data[i];
+		data[i] = data[i + 1];
 	}
-	delete[] data;
-	data = temp;
 
-	capacity = capacity * 2;
-
-
-	this->data[usedCount] = this->data[pos];
-
-	data[pos] = value;
+	//data[pos] = data[pos + 1];
 
 	usedCount -= 1;
 
 	return *this;
 }
 
-DynamicArray DynamicArray::RemoveFromMiddleOrdered(int pos)
+DynamicArray DynamicArray::AddCapacity(int add)
 {
+	capacity += add;
+
+	return *this;
+}
+
+DynamicArray DynamicArray::RemoveCapacity(int remove)
+{
+	capacity -= remove;
+
+	if (capacity < usedCount)
+	{
+		for (int i = usedCount; i > capacity; i--)
+		{
+			usedCount -= 1;
+		}
+	}
+
+	return *this;
+}
+
+DynamicArray DynamicArray::Clear()
+{
+	usedCount = 0;
+
 	return *this;
 }
 
