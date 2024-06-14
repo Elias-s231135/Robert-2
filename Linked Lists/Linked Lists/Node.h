@@ -1,8 +1,6 @@
 #pragma once
 
-#include "DoubleLinkedList.h"
-
-class Node : public DoubleLinkedList
+class Node
 {
 public:		// Variables
 
