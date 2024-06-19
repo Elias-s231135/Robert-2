@@ -17,6 +17,8 @@ int main()
 
 	doubleLL.DoubleLinkedList::PushBack(8);
 
+	doubleLL.DoubleLinkedList::Insert(doubleLL.head, 15);
+
 	doubleLL.DoubleLinkedList::PrintAllData();
 
 	std::cout << "first value is: " << doubleLL.DoubleLinkedList::First() << std::endl;
@@ -30,7 +32,7 @@ int main()
 	doubleLL.DoubleLinkedList::PopBack();
 
 	doubleLL.DoubleLinkedList::PopFront();
-
+		
 	doubleLL.DoubleLinkedList::PrintAllData();
 
 	std::cout << "current head is: " << doubleLL.head->data << std::endl;
@@ -45,5 +47,5 @@ int main()
 
 	doubleLL.DoubleLinkedList::PrintAllData();
 
-	std::cout << "IsEmpty? (1 true, 0 false) \n" << doubleLL.DoubleLinkedList::Empty() << std::endl;
+	std::cout << "IsEmpty? (1 true, 0 false) \n" << doubleLL.Empty() << std::endl;
 }

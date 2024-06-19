@@ -4,12 +4,23 @@
 
 class DoubleLinkedList
 {
+public:												// Linked List Variables
+
+	Node* head;
+	Node* tail;
 public:
 	class LinkListIterator
 	{
-	private:
+		friend class DoubleLinkedList;
+
+	private:							// iterator variables
 		Node* currentNode;
-	public:
+	public:								// iterator functions
+		LinkListIterator(Node* node)
+		{
+			currentNode = node;
+		};
+		
 		int Current()
 		{
 			return currentNode->data;
@@ -17,34 +28,42 @@ public:
 
 		bool MoveNext()
 		{
-			if ()
+			if (currentNode->next != nullptr)
 			{
-				return true
+				currentNode = currentNode->next;
+				return true;
 			}
-			return false;
+			else
+			{
+				return false;
+			}
 		}
 
 		bool MovePrev()
 		{
-			return false;
+			if (currentNode->previous != nullptr)
+			{
+				currentNode = currentNode->previous;
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 		}
 
 		void operator++()
 		{
 			//logical step forward in the data container
+			MoveNext();
 		}
 
 		void operator--()
 		{
 			//logical step backwards in the data container
+			MovePrev();
 		}
 	};
-
-public:												// Variables
-
-	Node* head;
-	Node* tail;
-
 public:												// (De)Constructors
 	
 	DoubleLinkedList();
@@ -56,10 +75,10 @@ public:												// Functions
 	DoubleLinkedList PushFront(int frontValue);		// Add a new value to the front of the list
 	DoubleLinkedList PushBack(int backValue);		// Add a new value to the end of the list
 	
-	DoubleLinkedList Insert(iterator, int value);	// Add a new value one-past the specified iterator location
+	DoubleLinkedList Insert(LinkListIterator prev, int value);	// Add a new value one-past the specified iterator location
 	
-//	DoubleLinkedList Begin();						// return an iterator to the first element
-//	DoubleLinkedList End();							// return an iterator to a null element
+	DoubleLinkedList Begin();						// return an iterator to the first element
+	DoubleLinkedList End();							// return an iterator to a null element
 
 	int First();									// return the first element by value, assert if no elements
 	int Last();										// return the last element by value, assert if no elements

@@ -74,10 +74,29 @@ DoubleLinkedList DoubleLinkedList::PushBack(int backValue)
     return *this;
 }
 
-DoubleLinkedList DoubleLinkedList::Insert(iterator, int value)
+DoubleLinkedList DoubleLinkedList::Insert(LinkListIterator spec, int value)
+{
+    Node* temp = new Node();
+    temp->data = value;
+
+    temp->next = spec.currentNode->next;
+
+    spec.currentNode->next->previous = temp;
+    spec.currentNode->next = temp;
+    
+    temp->previous = spec.currentNode;
+
+    return *this;
+}
+
+DoubleLinkedList DoubleLinkedList::Begin()
 {
 
+    return *this;
+}
 
+DoubleLinkedList DoubleLinkedList::End()
+{
     return *this;
 }
 
