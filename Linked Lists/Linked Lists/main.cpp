@@ -7,38 +7,46 @@ int main()
 {
 	DoubleLinkedList doubleLL;
 
-	doubleLL.DoubleLinkedList::PushFront(7);
+	doubleLL.PushFront(7);
 
-	doubleLL.DoubleLinkedList::PushFront(4);
+	doubleLL.PushFront(4);
 
-	doubleLL.DoubleLinkedList::PushFront(9);
+	doubleLL.PushFront(9);
 
-	doubleLL.DoubleLinkedList::PushBack(2);
+	doubleLL.PushFront(6);
 
-	doubleLL.DoubleLinkedList::PushBack(8);
+	doubleLL.PushBack(2);
 
-	doubleLL.DoubleLinkedList::Insert(doubleLL.head, 15);
+	doubleLL.PushBack(8);
 
-	doubleLL.DoubleLinkedList::PrintAllData();
+	doubleLL.Insert(doubleLL.head, 15);
 
-	std::cout << "first value is: " << doubleLL.DoubleLinkedList::First() << std::endl;
+	doubleLL.Erase(doubleLL.head);
 
-	std::cout << "last value is: " << doubleLL.DoubleLinkedList::Last() << std::endl;
+	doubleLL.PrintAllData();
 
-	std::cout << "count is: " << doubleLL.DoubleLinkedList::Count() << std::endl;
+	std::cout << "beginning is: " << doubleLL.Begin().Current() << std::endl;
 
-	doubleLL.DoubleLinkedList::Remove(4);
+	std::cout << "ending is: nullptr" << std::endl;
+	
+	std::cout << "first value is: " << doubleLL.First() << std::endl;
 
-	doubleLL.DoubleLinkedList::PopBack();
+	std::cout << "last value is: " << doubleLL.Last() << std::endl;
 
-	doubleLL.DoubleLinkedList::PopFront();
+	std::cout << "count is: " << doubleLL.Count() << std::endl;
+
+	doubleLL.Remove(4);
+
+	doubleLL.PopBack();
+
+	doubleLL.PopFront();
 		
-	doubleLL.DoubleLinkedList::PrintAllData();
+	doubleLL.PrintAllData();
 
 	std::cout << "current head is: " << doubleLL.head->data << std::endl;
 	std::cout << "current tail is: " << doubleLL.tail->data << std::endl;
 
-	doubleLL.DoubleLinkedList::Clear();
+	doubleLL.Clear();
 
 	//doubleLL.DoubleLinkedList::PushFront(1);
 

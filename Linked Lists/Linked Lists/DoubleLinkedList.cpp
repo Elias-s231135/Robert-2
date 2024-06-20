@@ -74,7 +74,7 @@ DoubleLinkedList DoubleLinkedList::PushBack(int backValue)
     return *this;
 }
 
-DoubleLinkedList DoubleLinkedList::Insert(LinkListIterator spec, int value)
+DoubleLinkedList DoubleLinkedList::Insert(DoubleLinkedList::LinkedListIterator spec, int value)
 {
     Node* temp = new Node();
     temp->data = value;
@@ -89,18 +89,25 @@ DoubleLinkedList DoubleLinkedList::Insert(LinkListIterator spec, int value)
     return *this;
 }
 
-DoubleLinkedList DoubleLinkedList::Begin()
+DoubleLinkedList::LinkedListIterator DoubleLinkedList::Begin()
 {
+    Node* temp = new Node();
+    LinkedListIterator* te = new LinkedListIterator(temp);
 
-    return *this;
+    te->currentNode = head;
+    return *te;
 }
 
-DoubleLinkedList DoubleLinkedList::End()
+DoubleLinkedList::LinkedListIterator DoubleLinkedList::End()
 {
-    return *this;
+    Node* temp = new Node();
+    LinkedListIterator* te = new LinkedListIterator(temp);
+
+    te->currentNode = tail->next;
+    return *te;
 }
 
-int DoubleLinkedList::First()
+int DoubleLinkedList::First() const
 {
     if (head != nullptr)
     {
@@ -108,7 +115,7 @@ int DoubleLinkedList::First()
     }
 }
 
-int DoubleLinkedList::Last()
+int DoubleLinkedList::Last() const
 {
     if (tail != nullptr)
     {
@@ -116,7 +123,7 @@ int DoubleLinkedList::Last()
     }
 }
 
-int DoubleLinkedList::Count()
+int DoubleLinkedList::Count() const
 {
     Node* current = head;
 
@@ -129,6 +136,33 @@ int DoubleLinkedList::Count()
     }
 
     return count;
+}
+
+DoubleLinkedList DoubleLinkedList::Erase(LinkedListIterator erasor)
+{
+    erasor.currentNode;
+
+    if (head == erasor.currentNode)
+    {
+        head = erasor.currentNode->next;
+        erasor.currentNode->next->previous = nullptr;
+    }
+    else
+    {
+        erasor.currentNode->previous->next = erasor.currentNode->next;
+    }
+
+    if (tail == erasor.currentNode)
+    { 
+        tail = erasor.currentNode->previous;
+        erasor.currentNode->previous->next = nullptr;
+    }
+    else
+    {
+        erasor.currentNode->next->previous = erasor.currentNode->previous;
+    }
+
+    return *this;
 }
 
 DoubleLinkedList DoubleLinkedList::Remove(int matchingValue)
@@ -173,7 +207,7 @@ DoubleLinkedList DoubleLinkedList::PopFront()
     return *this;
 }
 
-bool DoubleLinkedList::Empty()
+bool DoubleLinkedList::Empty() const
 {
     if (head == nullptr && tail == nullptr)
     {
