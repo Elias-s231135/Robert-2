@@ -10,17 +10,20 @@ public:
 
 	~HashTable();
 
+	void PrintAll();
+
 	int& operator [] (const std::string& str);
 
 	const int& operator [] (const std::string str) const;
 
-	int AddTo(std::string key, int value);
+	void AddTo(std::string key, int value);
+
+	//void;
 
 private:
-	static unsigned int Hash(const std::string& str);
+	unsigned int Hash(const std::string& str) const;
 
 	int* m_data;
 
 	unsigned int m_size;
 };
-
