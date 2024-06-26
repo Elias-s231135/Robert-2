@@ -15,4 +15,12 @@ int main()
 	std::cout << ha.operator[]("seven") << std::endl;
 
 	ha.PrintAll();
+
+	ha.Remove("seven");
+
+	ha.PrintAll();
+
+	ha.Clear();
+
+	std::cout << "Clear works" << std::endl;
 }

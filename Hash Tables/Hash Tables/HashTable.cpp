@@ -49,6 +49,7 @@ void HashTable::Clear()
 {
 	delete[] m_data;
 	std::cout << "hash table must be reinitialised" << std::endl;
+	m_data = 0;
 }
 
 //int HashTable::Access(std::string key)

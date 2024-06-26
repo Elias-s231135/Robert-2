@@ -28,7 +28,6 @@ public:
 
 private:
 	unsigned int Hash(const std::string& str) const;
-
 	int* m_data;
 
 	unsigned int m_size;
