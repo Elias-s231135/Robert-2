@@ -18,6 +18,12 @@ public:
 
 	void AddTo(std::string key, int value);
 
+	void Remove(std::string key);
+
+	void Clear();
+
+	//int Access(std::string key);
+
 	//void;
 
 private:

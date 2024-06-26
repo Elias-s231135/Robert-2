@@ -39,6 +39,23 @@ void HashTable::AddTo(std::string key, int value)
 	m_data[hashedKey] = value;
 }
 
+void HashTable::Remove(std::string key)
+{
+	auto hashedKey = Hash(key) % m_size;
+	m_data[hashedKey] = 0;
+}
+
+void HashTable::Clear()
+{
+	delete[] m_data;
+	std::cout << "hash table must be reinitialised" << std::endl;
+}
+
+//int HashTable::Access(std::string key)
+//{	
+//	return m_data[0//key];
+//}
+
 unsigned int HashTable::Hash(const std::string& str) const
 {
 	unsigned int hash = 0;
