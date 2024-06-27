@@ -46,6 +46,7 @@ int main(int argc, char* argv[])
     const int CRITTER_COUNT = 50;
     const int MAX_VELOCITY = 80;
 
+    // for loop that creates small critters
     for (int i = 0; i < CRITTER_COUNT; i++)
     {
         // create a random direction vector for the velocity
