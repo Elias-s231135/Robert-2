@@ -25,10 +25,10 @@ int main() {
 
     SetTargetFPS(60);
 
-    raylib::Texture2D tankSprite("res/tankBody_red_outline.png");
-    raylib::Texture2D turretSprite("res/tankRed_barrel1_outline.png");
-    raylib::Texture2D bulletSprite("res/bulletRed2_outline.png"); // change to a bullet before submitting
-    raylib::Texture2D crateSprite("res/crateMetal.png");
+    raylib::Texture2D tankSprite("res/aie.png");
+    raylib::Texture2D turretSprite("res/aie.png");
+    raylib::Texture2D bulletSprite("res/aie.png"); // change to a bullet before submitting
+    raylib::Texture2D crateSprite("res/aie.png");
 
     GameObject root;
     GameObject::SetRoot(&root);

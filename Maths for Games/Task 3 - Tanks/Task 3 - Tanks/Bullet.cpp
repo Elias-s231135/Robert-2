@@ -8,7 +8,7 @@
 
 void Bullet::OnUpdate(float deltaTime)
 {
-	const float SHOOTSPEED = 500.0f;
+	const float SHOOTSPEED = 5000.0f;
 		
 	Mine::Vector3 finalShoot = GetForward() * (SHOOTSPEED * deltaTime);
 
