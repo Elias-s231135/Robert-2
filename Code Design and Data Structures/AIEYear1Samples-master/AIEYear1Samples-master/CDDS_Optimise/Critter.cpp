@@ -32,7 +32,7 @@ void Critter::Init(Vector2 position, Vector2 velocity, float radius, const char*
 void Critter::Destroy()
 {
 	// Destroys Critter
-	UnloadTexture(m_texture);
+	//UnloadTexture(m_texture);
 	m_isLoaded = false;
 }
 

@@ -10,7 +10,7 @@ void TurretPlayer::OnUpdate(float deltaTime)
 
 	float degRotation = (GetWorldRotation() / PI * 180);
 
-		if (IsKeyDown(KeyboardKey::KEY_SPACE))
+		if (IsKeyPressed(KeyboardKey::KEY_SPACE))
 		{
 			Bullet* bullet = new Bullet();	//change to be heap allocated (new Keyword)	// No longer necessary
 			bullet->Sprite = bulletTexture;

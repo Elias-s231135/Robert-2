@@ -24,6 +24,7 @@
 #include <random>
 #include <time.h>
 #include "Critter.h"
+#include "ObjectPool.h"
 
 int main(int argc, char* argv[])
 {
@@ -37,14 +38,20 @@ int main(int argc, char* argv[])
     //SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
 
+    //Texture2D bigS("res/9.png");
+    //Texture2D smallS("res/10.png");
+
     srand(time(NULL));
 
     // array for small critters
     Critter critters[1000]; 
+    //critters[1000].m_texture = smallS;
 
     // create some critters
-    const int CRITTER_COUNT = 50;
+    const int CRITTER_COUNT = 500;
     const int MAX_VELOCITY = 80;
+
+    ObjectPool critterPool(CRITTER_COUNT);
 
     // for loop that creates small critters
     for (int i = 0; i < CRITTER_COUNT; i++)
@@ -59,6 +66,8 @@ int main(int argc, char* argv[])
             { (float)(5+rand() % (screenWidth-10)), (float)(5+(rand() % screenHeight-10)) },
             velocity,
             12, "res/10.png");
+       
+            /*LoadTexture("res/10.png")*/;
     }
 
     // big critter
@@ -82,6 +91,12 @@ int main(int argc, char* argv[])
 
         // update the destroyer
         destroyer.Update(delta);
+
+        /*for (int i = 0; i < CRITTER_COUNT; i++)
+        {
+            LoadTexture("res/10.png");
+        };*/
+
         // check each critter against screen bounds
         if (destroyer.GetX() < 0) {
             destroyer.SetX(0);
@@ -131,6 +146,7 @@ int main(int argc, char* argv[])
             {
                 critters[i].Destroy();
                 // this would be the perfect time to put the critter into an object pool
+                critterPool.Deallocate(critters[i], 1);
             }
         }
                 
@@ -174,6 +190,8 @@ int main(int argc, char* argv[])
             {
                 if (critters[i].IsDead())
                 {
+                    critterPool.Allocate(critters[i], 1);
+
                     Vector2 normal = Vector2Normalize(destroyer.GetVelocity());
 
                     // get a position behind the destroyer, and far enough away that the critter won't bump into it again
