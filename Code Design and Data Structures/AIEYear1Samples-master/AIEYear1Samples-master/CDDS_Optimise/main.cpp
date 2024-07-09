@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
     Critter critters[1000]; 
 
     // create some critters
-    const int CRITTER_COUNT = 500;
+    const int CRITTER_COUNT = 50;
     const int MAX_VELOCITY = 80;
 
     // for loop that creates small critters
