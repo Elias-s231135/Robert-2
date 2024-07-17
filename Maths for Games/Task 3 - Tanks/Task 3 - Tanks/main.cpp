@@ -27,7 +27,7 @@ int main() {
 
     raylib::Texture2D tankSprite("res/tankBody_red_outline.png");
     raylib::Texture2D turretSprite("res/tankRed_barrel1_outline.png");
-    raylib::Texture2D bulletSprite("res/bulletRed2_outline.png"); // change to a bullet before submitting
+    raylib::Texture2D bulletSprite("res/bulletRed2_outline.png"); 
     raylib::Texture2D crateSprite("res/crateMetal.png");
 
     GameObject root;

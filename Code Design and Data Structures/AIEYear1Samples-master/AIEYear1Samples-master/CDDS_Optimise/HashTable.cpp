@@ -1,7 +1,7 @@
 #include "HashTable.h"
 #include <iostream>
 
-HashTable::HashTable(unsigned int size) : m_size(size), m_data(new int[size])
+HashTable::HashTable(unsigned int size) : m_size(size), m_data(new Texture2D[size])
 {
 }
 
@@ -10,40 +10,40 @@ HashTable::~HashTable()
 	delete[] m_data;
 }
 
-void HashTable::PrintAll()
-{
-	for (int i = 0; i < m_size; i++)
-	{
-		std::cout << m_data[i] << ", ";
-	}
-	std::cout << "\n" << std::endl;
+//void HashTable::PrintAll()
+//{
+//	for (int i = 0; i < m_size; i++)
+//	{
+//		std::cout << m_data[i] << ", ";
+//	}
+//	std::cout << "\n" << std::endl;
+//
+//	//return *this;
+//}
 
-	//return *this;
-}
-
-int& HashTable::operator[](const std::string& str)
-{
-	auto hashedKey = Hash(str) % m_size;
-	return m_data[hashedKey];
-}
-
-const int& HashTable::operator[](const std::string str) const
+Texture2D& HashTable::operator[](const std::string& str)
 {
 	auto hashedKey = Hash(str) % m_size;
 	return m_data[hashedKey];
 }
 
-void HashTable::AddTo(std::string key, int value)
+const Texture2D& HashTable::operator[](const std::string str) const
+{
+	auto hashedKey = Hash(str) % m_size;
+	return m_data[hashedKey];
+}
+
+void HashTable::AddTo(std::string key, Texture2D value)
 {
 	auto hashedKey = Hash(key) % m_size;
 	m_data[hashedKey] = value;
 }
 
-void HashTable::Remove(std::string key)
-{
-	auto hashedKey = Hash(key) % m_size;
-	m_data[hashedKey] = 0;
-}
+//void HashTable::Remove(std::string key)
+//{
+//	auto hashedKey = Hash(key) % m_size;
+//	m_data[hashedKey] = 0;
+//}
 
 void HashTable::Clear()
 {

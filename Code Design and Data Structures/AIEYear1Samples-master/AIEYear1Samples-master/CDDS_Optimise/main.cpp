@@ -25,6 +25,7 @@
 #include <time.h>
 #include "Critter.h"
 #include "ObjectPool.h"
+#include "HashTable.h"
 
 int main(int argc, char* argv[])
 {
@@ -43,12 +44,20 @@ int main(int argc, char* argv[])
 
     srand(time(NULL));
 
+    HashTable textures(2);
+
     // array for small critters
-    Critter critters[1000]; 
-    //critters[1000].m_texture = smallS;
+    Critter critters[1000];
+   
+    Texture2D critterSprite = LoadTexture("res/10.png");
+    Texture2D destroyerSprite = LoadTexture("res/9.png");
+
+    HashTable critterTextures(20);
+    critterTextures.AddTo("critterS", critterSprite);
+    critterTextures.AddTo("destroyerS", destroyerSprite);
 
     // create some critters
-    const int CRITTER_COUNT = 500;
+    const int CRITTER_COUNT = 50;
     const int MAX_VELOCITY = 80;
 
     ObjectPool critterPool(CRITTER_COUNT);
@@ -65,7 +74,7 @@ int main(int argc, char* argv[])
         critters[i].Init(
             { (float)(5+rand() % (screenWidth-10)), (float)(5+(rand() % screenHeight-10)) },
             velocity,
-            12, "res/10.png");
+            12, critterTextures["critterS"]);
        
             /*LoadTexture("res/10.png")*/;
     }
@@ -74,7 +83,7 @@ int main(int argc, char* argv[])
     Critter destroyer;
     Vector2 velocity = { -100 + (rand() % 200), -100 + (rand() % 200) };
     velocity = Vector2Scale(Vector2Normalize(velocity), MAX_VELOCITY);
-    destroyer.Init(Vector2{ (float)(screenWidth >> 1), (float)(screenHeight >> 1) }, velocity, 20, "res/9.png");
+    destroyer.Init(Vector2{ (float)(screenWidth >> 1), (float)(screenHeight >> 1) }, velocity, 20, critterTextures["destroyerS"]);
 
     float timer = 1;
     Vector2 nextSpawnPos = destroyer.GetPosition();
@@ -198,7 +207,7 @@ int main(int argc, char* argv[])
                     Vector2 pos = destroyer.GetPosition();
                     pos = Vector2Add(pos, Vector2Scale(normal, -50));
                     // its pretty ineficient to keep reloading textures. ...if only there was something else we could do
-                    critters[i].Init(pos, Vector2Scale(normal, -MAX_VELOCITY), 12, "res/10.png");
+                    critters[i].Init(pos, Vector2Scale(normal, -MAX_VELOCITY), 12, critterTextures["critterS"]);
                     break;
                 }
             }

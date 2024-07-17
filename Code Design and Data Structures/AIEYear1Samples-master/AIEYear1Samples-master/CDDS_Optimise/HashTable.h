@@ -1,5 +1,6 @@
 #pragma once
 
+#include "raylib.h"
 #include <string>
 
 class HashTable
@@ -10,13 +11,13 @@ public:
 
 	~HashTable();
 
-	void PrintAll();
+	//void PrintAll();
 
-	int& operator [] (const std::string& str);
+	Texture2D& operator [] (const std::string& str);
 
-	const int& operator [] (const std::string str) const;
+	const Texture2D& operator [] (const std::string str) const;
 
-	void AddTo(std::string key, int value);
+	void AddTo(std::string key, Texture2D value);
 
 	void Remove(std::string key);
 
@@ -28,7 +29,7 @@ public:
 
 private:
 	unsigned int Hash(const std::string& str) const;
-	int* m_data;
+	Texture2D* m_data;
 
 	unsigned int m_size;
 };
