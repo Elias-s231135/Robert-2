@@ -58,10 +58,11 @@ int main(int argc, char* argv[])
 
     // create some critters
     const int CRITTER_COUNT = 50;
-    const int MAX_VELOCITY = 80;
+    const int MAX_VELOCITY = 800;
 
     ObjectPool critterPool(CRITTER_COUNT);
 
+    //
     // for loop that creates small critters
     for (int i = 0; i < CRITTER_COUNT; i++)
     {
@@ -78,6 +79,7 @@ int main(int argc, char* argv[])
        
             /*LoadTexture("res/10.png")*/;
     }
+    //
 
     // big critter
     Critter destroyer;
@@ -148,6 +150,7 @@ int main(int argc, char* argv[])
                 critters[i].SetVelocity(Vector2{ critters[i].GetVelocity().x, -critters[i].GetVelocity().y });
             }
 
+        //
             // kill any critter touching the destroyer
             // simple circle-to-circle collision check
             float dist = Vector2Distance(critters[i].GetPosition(), destroyer.GetPosition());
@@ -158,7 +161,8 @@ int main(int argc, char* argv[])
                 critterPool.Deallocate(critters[i], 1);
             }
         }
-                
+        //       
+
         // check for critter-on-critter collisions
         for (int i = 0; i < CRITTER_COUNT; i++)
         {            

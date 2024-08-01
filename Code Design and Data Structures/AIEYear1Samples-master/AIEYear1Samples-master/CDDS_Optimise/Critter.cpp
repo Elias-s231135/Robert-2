@@ -17,6 +17,8 @@ Critter::~Critter()
 	m_isLoaded = false;
 }
 
+
+//
 void Critter::Init(Vector2 position, Vector2 velocity, float radius, Texture2D texture)
 {
 	// Constructor that takes in values + texture
@@ -35,6 +37,7 @@ void Critter::Destroy()
 	//UnloadTexture(m_texture);
 	m_isLoaded = false;
 }
+//
 
 void Critter::Update(float dt)
 {
