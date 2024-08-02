@@ -10,9 +10,21 @@ public:
 	
 	~ObjectPool();
 
+	void Allocate(Critter add);
+
 	void Allocate(Critter add, int pos);
 
+	void Deallocate(Critter sub);
+
+	void Deallocate(int pos);
+
 	void Deallocate(Critter sub, int pos);
+
+	int CurrentUsed() { return m_used; }
+
+	Critter* GetAlive() { return m_data; }
+
+	int CurrentSize() { return m_size; }
 
 private:
 
