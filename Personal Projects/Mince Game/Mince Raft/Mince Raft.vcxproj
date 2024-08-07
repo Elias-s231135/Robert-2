@@ -130,9 +130,11 @@
     <ClInclude Include="CrabThatEatsMince.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="LeftHandedMince.h" />
     <ClInclude Include="LeftHandedShopOwner.h" />
+    <ClInclude Include="Matrix3.h" />
     <ClInclude Include="MincedMan.h" />
     <ClInclude Include="MinceMeister.h" />
     <ClInclude Include="Player.h" />
@@ -144,11 +146,13 @@
     <ClInclude Include="StickyMince.h" />
     <ClInclude Include="StringTester.h" />
     <ClInclude Include="SturdyMince.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CrabThatEatsMince.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LeftHandedMince.cpp" />
     <ClCompile Include="LeftHandedShopOwner.cpp" />
@@ -165,7 +169,17 @@
     <ClCompile Include="string.cpp" />
     <ClCompile Include="SturdyMince.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\raylib.5.0.0\build\native\raylib.targets" Condition="Exists('..\packages\raylib.5.0.0\build\native\raylib.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\raylib.5.0.0\build\native\raylib.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\raylib.5.0.0\build\native\raylib.targets'))" />
+  </Target>
 </Project>
