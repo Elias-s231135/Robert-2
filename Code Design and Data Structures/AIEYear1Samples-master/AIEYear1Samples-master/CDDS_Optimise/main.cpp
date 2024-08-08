@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     // array for small critters
     //Critter critters[1000];
    
-    Texture2D critterSprite = LoadTexture("res/10.png");
+    Texture2D critterSprite = LoadTexture("res/Beef_Mince.png");
     Texture2D destroyerSprite = LoadTexture("res/9.png");
 
     HashTable critterTextures(20);

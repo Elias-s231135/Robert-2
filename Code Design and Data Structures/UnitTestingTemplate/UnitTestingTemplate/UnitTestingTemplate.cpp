@@ -1,6 +1,7 @@
 #include "CppUnitTest.h"
-
-
+#include "Critter.h"
+#include "HashTable.h"
+#include "ObjectPool.h"
 
 /*
 Template Document For Building your CDDS Assessment Task 2 Unit Tests
@@ -40,7 +41,7 @@ namespace UnitTestingTemplate
 			Assert::AreEqual(1, 1);
 		}
 
-		//Replace "TestMethod1" with a new name outlining what you are testing
+		//Replace "TestMethod2" with a new name outlining what you are testing
 		TEST_METHOD(TestMethod2)
 		{
 
@@ -48,7 +49,7 @@ namespace UnitTestingTemplate
 			Assert::AreEqual(1, 1);
 		}
 
-		//Replace "TestMethod1" with a new name outlining what you are testing
+		//Replace "TestMethod3" with a new name outlining what you are testing
 		TEST_METHOD(TestMethod3)
 		{
 
