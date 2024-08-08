@@ -16,7 +16,8 @@
 #include "MincedMan.h"
 #include "MinceMeister.h"
 #include "RightHandedShopOwner.h"
-#include "raylib.h"
+#include "raylib-cpp.hpp"
+//#include "raylib"
 
 int main()
 {
@@ -24,7 +25,7 @@ int main()
 	int screenWidth = 800;
 	int screenHeight = 450;
 	raylib::Color textColor = raylib::Color::LightGray();
-	raylib::Window window(screenWidth, screenHeight, "Tank");
+	raylib::Window window(screenWidth, screenHeight, "Mince Game");
 
 	SetTargetFPS(60);
 
@@ -42,7 +43,7 @@ int main()
 
 	while (!WindowShouldClose())
 	{
-		float deltaTime = window.GetFramTime();
+		float deltaTime = window.GetFrameTime();
 		//Update(deltaTime);
 
 		BeginDrawing();
