@@ -23,12 +23,15 @@ public:
 
 	void Clear();
 
+
+
 	//int Access(std::string key);
 
 	//void;
 
 private:
 	unsigned int Hash(const std::string& str) const;
+	
 	Texture2D* m_data;
 
 	unsigned int m_size;
