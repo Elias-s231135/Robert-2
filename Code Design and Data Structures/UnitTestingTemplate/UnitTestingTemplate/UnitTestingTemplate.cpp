@@ -27,6 +27,90 @@ Testing your own data structures / classes:
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+static bool operator==(Texture2D lhs, Texture2D rhs)
+{
+	if (lhs.format == rhs.format)
+	{
+		if (lhs.height == rhs.height)
+		{
+			if (lhs.id == rhs.id)
+			{
+				if (lhs.mipmaps == rhs.mipmaps)
+				{
+					if (lhs.width == rhs.width)
+					{
+						return true;
+					}
+				}
+			}
+		}
+	}
+	
+	return false;
+	
+
+	//return true;
+}
+
+static bool operator==(Vector2 lhs, Vector2 rhs)
+{
+	if (lhs.x == rhs.x)
+	{
+		if (lhs.y == rhs.y)
+		{
+			return true;
+		}
+	}
+
+	
+	return false;
+	
+}
+
+static bool operator==(Critter lhs, Critter rhs)
+{
+	if (lhs.GetPosition() == rhs.GetPosition())
+	{
+		if (lhs.GetRadius() == rhs.GetRadius())
+		{
+			if (lhs.GetVelocity() == rhs.GetVelocity())
+			{
+				if (lhs.IsDead() == rhs.IsDead())
+				{
+					if (lhs.IsDirty() == rhs.IsDirty())
+					{
+						return true;
+					}
+				}
+			}
+		}
+	}
+	
+	
+	return false;
+	
+}
+
+
+namespace Microsoft
+{
+	namespace VisualStudio
+	{
+		namespace CppUnitTestFramework
+		{
+			template<> static std::wstring ToString<Texture2D>(const Texture2D& t)
+			{
+				return L"Texture2D";
+			}
+			template<> static std::wstring ToString<Critter>(const Critter& t)
+			{
+				return L"Critter";
+			}
+		}
+	}
+}
+
+
 namespace UnitTestingTemplate
 {
 	TEST_CLASS(UnitTestingTemplate)
@@ -34,27 +118,40 @@ namespace UnitTestingTemplate
 	public:
 		
 		//Replace "TestMethod1" with a new name outlining what you are testing
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(HashTableAddTo)
 		{
+			Texture2D testTexture = LoadTexture("res/download.png");
 
+			HashTable TestHash(2);
+			TestHash.AddTo("testImage", testTexture);
 
-			Assert::AreEqual(1, 1);
+			Assert::AreEqual(TestHash["testImage"], testTexture);
 		}
 
 		//Replace "TestMethod2" with a new name outlining what you are testing
-		TEST_METHOD(TestMethod2)
+		TEST_METHOD(ObjectPoolAllocate)
 		{
+			Critter testCritter;
 
+			ObjectPool testPool(2);
 
-			Assert::AreEqual(1, 1);
+			testPool.Allocate(testCritter, 1);
+
+			Assert::AreEqual(testPool.GetAlive()[1], testCritter);
 		}
 
 		//Replace "TestMethod3" with a new name outlining what you are testing
-		TEST_METHOD(TestMethod3)
+		TEST_METHOD(ObjectPoolDeallocate)
 		{
+			Critter testDeadCritter;
 
+			ObjectPool testDeadPool(2);
 
-			Assert::AreEqual(1, 1);
+			testDeadPool.Allocate(testDeadCritter, 1);
+	
+			testDeadPool.Deallocate(1);
+
+			Assert::AreNotEqual(testDeadPool.GetAlive()[1], testDeadCritter);
 		}
 	};
 }
