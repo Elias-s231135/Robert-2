@@ -1,0 +1,6 @@
+Widget manager contains
+	contains edit menu
+	
+Reference widget manager
+	reference edit menu
+		blue spheres collected
