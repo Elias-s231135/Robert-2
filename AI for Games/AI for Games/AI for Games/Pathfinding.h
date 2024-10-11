@@ -25,8 +25,8 @@ namespace AIForGames
 		glm::vec2 position;
 		std::vector<Edge> connections;
 
-		float gScore;
-		Node* previous;
+		float gScore = 0;
+		Node* previous = nullptr;
 
 		Node(float x, float y) 
 		{
@@ -37,6 +37,7 @@ namespace AIForGames
 		{
 			connections.push_back(Edge(other, cost));
 		}
+
 
 	};
 

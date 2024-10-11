@@ -1,7 +1,32 @@
 #include "NodeMap.h"
 #include "raylib.hpp"
+#include <algorithm>
 
+static bool CompareNode(Node* one, Node* two)
+{
+	return one->gScore < two->gScore;
+}
 
+//bool Node::operator==(const &Node other)
+//{
+//	if (one.connections == two.connections)
+//	{
+//		if (one.gScore == two.gScore)
+//		{
+//			if (one.position == two.position)
+//			{
+//				if (one.previous == two.previous)
+//				{
+//					return true;
+//				}
+//			}
+//		}
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
 
 void NodeMap::Initialise(std::vector<std::string> asciiMap, int cellSize)
 {
@@ -58,9 +83,9 @@ void NodeMap::Draw()
 {
 	Color cellColor;
 	cellColor.a = 255;
-	cellColor.r = 255;
-	cellColor.g = 0;
-	cellColor.b = 0;
+	cellColor.r = 74;
+	cellColor.g = 65;
+	cellColor.b = 42;
 
 	for (int y = 0; y < m_height; y++)
 	{
@@ -83,11 +108,19 @@ void NodeMap::Draw()
 	}
 }
 
+void NodeMap::DrawPath(std::vector<Node*> path, Color lineColor)
+{
+	for ( int d = 1; d < path.size(); d++)
+	{
+		DrawLine(path[d]->position.x, path[d]->position.y, path[d - 1]->position.x, path[d - 1]->position.y, lineColor);
+	}
+}
+
 std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode)
 {
 	if ((startNode == nullptr) || (endNode == nullptr))
 	{
-		return;
+		return std::vector<Node*>();
 	}
 
 	if (startNode == endNode)
@@ -100,13 +133,78 @@ std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode)
 
 	std::vector<Node*> openList;
 	std::vector<Node*> closedList;
+	Node* currentNode;
 
-	//add startNode to openList
 	openList.push_back(startNode);
 
-	while (openList.size() != 0)
+	while (!openList.empty())
 	{
-		//pop front currentNode
+		//Sort openList by Node.gScore COME BACK TO
+		std::sort(openList.begin(), openList.end(), CompareNode);
+
+
+		currentNode = openList.front(); //openList.front() potential? / or should be at(0)
+		
+
+		if (currentNode == endNode)
+		{
+			break;
+		}
+
+		//remove currentNode from openList COME BACK TO
+		openList.erase(openList.begin());
+
+		closedList.push_back(currentNode);
+
+		for (int c = 0; c < currentNode->connections.size(); c++)
+		{
+			//if (currentNode->connections[c].target != std::find(closedList.at(1), closedList.at(closedList.size()), currentNode->connections[c].target))
+			if(std::find(closedList.begin(), closedList.end(), currentNode->connections[c].target) == closedList.end())
+			{
+				int newGScore = currentNode->gScore + currentNode->connections[c].cost;
+
+				//if (currentNode->connections[c].target != std::find(openList.at(1), openList.at(openList.size()), currentNode->connections[c].target))
+				if(std::find(openList.begin(), openList.end(), currentNode->connections[c].target) == openList.end())
+				{
+					currentNode->connections[c].target->gScore = newGScore;
+					currentNode->connections[c].target->previous = currentNode;
+					openList.push_back(currentNode->connections[c].target);
+				}
+				else if (newGScore < currentNode->connections[c].target->gScore)
+				{
+					currentNode->connections[c].target->gScore = newGScore;
+					currentNode->connections[c].target->previous = currentNode;
+				}
+			}
+		}
 
 	}
+
+	std::vector<Node*> Path;
+	currentNode = endNode;
+
+	while (currentNode != nullptr)
+	{
+		Path.insert(Path.begin(), currentNode);
+		currentNode = currentNode->previous;
+	}
+
+	return Path;
+}
+
+Node* NodeMap::GetClosestNode(glm::vec2 worldPos)
+{
+	int i = (int)(worldPos.x / m_cellSize);
+	if (i < 0 || i >= m_width)
+	{
+		return nullptr;
+	}
+
+	int j = (int)(worldPos.y / m_cellSize);
+	if (j < 0 || j >= m_height)
+	{
+		return nullptr;
+	}
+
+	return GetNode(i, j);
 }

@@ -33,6 +33,11 @@ int main()
 
 	nodeMap.Initialise(asciiMap, 48);
 
+	Node* start = nodeMap.GetNode(1, 1);
+	Node* end = nodeMap.GetNode(10, 2);
+	std::vector<Node*> nodeMapPath = nodeMap.DijkstrasSearch(start, end);
+	Color lineColor = { 74, 65, 42, 255 };
+
 	SetTargetFPS(60);
 	//------------------
 	// Main game loop
@@ -43,7 +48,27 @@ int main()
 		// TODO: Update your variables here
 		//----------------------------------------------------------------------------------
 		//Drawing goes here
+		BeginDrawing();
+
+		ClearBackground(BLACK);
+
 		nodeMap.Draw();
+		nodeMap.DrawPath(nodeMapPath, lineColor);
+
+		if (IsMouseButtonPressed(0))
+		{
+			Vector2 mousePos = GetMousePosition();
+			start = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
+			nodeMapPath = nodeMap.DijkstrasSearch(start, end);
+		}
+
+		if (IsMouseButtonPressed(1))
+		{
+			Vector2 mousePos = GetMousePosition();
+			end = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
+			nodeMapPath = nodeMap.DijkstrasSearch(start, end);
+		}
+
 		EndDrawing();
 		//----------------------------------------------------------------------------------
 	}
