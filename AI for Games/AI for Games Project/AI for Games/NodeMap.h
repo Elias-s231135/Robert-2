@@ -26,8 +26,10 @@ public:
 
 	void DrawPath(std::vector<Node*> path, Color lineColor);
 
-	static std::vector<Node*> DijkstrasSearch(Node* startNode, Node* endNode);
+	static std::vector<Node*> AStarSearch(Node* startNode, Node* endNode);
 	
 	Node* GetClosestNode(glm::vec2 worldPos);
+
+	static float Heuristic(Node* start, Node* end);
 };
 

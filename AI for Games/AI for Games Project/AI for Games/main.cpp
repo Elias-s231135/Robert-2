@@ -33,7 +33,7 @@ int main()
 	nodeMap.Initialise(asciiMap, 48);
 	Node* start = nodeMap.GetNode(1, 1);
 	Node* end = nodeMap.GetNode(10, 2);
-	std::vector<Node*> nodeMapPath = nodeMap.DijkstrasSearch(start, end);
+	std::vector<Node*> nodeMapPath = nodeMap.AStarSearch(start, end);
 	Color lineColor = { 74, 65, 42, 255 };
 
 	PathAgent agent;
@@ -52,7 +52,7 @@ int main()
 		{
 			Vector2 mousePos = GetMousePosition();
 			end = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
-			nodeMapPath = nodeMap.DijkstrasSearch(start, end);
+			nodeMapPath = nodeMap.AStarSearch(start, end);
 			agent.GoToNode(end);
 
 			

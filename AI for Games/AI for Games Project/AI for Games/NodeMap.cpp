@@ -4,7 +4,7 @@
 
 static bool CompareNode(Node* one, Node* two)
 {
-	return one->gScore < two->gScore;
+	return one->fScore < two->fScore;
 }
 
 //bool Node::operator==(const &Node other)
@@ -116,7 +116,7 @@ void NodeMap::DrawPath(std::vector<Node*> path, Color lineColor)
 	}
 }
 
-std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode)
+std::vector<Node*> NodeMap::AStarSearch(Node* startNode, Node* endNode)
 {
 	if ((startNode == nullptr) || (endNode == nullptr))
 	{
@@ -139,7 +139,7 @@ std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode)
 
 	while (!openList.empty())
 	{
-		//Sort openList by Node.gScore COME BACK TO
+		//Sort openList by Node.fScore COME BACK TO
 		std::sort(openList.begin(), openList.end(), CompareNode);
 
 
@@ -162,17 +162,21 @@ std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode)
 			if(std::find(closedList.begin(), closedList.end(), currentNode->connections[c].target) == closedList.end())
 			{
 				int newGScore = currentNode->gScore + currentNode->connections[c].cost;
+				int newHScore = Heuristic(currentNode->connections[c].target, endNode);
+				int newFScore = currentNode->gScore + currentNode->hScore;
 
 				//if (currentNode->connections[c].target != std::find(openList.at(1), openList.at(openList.size()), currentNode->connections[c].target))
 				if(std::find(openList.begin(), openList.end(), currentNode->connections[c].target) == openList.end())
 				{
 					currentNode->connections[c].target->gScore = newGScore;
+					currentNode->connections[c].target->fScore = newFScore;
 					currentNode->connections[c].target->previous = currentNode;
 					openList.push_back(currentNode->connections[c].target);
 				}
 				else if (newGScore < currentNode->connections[c].target->gScore)
 				{
 					currentNode->connections[c].target->gScore = newGScore;
+					currentNode->connections[c].target->fScore = newFScore;
 					currentNode->connections[c].target->previous = currentNode;
 				}
 			}
@@ -206,4 +210,12 @@ Node* NodeMap::GetClosestNode(glm::vec2 worldPos)
 	}
 
 	return GetNode(i, j);
+}
+
+float NodeMap::Heuristic(Node* start, Node* end)
+{
+	float minimumCost = 1;
+	float hScore = glm::abs(start->position.x - end->position.x) + glm::abs(start->position.y - end->position.y);
+
+	return minimumCost * hScore;
 }

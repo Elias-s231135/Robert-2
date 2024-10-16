@@ -4,6 +4,7 @@
 
 namespace AIForGames
 {
+
 	struct Node;
 
 	struct Edge
@@ -26,6 +27,9 @@ namespace AIForGames
 		std::vector<Edge> connections;
 
 		float gScore = 0;
+		float hScore = 0;
+		float fScore = 0;
+
 		Node* previous = nullptr;
 
 		Node(float x, float y) 
