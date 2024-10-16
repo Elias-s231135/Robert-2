@@ -1,5 +1,6 @@
 #include "Pathfinding.h"
 #include "NodeMap.h"
+#include "PathAgent.h"
 #include <string>
 #include "raylib.h"
 
@@ -9,7 +10,6 @@ using namespace AIForGames;
 
 int main()
 {
-
 	std::vector<std::string> asciiMap;
 	asciiMap.push_back("000000000000");
 	asciiMap.push_back("010111011100");
@@ -30,19 +30,41 @@ int main()
 	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
 	NodeMap nodeMap;
-
 	nodeMap.Initialise(asciiMap, 48);
-
 	Node* start = nodeMap.GetNode(1, 1);
 	Node* end = nodeMap.GetNode(10, 2);
 	std::vector<Node*> nodeMapPath = nodeMap.DijkstrasSearch(start, end);
 	Color lineColor = { 74, 65, 42, 255 };
+
+	PathAgent agent;
+	agent.SetNode(start);
+	agent.SetSpeed(128);
 
 	SetTargetFPS(60);
 	//------------------
 	// Main game loop
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
+		float deltaTime = GetFrameTime();
+		
+
+		if (IsMouseButtonPressed(0))
+		{
+			Vector2 mousePos = GetMousePosition();
+			end = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
+			nodeMapPath = nodeMap.DijkstrasSearch(start, end);
+			agent.GoToNode(end);
+
+			
+		}
+
+		//if (IsMouseButtonPressed(1))
+		//{
+		//	Vector2 mousePos = GetMousePosition();
+		//	end = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
+		//	nodeMapPath = nodeMap.DijkstrasSearch(start, end);
+		//}
+
 		// Update
 		//----------------------------------------------------------------------------------
 		// TODO: Update your variables here
@@ -53,21 +75,11 @@ int main()
 		ClearBackground(BLACK);
 
 		nodeMap.Draw();
-		nodeMap.DrawPath(nodeMapPath, lineColor);
+		nodeMap.DrawPath(agent.GetPath(), lineColor);
 
-		if (IsMouseButtonPressed(0))
-		{
-			Vector2 mousePos = GetMousePosition();
-			start = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
-			nodeMapPath = nodeMap.DijkstrasSearch(start, end);
-		}
 
-		if (IsMouseButtonPressed(1))
-		{
-			Vector2 mousePos = GetMousePosition();
-			end = nodeMap.GetClosestNode(glm::vec2(mousePos.x, mousePos.y));
-			nodeMapPath = nodeMap.DijkstrasSearch(start, end);
-		}
+		agent.Update(deltaTime);
+		agent.Draw();
 
 		EndDrawing();
 		//----------------------------------------------------------------------------------

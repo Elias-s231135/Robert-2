@@ -177,7 +177,6 @@ std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode)
 				}
 			}
 		}
-
 	}
 
 	std::vector<Node*> Path;
