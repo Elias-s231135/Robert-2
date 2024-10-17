@@ -23,5 +23,8 @@ public:
 	void Update(float deltatime);
 	void GoToNode(Node* node);
 	void Draw();
+
+	Node* GetNode();
+	glm::vec2 GetPosition();
 };
 

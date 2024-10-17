@@ -3,7 +3,7 @@
 #include "PathAgent.h"
 #include <string>
 #include "raylib.h"
-
+#include "Agent.h"
 
 
 using namespace AIForGames;
@@ -16,7 +16,7 @@ int main()
 	asciiMap.push_back("010101110110");
 	asciiMap.push_back("010100000000");
 	asciiMap.push_back("010111111110");
-	asciiMap.push_back("010000001000");
+	asciiMap.push_back("010000001001");
 	asciiMap.push_back("011111111110");
 	asciiMap.push_back("000000000000");
 
@@ -36,9 +36,17 @@ int main()
 	std::vector<Node*> nodeMapPath = nodeMap.AStarSearch(start, end);
 	Color lineColor = { 74, 65, 42, 255 };
 
-	PathAgent agent;
+	PathAgent pagent;
+	pagent.SetNode(start);
+	pagent.SetSpeed(128);
+
+	Agent agent(&nodeMap, new GoToPointBehaviour());
 	agent.SetNode(start);
 	agent.SetSpeed(128);
+
+	Agent agent2(&nodeMap, new WanderBehaviour());
+	agent2.SetNode(nodeMap.GetRandomNode());
+	agent2.SetSpeed(128);
 
 	SetTargetFPS(60);
 	//------------------
@@ -77,9 +85,11 @@ int main()
 		nodeMap.Draw();
 		nodeMap.DrawPath(agent.GetPath(), lineColor);
 
-
 		agent.Update(deltaTime);
 		agent.Draw();
+
+		agent2.Update(deltaTime);
+		agent2.Draw();
 
 		EndDrawing();
 		//----------------------------------------------------------------------------------

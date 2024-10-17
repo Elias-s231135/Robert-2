@@ -31,5 +31,7 @@ public:
 	Node* GetClosestNode(glm::vec2 worldPos);
 
 	static float Heuristic(Node* start, Node* end);
+
+	Node* GetRandomNode();
 };
 

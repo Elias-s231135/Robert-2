@@ -71,3 +71,13 @@ void PathAgent::Draw()
 	DrawCircle((int)m_position.x, (int)m_position.y, 8, { 255, 255, 0, 255 });
 	DrawCircle((int)m_currentNode->position.x, (int)m_currentNode->position.y, 4, { 0, 255, 0, 255 });
 }
+
+Node* PathAgent::GetNode()
+{
+	return m_currentNode;
+}
+
+glm::vec2 PathAgent::GetPosition()
+{
+	return m_position;
+}
