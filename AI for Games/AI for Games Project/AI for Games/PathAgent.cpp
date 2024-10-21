@@ -3,6 +3,7 @@
 void PathAgent::SetNode(Node* node)
 {
 	m_currentNode = node;
+	m_position = m_currentNode->position;
 }
 
 void PathAgent::SetSpeed(float speed)

@@ -33,5 +33,7 @@ public:
 	static float Heuristic(Node* start, Node* end);
 
 	Node* GetRandomNode();
+
+	float GetCellSize() { return m_cellSize; }
 };
 

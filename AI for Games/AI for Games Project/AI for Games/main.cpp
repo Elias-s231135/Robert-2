@@ -5,7 +5,6 @@
 #include "raylib.h"
 #include "Agent.h"
 
-
 using namespace AIForGames;
 
 int main()
@@ -43,10 +42,30 @@ int main()
 	Agent agent(&nodeMap, new GoToPointBehaviour());
 	agent.SetNode(start);
 	agent.SetSpeed(128);
+	agent.SetColor({ 255, 255, 0, 255 });
 
 	Agent agent2(&nodeMap, new WanderBehaviour());
 	agent2.SetNode(nodeMap.GetRandomNode());
 	agent2.SetSpeed(128);
+	agent2.SetColor({ 255, 0, 0, 255 });
+
+	DistanceCondition* closerThan5 = new DistanceCondition(5.0f * nodeMap.GetCellSize(), true);
+	DistanceCondition* furtherThan7 = new DistanceCondition(7.0f * nodeMap.GetCellSize(), false);
+
+	State* wanderState = new State(new WanderBehaviour());
+	State* followState = new State(new FollowBehaviour());
+	wanderState->AddTransition(closerThan5, followState);
+	followState->AddTransition(furtherThan7, wanderState);
+
+	FiniteStateMachine* fsm = new FiniteStateMachine(wanderState);
+	fsm->AddState(wanderState);
+	fsm->AddState(followState);
+
+	Agent agent3(&nodeMap, fsm);
+	agent3.SetNode(nodeMap.GetRandomNode());
+	agent3.SetTarget(&agent);
+	agent3.SetSpeed(64);
+	agent3.SetColor({ 0, 0, 255, 255 });
 
 	SetTargetFPS(60);
 	//------------------
@@ -90,6 +109,9 @@ int main()
 
 		agent2.Update(deltaTime);
 		agent2.Draw();
+
+		agent3.Update(deltaTime);
+		agent3.Draw();
 
 		EndDrawing();
 		//----------------------------------------------------------------------------------

@@ -59,21 +59,21 @@ void NodeMap::Initialise(std::vector<std::string> asciiMap, int cellSize)
 		for (int x = 0; x < m_width; x++)
 		{
 			Node* node = GetNode(x, y);
-			if (node)
-			{
-				Node* nodeWest = x == 0 ? nullptr : GetNode(x - 1, y);
-				if (nodeWest)
-				{
-					node->ConnectTo(nodeWest, 1);
-					nodeWest->ConnectTo(node, 1);
-				}
-
-				Node* nodeSouth = y == 0 ? nullptr : GetNode(x, y - 1);
-				if (nodeSouth)
-				{
-					node->ConnectTo(nodeSouth, 1);
-					nodeSouth->ConnectTo(node, 1);
-				}
+			if (node)																	  
+			{																			  
+				Node* nodeWest = x == 0 ? nullptr : GetNode(x - 1, y);					  
+				if (nodeWest)															  
+				{																		  
+					node->ConnectTo(nodeWest, cellSize);								  
+					nodeWest->ConnectTo(node, cellSize);								  
+				}																		  
+																						  
+				Node* nodeSouth = y == 0 ? nullptr : GetNode(x, y - 1);					  
+				if (nodeSouth)															  
+				{																		  
+					node->ConnectTo(nodeSouth, cellSize);								  
+					nodeSouth->ConnectTo(node, cellSize);								  
+				}																		  
 			}
 		}
 	}
