@@ -2,11 +2,15 @@
 
 //using namespace AIForGames;
 
-Agent::Agent(NodeMap* nodeMap, FiniteStateMachine stateMachine)
+Agent::Agent(NodeMap* _nodeMap, Behaviour* _behaviour)
 {
-	Agent agent;
+	//Agent agent;
 
-	agent.m_nodeMap = nodeMap;
+	this->m_nodeMap = _nodeMap;
+
+	this->m_current = _behaviour;
+
+	m_current->Enter(this);
 }
 
 void Agent::Update(float deltaTime)
@@ -52,6 +56,12 @@ void WanderBehaviour::Update(Agent* agent, float deltaTime)
 	}
 }
 
+void WanderBehaviour::Enter(Agent* agent)
+{
+	agent->SetColor({ 127, 255, 255, 255 }); // light blue
+	agent->Reset();
+}
+
 void FollowBehaviour::Update(Agent* agent, float deltaTime)
 {
 	// null check on targetAgent potentially?
@@ -68,6 +78,12 @@ void FollowBehaviour::Update(Agent* agent, float deltaTime)
 		lastTargetPosition = target->GetPosition();
 		agent->GoTo(lastTargetPosition);
 	}
+}
+
+void FollowBehaviour::Enter(Agent* agent)
+{
+	agent->SetColor({ 255, 127, 127, 255 }); // salmon
+	agent->Reset();
 }
 
 void SelectorBehaviour::Update(Agent* agent, float deltaTime)
@@ -94,6 +110,10 @@ void SelectorBehaviour::SetBehaviour(Behaviour* b, Agent* agent)
 	}
 }
 
+State::State()
+{
+}
+
 State::~State()
 {
 	for (Behaviour* b : m_behaviours)
@@ -109,6 +129,10 @@ State::~State()
 
 void State::Enter(Agent* agent)
 {
+	for (Behaviour* b : m_behaviours)
+	{
+		b->Enter(agent);
+	}
 }
 
 void State::Update(Agent* agent, float deltaTime)
@@ -117,10 +141,16 @@ void State::Update(Agent* agent, float deltaTime)
 	{
 		b->Update(agent, deltaTime);
 	}
+
+	
 }
 
 void State::Exit(Agent* agent)
 {
+	for (Behaviour* b : m_behaviours)
+	{
+		b->Exit(agent);
+	}
 }
 
 void State::AddTransition(Condition* m_condition, State* m_state)
@@ -128,6 +158,7 @@ void State::AddTransition(Condition* m_condition, State* m_state)
 	Transition transition;
 	transition.condition = m_condition;
 	transition.targetState = m_state;
+	m_transitions.push_back(transition);
 }
 
 FiniteStateMachine::~FiniteStateMachine()

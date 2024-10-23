@@ -15,7 +15,7 @@ int main()
 	asciiMap.push_back("010101110110");
 	asciiMap.push_back("010100000000");
 	asciiMap.push_back("010111111110");
-	asciiMap.push_back("010000001001");
+	asciiMap.push_back("010000001000");
 	asciiMap.push_back("011111111110");
 	asciiMap.push_back("000000000000");
 
@@ -65,7 +65,7 @@ int main()
 	agent3.SetNode(nodeMap.GetRandomNode());
 	agent3.SetTarget(&agent);
 	agent3.SetSpeed(64);
-	agent3.SetColor({ 0, 0, 255, 255 });
+	//agent3.SetColor({ 0, 0, 255, 255 });
 
 	SetTargetFPS(60);
 	//------------------

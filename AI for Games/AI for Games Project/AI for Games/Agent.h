@@ -9,8 +9,9 @@ class Agent
 {
 public:
 	Agent() {}
-	Agent(NodeMap* _nodeMap, Behaviour* _behaviour) : m_current(_behaviour), m_nodeMap(_nodeMap), m_color() {}
-	Agent(NodeMap* nodeMap, FiniteStateMachine stateMachine);
+	Agent(NodeMap* _nodeMap, Behaviour* _behaviour); /*: m_current(_behaviour), m_nodeMap(_nodeMap), m_color() {}*/
+	
+	//Agent(NodeMap* nodeMap, FiniteStateMachine* stateMachine);
 
 	void Update(float deltaTime);
 	void Draw();
@@ -72,12 +73,14 @@ public:
 class WanderBehaviour : public Behaviour
 {
 public:
+	virtual void Enter(Agent* agent);
 	virtual void Update(Agent* agent, float deltaTime);
 };
 
 class FollowBehaviour : public Behaviour
 {
 public:
+	virtual void Enter(Agent* agent);
 	virtual void Update(Agent* agent, float deltaTime);
 
 	Agent* GetTarget() { return target; }
@@ -122,8 +125,7 @@ private:
 
 public:
 	State();
-	State(WanderBehaviour);
-	State(FollowBehaviour);
+	State(Behaviour* behaviour) { m_behaviours.push_back(behaviour); }
 	~State();
 
 	std::vector<Transition> GetTransitions() { return m_transitions; }
@@ -136,7 +138,7 @@ public:
 };
 
 
-class FiniteStateMachine
+class FiniteStateMachine : public Behaviour
 {
 private:
 	std::vector<State*> m_states;
@@ -145,8 +147,13 @@ private:
 	State* m_newState;
 
 public:
-	FiniteStateMachine(State* s) : m_currentState(s), m_newState(nullptr) {}
+	FiniteStateMachine(State* s) : m_currentState(s), m_newState(nullptr) { }
 	virtual ~FiniteStateMachine();
+
+	virtual void Enter(Agent* agent)
+	{
+		m_currentState->Enter(agent);
+	}
 
 	void Update(Agent* agent, float deltaTime);
 
