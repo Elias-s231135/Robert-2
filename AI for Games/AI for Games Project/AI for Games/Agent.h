@@ -107,6 +107,7 @@ public:
 class Condition
 {
 public:
+
 	virtual bool IsTrue(Agent* agent) = 0;
 };
 
@@ -171,4 +172,50 @@ private:
 public:
 	DistanceCondition(float d, bool lt) : m_distance(d), m_lessThan(lt) {}
 	virtual bool IsTrue(Agent* agent);
+};
+
+class Decision : public Behaviour
+{
+public: 
+	Decision() {}
+	//Decision(Behaviour* behaviour);
+
+	virtual void MakeDecision(Agent* agent, float deltaTime);
+	virtual void Update(Agent* agent, float deltaTime) override;
+};
+
+class ABDecision : public Decision
+{
+private:
+	Decision* A;
+	Decision* B;
+	Condition* m_condition;
+
+public:
+	ABDecision(Condition* condition, Decision* a, Decision* b);
+
+	virtual void MakeDecision(Agent* agent, float deltaTime) override;
+};
+
+class DecisionBehaviour : public Decision
+{
+public:
+	DecisionBehaviour(Decision* decision);
+
+	virtual void Update(Agent* agent, float deltaTime) override;
+
+private:
+	Decision* m_decision;
+};
+
+class Action : public Decision
+{
+public:
+	Action(Behaviour* behaviour);
+
+	void MakeDecision(Agent* agent, float deltaTime);
+
+private:
+	Behaviour* m_behaviour;
+
 };

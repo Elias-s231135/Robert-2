@@ -49,19 +49,24 @@ int main()
 	agent2.SetSpeed(128);
 	agent2.SetColor({ 255, 0, 0, 255 });
 
-	DistanceCondition* closerThan5 = new DistanceCondition(5.0f * nodeMap.GetCellSize(), true);
+	DistanceCondition* closerThan3 = new DistanceCondition(3.0f * nodeMap.GetCellSize(), true);
 	DistanceCondition* furtherThan7 = new DistanceCondition(7.0f * nodeMap.GetCellSize(), false);
 
-	State* wanderState = new State(new WanderBehaviour());
+	/*State* wanderState = new State(new WanderBehaviour());
 	State* followState = new State(new FollowBehaviour());
 	wanderState->AddTransition(closerThan5, followState);
-	followState->AddTransition(furtherThan7, wanderState);
+	followState->AddTransition(furtherThan7, wanderState);*/
 
-	FiniteStateMachine* fsm = new FiniteStateMachine(wanderState);
-	fsm->AddState(wanderState);
-	fsm->AddState(followState);
+	//FiniteStateMachine* fsm = new FiniteStateMachine(wanderState);
+	//fsm->AddState(wanderState);
+	//fsm->AddState(followState);
+	
+	Action* wanderAction = new Action(new WanderBehaviour());
+	Action* followAction = new Action(new FollowBehaviour());
 
-	Agent agent3(&nodeMap, fsm);
+	ABDecision* wanderFollow = new ABDecision(closerThan3, wanderAction, followAction);
+
+	Agent agent3(&nodeMap, new DecisionBehaviour(wanderFollow));
 	agent3.SetNode(nodeMap.GetRandomNode());
 	agent3.SetTarget(&agent);
 	agent3.SetSpeed(64);

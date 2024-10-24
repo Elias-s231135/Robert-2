@@ -1,5 +1,6 @@
 #include "Agent.h"
 
+
 //using namespace AIForGames;
 
 Agent::Agent(NodeMap* _nodeMap, Behaviour* _behaviour)
@@ -64,13 +65,13 @@ void WanderBehaviour::Enter(Agent* agent)
 
 void FollowBehaviour::Update(Agent* agent, float deltaTime)
 {
-	// null check on targetAgent potentially?
-	if (target = nullptr)
+	target = agent->GetTarget();
+	
+// null check on targetAgent potentially?
+	if (target == nullptr)
 	{
 		return;
 	}
-
-	target = agent->GetTarget();
 
 	float dist = glm::distance(target->GetPosition(), lastTargetPosition);
 	if (dist > agent->GetNodeMap()->GetCellSize())
@@ -202,4 +203,60 @@ void FiniteStateMachine::AddState(State* state)
 bool DistanceCondition::IsTrue(Agent* agent)
 {
 	return (glm::distance(agent->GetPosition(), agent->GetTarget()->GetPosition()) < m_distance) == m_lessThan;
+}
+
+//Decision::Decision(Behaviour* behaviour)
+//{
+//	behaviour;
+//}
+
+void Decision::MakeDecision(Agent* agent, float deltaTime)
+{
+
+}
+
+void Decision::Update(Agent* agent, float deltaTime)
+{
+}
+
+ABDecision::ABDecision(Condition* condition, Decision* a, Decision* b)
+{
+	m_condition = condition;
+	A = a;
+	B = b;
+}
+
+void ABDecision::MakeDecision(Agent* agent, float deltaTime)
+{
+	if (m_condition->IsTrue(agent))
+	{
+		A->MakeDecision(agent, deltaTime);
+		agent->SetColor({ 255, 127, 127, 255 }); // salmon
+	}
+	else
+	{
+		B->MakeDecision(agent, deltaTime);
+		agent->SetColor({ 127, 255, 255, 255 }); // light blue
+	}
+}
+
+DecisionBehaviour::DecisionBehaviour(Decision* decision)
+{
+	m_decision = decision;
+}
+
+void DecisionBehaviour::Update(Agent* agent, float deltaTime)
+{
+	m_decision->MakeDecision(agent, deltaTime);
+
+}
+
+Action::Action(Behaviour* behaviour)
+{
+	m_behaviour = behaviour;
+}
+
+void Action::MakeDecision(Agent* agent, float deltaTime)
+{
+	m_behaviour->Update(agent, deltaTime);
 }
