@@ -1,5 +1,5 @@
 #include "Agent.h"
-
+#include <iostream>
 
 //using namespace AIForGames;
 
@@ -73,11 +73,14 @@ void FollowBehaviour::Update(Agent* agent, float deltaTime)
 		return;
 	}
 
+	//std::cout << "Followupdate" << std::endl;
+
 	float dist = glm::distance(target->GetPosition(), lastTargetPosition);
 	if (dist > agent->GetNodeMap()->GetCellSize())
 	{
 		lastTargetPosition = target->GetPosition();
 		agent->GoTo(lastTargetPosition);
+		//std::cout << "followgo" << std::endl;
 	}
 }
 

@@ -11,12 +11,16 @@ int main()
 {
 	std::vector<std::string> asciiMap;
 	asciiMap.push_back("000000000000");
-	asciiMap.push_back("010111011100");
-	asciiMap.push_back("010101110110");
-	asciiMap.push_back("010100000000");
 	asciiMap.push_back("010111111110");
-	asciiMap.push_back("010000001000");
-	asciiMap.push_back("011111111110");
+	asciiMap.push_back("010001000010");
+	asciiMap.push_back("010101000010");
+	asciiMap.push_back("010111110010");
+	asciiMap.push_back("010100011110");
+	asciiMap.push_back("010111000000");
+	asciiMap.push_back("010001111110");
+	asciiMap.push_back("010001000010");
+	asciiMap.push_back("010111110010");
+	asciiMap.push_back("011100011110");
 	asciiMap.push_back("000000000000");
 
 	int screenWidth = 0;// 00;
@@ -47,9 +51,9 @@ int main()
 	Agent agent2(&nodeMap, new WanderBehaviour());
 	agent2.SetNode(nodeMap.GetRandomNode());
 	agent2.SetSpeed(128);
-	agent2.SetColor({ 255, 0, 0, 255 });
+	agent2.SetColor({ 127, 127, 255, 255 });
 
-	DistanceCondition* closerThan3 = new DistanceCondition(3.0f * nodeMap.GetCellSize(), true);
+	DistanceCondition* closerThan5 = new DistanceCondition(5.0f * nodeMap.GetCellSize(), true);
 	DistanceCondition* furtherThan7 = new DistanceCondition(7.0f * nodeMap.GetCellSize(), false);
 
 	/*State* wanderState = new State(new WanderBehaviour());
@@ -64,7 +68,7 @@ int main()
 	Action* wanderAction = new Action(new WanderBehaviour());
 	Action* followAction = new Action(new FollowBehaviour());
 
-	ABDecision* wanderFollow = new ABDecision(closerThan3, wanderAction, followAction);
+	ABDecision* wanderFollow = new ABDecision(closerThan5, followAction, wanderAction);
 
 	Agent agent3(&nodeMap, new DecisionBehaviour(wanderFollow));
 	agent3.SetNode(nodeMap.GetRandomNode());
