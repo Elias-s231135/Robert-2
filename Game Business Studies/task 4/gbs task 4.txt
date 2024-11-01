@@ -1,0 +1,8 @@
+- no antivirus
+- individuals have mulitple versions of same software installed
+- office.com student accounts (this is a business?)
+- team members using own devices for mobile tests
+- one maya install with student license (?)
+- one personally owned oculus rift, attached to facebook account
+- local wifi hotspot using mobile phones
+- keycards for existing team members, 24 hour access (security risk?)
