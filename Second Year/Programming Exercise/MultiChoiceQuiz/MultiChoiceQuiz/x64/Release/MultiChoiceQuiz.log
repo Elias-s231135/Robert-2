@@ -1,0 +1,8 @@
+﻿  Answer.cpp
+  MultiChoiceQuiz.cpp
+  Question.cpp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 107 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  MultiChoiceQuiz.vcxproj -> C:\Users\s231135\GitHub\Robert-2\Second Year\Programming Exercise\MultiChoiceQuiz\x64\Release\MultiChoiceQuiz.exe
