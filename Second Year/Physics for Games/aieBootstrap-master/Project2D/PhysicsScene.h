@@ -2,6 +2,7 @@
 #include "glm/vec2.hpp"
 #include <vector>
 #include "PhysicsObject.h"
+#include "Sphere.h"
 
 class PhysicsScene
 {
@@ -19,6 +20,8 @@ public:
 
 	void SetTimestep(const float timestep) { m_timestep = timestep; }
 	float GetTimestep() const { return m_timestep; }
+
+	static bool sphere2Sphere(PhysicsObject* obj1, PhysicsObject* obj2);
 
 protected:
 	glm::vec2 m_gravity;
