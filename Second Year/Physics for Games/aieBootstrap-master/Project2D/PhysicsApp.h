@@ -4,6 +4,8 @@
 #include "Renderer2D.h"
 #include "PhysicsScene.h"
 
+class Sphere;
+
 class PhysicsApp : public aie::Application {
 public:
 
@@ -16,6 +18,7 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
+
 protected:
 
 	aie::Renderer2D*	m_2dRenderer;
@@ -23,6 +26,8 @@ protected:
 	aie::Texture*		m_shipTexture;
 	aie::Font*			m_font;
 	PhysicsScene* m_physicsScene;
+
+	Sphere* ball;
 
 	float m_timer;
 };

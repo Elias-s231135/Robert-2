@@ -8,6 +8,10 @@ PhysicsScene::PhysicsScene() : m_timestep(0.01f), m_gravity(glm::vec2(0, 0))
 
 PhysicsScene::~PhysicsScene()
 {
+	for (auto pActor : m_actors)
+	{
+		delete pActor;
+	}
 }
 
 void PhysicsScene::RemoveActor(PhysicsObject* actor)
@@ -21,6 +25,14 @@ void PhysicsScene::RemoveActor(PhysicsObject* actor)
 		}
 	}
 }
+
+typedef bool(*fn)(PhysicsObject*, PhysicsObject*);
+
+static fn collisionFunctionArray[] =
+{
+	PhysicsScene::plane2Plane, PhysicsScene::plane2Sphere,
+	PhysicsScene::sphere2SPlane, PhysicsScene::sphere2Sphere,
+};
 
 void PhysicsScene::Update(float dt)
 {
@@ -44,8 +56,15 @@ void PhysicsScene::Update(float dt)
 			{
 				PhysicsObject* object1 = m_actors[outer];
 				PhysicsObject* object2 = m_actors[inner];
+				int shapeId1 = object1->GetShapeType();
+				int shapeId2 = object2->GetShapeType();
 
-				sphere2Sphere(object1, object2);
+				int functionIdx = (shapeId1 * SHAPE_COUNT) + shapeId2;
+				fn collisionFunctionPtr = collisionFunctionArray[functionIdx];
+				if (collisionFunctionPtr != nullptr)
+				{
+					collisionFunctionPtr(object1, object2);
+				}
 			}
 		}
 	}
@@ -66,6 +85,12 @@ bool PhysicsScene::sphere2Sphere(PhysicsObject* obj1, PhysicsObject* obj2)
 
 	if (sphere1 != nullptr && sphere2 != nullptr)
 	{
-		glm::distance(sphere1->GetPosition(), sphere2->GetPosition()) ;
+		if (glm::distance(sphere1->GetPosition(), sphere2->GetPosition()) < (sphere1->GetRadius() + sphere2->GetRadius()))
+		{
+			sphere1->SetVelocity(glm::vec2(0, 0));
+			sphere2->SetVelocity(glm::vec2(0, 0));
+
+			return true;
+		}
 	}
 }

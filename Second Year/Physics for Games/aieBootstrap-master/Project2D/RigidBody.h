@@ -16,6 +16,8 @@ public:
 	glm::vec2 GetVelocity() { return m_velocity; }
 	float GetMass() { return m_mass; }
 
+	void SetVelocity(glm::vec2 velocity) { m_velocity = velocity; }
+
 protected:
 
 	glm::vec2 m_position;

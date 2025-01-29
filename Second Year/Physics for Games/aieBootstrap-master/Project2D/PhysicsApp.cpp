@@ -4,6 +4,12 @@
 #include "Input.h"
 #include "Gizmos.h"
 #include <glm\ext.hpp>
+#include "glm/vec2.hpp"
+#include "glm/vec4.hpp"
+
+
+#include "Sphere.h"
+
 
 PhysicsApp::PhysicsApp() {
 
@@ -18,10 +24,24 @@ bool PhysicsApp::startup() {
 	aie::Gizmos::create(255U, 255U, 65535U, 65535U);
 
 	m_2dRenderer = new aie::Renderer2D();
+
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 	
 	m_physicsScene = new PhysicsScene();
+	m_physicsScene->SetGravity(glm::vec2(0, 0));
 	m_physicsScene->SetTimestep(0.01f);
+	
+	
+	ball = new Sphere(glm::vec2(0, 0), glm::vec2(0), 4.0f, 4, glm::vec4(0.29, 0.25, 0.16, 1));
+	m_physicsScene->AddActor(ball);
+
+	/*Sphere* negativeBall;
+	negativeBall = new Sphere(glm::vec2(10, 0), glm::vec2(0), 4.0f, 4, glm::vec4(0, 1, 0, 1));
+	m_physicsScene->AddActor(negativeBall);*/
+
+	//ball->ApplyForce(glm::vec2(30, 0));
+	//negativeBall->ApplyForce(glm::vec2(-15, 0));
+
 	return true;
 }
 
@@ -40,6 +60,11 @@ void PhysicsApp::update(float deltaTime)
 
 	m_physicsScene->Update(deltaTime);
 	m_physicsScene->Draw();
+
+	/*if (input->isKeyDown(aie::INPUT_KEY_M))
+	{*/
+		ball->ApplyForce(glm::vec2(rand()%50 - 25, rand()%50 - 25));
+	//}
 
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))

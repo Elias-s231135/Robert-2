@@ -9,12 +9,14 @@ enum ShapeType {
 
 class PhysicsObject
 {
-protected:
+public:
 
 	PhysicsObject();
 	~PhysicsObject();
 
 	PhysicsObject(ShapeType a_shapeID) : m_shapeID(a_shapeID) {}
+
+	ShapeType GetShapeType() { return m_shapeID; }
 
 public:
 
