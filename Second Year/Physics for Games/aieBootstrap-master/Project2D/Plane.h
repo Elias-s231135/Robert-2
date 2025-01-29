@@ -10,12 +10,12 @@ public:
 	Plane(glm::vec2 normal, float distance);
 	~Plane();
 
-	virtual void fixedUpdate(glm::vec2 gravity, float timestep);
+	virtual void FixedUpdate(glm::vec2 gravity, float timestep);
 	virtual void Draw();
 	virtual void ResetPosition();
 
 	glm::vec2 GetNormal() { return m_normal; }
-	float getDistance() { return m_distanceToOrigin; }
+	float GetDistance() { return m_distanceToOrigin; }
 
 protected:
 

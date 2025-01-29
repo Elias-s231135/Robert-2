@@ -8,6 +8,8 @@
 #include "glm/vec4.hpp"
 
 
+#include "Plane.h"
+
 #include "Sphere.h"
 
 
@@ -41,6 +43,16 @@ bool PhysicsApp::startup() {
 
 	//ball->ApplyForce(glm::vec2(30, 0));
 	//negativeBall->ApplyForce(glm::vec2(-15, 0));
+	
+	Plane* plane1 = new Plane(glm::vec2(0, 1), -30);
+	Plane* plane2 = new Plane(glm::vec2(1, 0), -30);
+	Plane* plane3 = new Plane(glm::vec2(0, -1), -30);
+	Plane* plane4 = new Plane(glm::vec2(-1, 0), -30);
+
+	m_physicsScene->AddActor(plane1);
+	m_physicsScene->AddActor(plane2);
+	m_physicsScene->AddActor(plane3);
+	m_physicsScene->AddActor(plane4);
 
 	return true;
 }

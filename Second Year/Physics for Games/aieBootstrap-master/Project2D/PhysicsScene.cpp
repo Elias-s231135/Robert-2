@@ -1,5 +1,6 @@
 #include "PhysicsScene.h"
 #include "glm/glm.hpp"
+#include "Plane.h"
 
 PhysicsScene::PhysicsScene() : m_timestep(0.01f), m_gravity(glm::vec2(0, 0))
 {
@@ -26,13 +27,7 @@ void PhysicsScene::RemoveActor(PhysicsObject* actor)
 	}
 }
 
-typedef bool(*fn)(PhysicsObject*, PhysicsObject*);
 
-static fn collisionFunctionArray[] =
-{
-	PhysicsScene::plane2Plane, PhysicsScene::plane2Sphere,
-	PhysicsScene::sphere2SPlane, PhysicsScene::sphere2Sphere,
-};
 
 void PhysicsScene::Update(float dt)
 {
@@ -76,6 +71,39 @@ void PhysicsScene::Draw()
 	{
 		pActor->Draw();
 	}
+}
+
+
+
+bool PhysicsScene::plane2Plane(PhysicsObject* obj1, PhysicsObject* obj2)
+{
+	return false;
+}
+
+bool PhysicsScene::plane2Sphere(PhysicsObject* obj1, PhysicsObject* obj2)
+{
+	return sphere2Plane(obj2, obj1);
+}
+
+bool PhysicsScene::sphere2Plane(PhysicsObject* obj1, PhysicsObject* obj2)
+{
+	Sphere* sphere = dynamic_cast<Sphere*>(obj1);
+	Plane* plane = dynamic_cast<Plane*>(obj2);
+
+	if (sphere != nullptr && plane != nullptr)
+	{
+		glm::vec2 collisionNormal = plane->GetNormal();
+		float sphereToPlane = glm::dot(sphere->GetPosition(), plane->GetNormal()) - plane->GetDistance();
+		
+		float intersection = sphere->GetRadius() - sphereToPlane;
+		float velocityOutOfPlane = glm::dot(sphere->GetVelocity(), plane->GetNormal());
+		if (intersection > 0 && velocityOutOfPlane < 0)
+		{
+			sphere->ApplyForce(-sphere->GetVelocity() * sphere->GetMass());
+			return true;
+		}
+	}
+	return false;
 }
 
 bool PhysicsScene::sphere2Sphere(PhysicsObject* obj1, PhysicsObject* obj2)

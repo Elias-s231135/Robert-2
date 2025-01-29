@@ -21,6 +21,9 @@ public:
 	void SetTimestep(const float timestep) { m_timestep = timestep; }
 	float GetTimestep() const { return m_timestep; }
 
+	static bool plane2Plane(PhysicsObject* obj1, PhysicsObject* obj2);
+	static bool plane2Sphere(PhysicsObject* obj1, PhysicsObject* obj2);
+	static bool sphere2Plane(PhysicsObject* obj1, PhysicsObject* obj2);
 	static bool sphere2Sphere(PhysicsObject* obj1, PhysicsObject* obj2);
 
 protected:
@@ -29,3 +32,10 @@ protected:
 	std::vector<PhysicsObject*> m_actors;
 };
 
+typedef bool(*fn)(PhysicsObject*, PhysicsObject*);
+
+static fn collisionFunctionArray[] =
+{
+	PhysicsScene::plane2Plane, PhysicsScene::plane2Sphere,
+	PhysicsScene::sphere2Plane, PhysicsScene::sphere2Sphere,
+};

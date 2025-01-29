@@ -1,23 +1,24 @@
 #include "Plane.h"
 #include "Gizmos.h"
 
-Plane::Plane() : PhysicsObject(ShapeType::PLANE) 
+Plane::Plane() : PhysicsObject(PLANE) 
 {
 	m_distanceToOrigin = 0;
 	m_normal = glm::vec2(0, 1);
 }
 
-Plane::Plane(glm::vec2 normal, float distance)
+Plane::Plane(glm::vec2 normal, float distance) : PhysicsObject(PLANE)
 {
 	m_normal = normal;
 	m_distanceToOrigin = distance;
+	m_colour = glm::vec4(1,1,1,1);
 }
 
 Plane::~Plane()
 {
 }
 
-void Plane::fixedUpdate(glm::vec2 gravity, float timestep)
+void Plane::FixedUpdate(glm::vec2 gravity, float timestep)
 {
 }
 

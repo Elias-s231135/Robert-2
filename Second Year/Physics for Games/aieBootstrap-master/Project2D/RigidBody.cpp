@@ -1,6 +1,7 @@
 #include "RigidBody.h"
 
 RigidBody::RigidBody(ShapeType shapeID, glm::vec2 position, glm::vec2 velocity, float orientation, float mass)
+	: PhysicsObject(shapeID)
 {
 	shapeID;
 

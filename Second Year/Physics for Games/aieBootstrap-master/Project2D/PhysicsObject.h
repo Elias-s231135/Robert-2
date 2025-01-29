@@ -4,14 +4,14 @@
 enum ShapeType {
 	PLANE = 0,
 	SPHERE,
-	BOX
+	//BOX
+	SHAPE_COUNT
 };
 
 class PhysicsObject
 {
 public:
 
-	PhysicsObject();
 	~PhysicsObject();
 
 	PhysicsObject(ShapeType a_shapeID) : m_shapeID(a_shapeID) {}
