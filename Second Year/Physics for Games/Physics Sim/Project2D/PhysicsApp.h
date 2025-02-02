@@ -27,7 +27,9 @@ protected:
 	aie::Font*			m_font;
 	PhysicsScene* m_physicsScene;
 
-	Sphere* ball;
+	Sphere* flyBall;
+	Sphere* waspBall;
+	Sphere* bestBall;
 
 	float m_timer;
 };

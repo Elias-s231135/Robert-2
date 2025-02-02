@@ -30,12 +30,18 @@ bool PhysicsApp::startup() {
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 	
 	m_physicsScene = new PhysicsScene();
-	m_physicsScene->SetGravity(glm::vec2(0, 0));
+	m_physicsScene->SetGravity(glm::vec2(10, 0));
 	m_physicsScene->SetTimestep(0.01f);
 	
 	
-	ball = new Sphere(glm::vec2(0, 0), glm::vec2(0), 4.0f, 4, glm::vec4(0.29, 0.25, 0.16, 1));
-	m_physicsScene->AddActor(ball);
+	flyBall = new Sphere(glm::vec2(rand()%30 - 30, rand()%30 - 30), glm::vec2(0), 4.0f, 4, glm::vec4(0.29, 0.25, 0.16, 1));
+	m_physicsScene->AddActor(flyBall);
+
+	waspBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 4.0f, 4, glm::vec4(0.95, 0.72, 0.12, 1));
+	m_physicsScene->AddActor(waspBall);
+
+	bestBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 4.0f, 4, glm::vec4(0.29, 0.25, 0.16, 1));
+	m_physicsScene->AddActor(bestBall);
 
 	/*Sphere* negativeBall;
 	negativeBall = new Sphere(glm::vec2(10, 0), glm::vec2(0), 4.0f, 4, glm::vec4(0, 1, 0, 1));
@@ -75,7 +81,9 @@ void PhysicsApp::update(float deltaTime)
 
 	/*if (input->isKeyDown(aie::INPUT_KEY_M))
 	{*/
-		ball->ApplyForce(glm::vec2(rand()%50 - 25, rand()%50 - 25));
+		flyBall->ApplyForce(glm::vec2(rand()%50 - 25, rand()%50 - 25));
+		waspBall->ApplyForce(glm::vec2(rand() % 100 - 50, rand() % 100 - 50));
+		bestBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25));
 	//}
 
 	// exit the application
