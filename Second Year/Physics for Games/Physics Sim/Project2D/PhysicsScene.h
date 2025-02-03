@@ -15,19 +15,22 @@ public:
 	void Update(float dt);
 	void Draw();
 
-	void SetGravity(const glm::vec2 gravity) { m_gravity = gravity; }
-	glm::vec2 GetGravity() const { return m_gravity; }
+	static void SetGravity(glm::vec2 gravity) { m_gravity = gravity; }
+	static glm::vec2 GetGravity() { return m_gravity; }
 
 	void SetTimestep(const float timestep) { m_timestep = timestep; }
 	float GetTimestep() const { return m_timestep; }
 
 	static bool plane2Plane(PhysicsObject* obj1, PhysicsObject* obj2);
 	static bool plane2Sphere(PhysicsObject* obj1, PhysicsObject* obj2);
+	static bool plane2Box(PhysicsObject* obj1, PhysicsObject* obj2);
 	static bool sphere2Plane(PhysicsObject* obj1, PhysicsObject* obj2);
 	static bool sphere2Sphere(PhysicsObject* obj1, PhysicsObject* obj2);
 
+	float GetTotalEnergy();
+
 protected:
-	glm::vec2 m_gravity;
+	static glm::vec2 m_gravity;
 	float m_timestep;
 	std::vector<PhysicsObject*> m_actors;
 };
@@ -36,6 +39,6 @@ typedef bool(*fn)(PhysicsObject*, PhysicsObject*);
 
 static fn collisionFunctionArray[] =
 {
-	PhysicsScene::plane2Plane, PhysicsScene::plane2Sphere,
+	PhysicsScene::plane2Plane, PhysicsScene::plane2Sphere, PhysicsScene::plane2Box,
 	PhysicsScene::sphere2Plane, PhysicsScene::sphere2Sphere,
 };

@@ -30,18 +30,21 @@ bool PhysicsApp::startup() {
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 	
 	m_physicsScene = new PhysicsScene();
-	m_physicsScene->SetGravity(glm::vec2(10, 0));
+	PhysicsScene::SetGravity(glm::vec2(0, 0));
 	m_physicsScene->SetTimestep(0.01f);
 	
-	
-	flyBall = new Sphere(glm::vec2(rand()%30 - 30, rand()%30 - 30), glm::vec2(0), 4.0f, 4, glm::vec4(0.29, 0.25, 0.16, 1));
-	m_physicsScene->AddActor(flyBall);
+	for (int i = 0; i < 200; i++)
+	{
+		Sphere* flyBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 2.0f, 2.5, glm::vec4(0.29, 0.25, 0.16, 1));
+		flyBalls.push_back(flyBall);
+		m_physicsScene->AddActor(flyBall);
+	}
 
-	waspBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 4.0f, 4, glm::vec4(0.95, 0.72, 0.12, 1));
+	waspBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 8.0f, 4, glm::vec4(0.95, 0.72, 0.12, 1));
 	m_physicsScene->AddActor(waspBall);
 
-	bestBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 4.0f, 4, glm::vec4(0.29, 0.25, 0.16, 1));
-	m_physicsScene->AddActor(bestBall);
+	/*bestBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 4.0f, 4, glm::vec4(0.29, 0.25, 0.16, 1));
+	m_physicsScene->AddActor(bestBall);*/
 
 	/*Sphere* negativeBall;
 	negativeBall = new Sphere(glm::vec2(10, 0), glm::vec2(0), 4.0f, 4, glm::vec4(0, 1, 0, 1));
@@ -79,12 +82,23 @@ void PhysicsApp::update(float deltaTime)
 	m_physicsScene->Update(deltaTime);
 	m_physicsScene->Draw();
 
-	/*if (input->isKeyDown(aie::INPUT_KEY_M))
-	{*/
-		flyBall->ApplyForce(glm::vec2(rand()%50 - 25, rand()%50 - 25));
-		waspBall->ApplyForce(glm::vec2(rand() % 100 - 50, rand() % 100 - 50));
-		bestBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25));
-	//}
+	if (input->isKeyDown(aie::INPUT_KEY_M))
+	{
+		for (auto flyBall : flyBalls) {
+			flyBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(rand() % 50 - 25, rand() % 50 - 25));
+		}
+		waspBall->ApplyForce(glm::vec2(rand() % 100 - 50, rand() % 100 - 50), glm::vec2(rand() % 100 - 50, rand() % 100 - 50));
+		//bestBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(rand() % 50 - 25, rand() % 50 - 25));
+	}
+
+	if (input->wasKeyPressed(aie::INPUT_KEY_END))
+	{
+		for (auto flyBall : flyBalls) {
+			flyBall->ApplyForce(glm::vec2(rand() % 1000 - 500, rand() % 1000 - 500), glm::vec2(rand() % 1000 - 500, rand() % 1000 - 500));
+		}
+		//waspBall->ApplyForce(glm::vec2(rand() % 1000 - 500, rand() % 1000 - 500), glm::vec2(rand() % 1000 - 500, rand() % 1000 - 500));
+		//bestBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(rand() % 50 - 25, rand() % 50 - 25));
+	}
 
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))

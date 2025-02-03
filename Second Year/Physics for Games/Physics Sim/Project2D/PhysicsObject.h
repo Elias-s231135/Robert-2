@@ -4,7 +4,7 @@
 enum ShapeType {
 	PLANE = 0,
 	SPHERE,
-	//BOX
+	BOX,
 	SHAPE_COUNT
 };
 
@@ -17,6 +17,8 @@ public:
 	PhysicsObject(ShapeType a_shapeID) : m_shapeID(a_shapeID) {}
 
 	ShapeType GetShapeType() { return m_shapeID; }
+
+	virtual float GetEnergy() { return 0; }
 
 public:
 

@@ -27,9 +27,9 @@ protected:
 	aie::Font*			m_font;
 	PhysicsScene* m_physicsScene;
 
-	Sphere* flyBall;
+	std::vector<Sphere*> flyBalls;
 	Sphere* waspBall;
-	Sphere* bestBall;
+	//Sphere* bestBall;
 
 	float m_timer;
 };
