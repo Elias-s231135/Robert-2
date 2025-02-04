@@ -3,14 +3,15 @@
 #include "Font.h"
 #include "Input.h"
 #include "Gizmos.h"
-#include <glm\ext.hpp>
+#include "glm/ext.hpp"
 #include "glm/vec2.hpp"
 #include "glm/vec4.hpp"
 
 
 #include "Plane.h"
-
+#include "PhysicsScene.h"
 #include "Sphere.h"
+#include "Box.h"
 
 
 PhysicsApp::PhysicsApp() {
@@ -33,9 +34,9 @@ bool PhysicsApp::startup() {
 	PhysicsScene::SetGravity(glm::vec2(0, 0));
 	m_physicsScene->SetTimestep(0.01f);
 	
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 100; i++)
 	{
-		Sphere* flyBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 2.0f, 2.5, glm::vec4(0.29, 0.25, 0.16, 1));
+		Sphere* flyBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 4.0f, 2.5, glm::vec4(0.29, 0.25, 0.16, 1));
 		flyBalls.push_back(flyBall);
 		m_physicsScene->AddActor(flyBall);
 	}
@@ -53,6 +54,9 @@ bool PhysicsApp::startup() {
 	//ball->ApplyForce(glm::vec2(30, 0));
 	//negativeBall->ApplyForce(glm::vec2(-15, 0));
 	
+	box = new Box(glm::vec2(40, 40), glm::vec2(0), 16.0f, glm::vec2(4, 8), glm::vec4(0.66, 0.29, 0.26, 1));
+	m_physicsScene->AddActor(box);
+
 	Plane* plane1 = new Plane(glm::vec2(0, 1), -50);	//bottom
 	Plane* plane2 = new Plane(glm::vec2(1, 0), -90);	//left
 	Plane* plane3 = new Plane(glm::vec2(0, -1), -50);	//top
@@ -85,13 +89,13 @@ void PhysicsApp::update(float deltaTime)
 	if (input->isKeyDown(aie::INPUT_KEY_M))
 	{
 		for (auto flyBall : flyBalls) {
-			flyBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(rand() % 50 - 25, rand() % 50 - 25));
+			flyBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(50, 50));
 		}
-		waspBall->ApplyForce(glm::vec2(rand() % 100 - 50, rand() % 100 - 50), glm::vec2(rand() % 100 - 50, rand() % 100 - 50));
+		waspBall->ApplyForce(glm::vec2(rand() % 200 - 100, rand() % 200 - 100), glm::vec2(200, 200));
 		//bestBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(rand() % 50 - 25, rand() % 50 - 25));
 	}
 
-	if (input->wasKeyPressed(aie::INPUT_KEY_END))
+	if (input->isKeyDown(aie::INPUT_KEY_END))
 	{
 		for (auto flyBall : flyBalls) {
 			flyBall->ApplyForce(glm::vec2(rand() % 1000 - 500, rand() % 1000 - 500), glm::vec2(rand() % 1000 - 500, rand() % 1000 - 500));

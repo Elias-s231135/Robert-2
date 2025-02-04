@@ -6,16 +6,21 @@ class Box : public RigidBody
 {
 public:
 
-	Box();
-	~Box();
+	//Box();
+	//~Box();
 
-	void FixedUpdate(glm::vec2 gravity, float timestep);
+	Box(glm::vec2 position, glm::vec2 velocity, float mass, glm::vec2 extents, glm::vec4 colour);
+
+
+	virtual void FixedUpdate(glm::vec2 gravity, float timestep);
 	void Draw();
 
-	glm::vec2 GetLocalX() { return m_localX; }
-	glm::vec2 GetLocalY() { return m_localY; }
+	bool CheckBoxCorners(Box& box, glm::vec2& contact, int& numContacts, float& pen, glm::vec2& edgeNormal);
 
-	glm::vec2 GetExtents() { return glm::vec2(m_localX, m_localY); }
+	const glm::vec2 GetLocalX() { return m_localX; }
+	const glm::vec2 GetLocalY() { return m_localY; }
+
+	glm::vec2 GetExtents() { return m_extents; }
 
 	float GetWidth() { return m_extents.x * 2; }
 	float GetHeight() { return m_extents.y * 2; }

@@ -1,7 +1,9 @@
 #include "PhysicsScene.h"
-#include "glm/glm.hpp"
+#include "glm/geometric.hpp"
 #include "Plane.h"
 #include "Box.h"
+#include "Sphere.h"
+
 
 glm::vec2 PhysicsScene::m_gravity;
 
@@ -169,6 +171,69 @@ bool PhysicsScene::sphere2Sphere(PhysicsObject* obj1, PhysicsObject* obj2)
 			return true;
 		}
 	}
+}
+
+bool PhysicsScene::sphere2Box(PhysicsObject* obj1, PhysicsObject* obj2)
+{
+	return box2Sphere(obj2, obj1);
+}
+
+bool PhysicsScene::box2Plane(PhysicsObject* obj1, PhysicsObject* obj2)
+{
+	return plane2Box(obj2, obj1);
+}
+
+bool PhysicsScene::box2Sphere(PhysicsObject* obj1, PhysicsObject* obj2)
+{
+	Box* box = dynamic_cast<Box*>(obj1);
+	Sphere* sphere = dynamic_cast<Sphere*>(obj2);
+
+	if (box != nullptr && sphere != nullptr)
+	{
+		glm::vec2 circlePosWorld = sphere->GetPosition() - box->GetPosition();
+		glm::vec2 circlePosBox = glm::vec2(glm::dot(circlePosWorld, box->GetLocalX()), glm::dot(circlePosWorld, box->GetLocalY()));
+
+		glm::vec2 closestPointOnBoxBox = circlePosBox;
+		glm::vec2 extents = box->GetExtents();
+		if (closestPointOnBoxBox.x < -extents.x) closestPointOnBoxBox.x = -extents.x;
+		if (closestPointOnBoxBox.x > extents.x) closestPointOnBoxBox.y = -extents.y;
+		if (closestPointOnBoxBox.y > extents.y) closestPointOnBoxBox.y = extents.y;
+		glm::vec2 closestPointOnBoxWorld = box->GetPosition() + closestPointOnBoxBox.x * box->GetLocalX() + closestPointOnBoxBox.y * box->GetLocalY();
+		glm::vec2 circleToBox = sphere->GetPosition() - closestPointOnBoxWorld;
+
+		if (glm::length(circleToBox) < sphere->GetRadius())
+		{
+			glm::vec2 direction = glm::normalize(circleToBox);
+			glm::vec2 contact = closestPointOnBoxWorld;
+			box->ResolveCollision(sphere, contact, &direction);
+		}
+	}
+	return false;
+}
+
+bool PhysicsScene::box2Box(PhysicsObject* obj1, PhysicsObject* obj2)
+{
+	Box* box1 = dynamic_cast<Box*>(obj1);
+	Box* box2 = dynamic_cast<Box*>(obj2);
+	if (box1 != nullptr && box2 != nullptr)
+	{
+		glm::vec2 boxPos = box2->GetPosition() - box1->GetPosition();
+		glm::vec2 norm(0, 0);
+		glm::vec2 contact(0, 0);
+		float pen = 0;
+		int numContants = 0;
+		box1->CheckBoxCorners(*box2, contact, numContants, pen, norm);
+		if (box2->CheckBoxCorners(*box1, contact, numContants, pen, norm))
+		{
+			norm = -norm;
+		}
+		if (pen > 0)
+		{
+			box1->ResolveCollision(box2, contact / float(numContants), &norm);
+		}
+		return true;
+	}
+	return false;
 }
 
 float PhysicsScene::GetTotalEnergy()

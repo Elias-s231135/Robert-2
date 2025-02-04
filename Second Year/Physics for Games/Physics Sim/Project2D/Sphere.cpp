@@ -1,7 +1,6 @@
 #include "Sphere.h"
 #include "Gizmos.h"
-
-#include <cmath>
+#include "glm/geometric.hpp"
 
 Sphere::Sphere(glm::vec2 position, glm::vec2 velocity, float mass, float radius, glm::vec4 colour) : RigidBody(SPHERE, position, velocity, 0, mass)
 {

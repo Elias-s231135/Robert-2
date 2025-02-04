@@ -14,11 +14,13 @@ public:
 
 	~PhysicsObject();
 
-	PhysicsObject(ShapeType a_shapeID) : m_shapeID(a_shapeID) {}
+	PhysicsObject(ShapeType a_shapeID) : m_shapeID(a_shapeID) { m_elasticity = 1; }
 
 	ShapeType GetShapeType() { return m_shapeID; }
 
 	virtual float GetEnergy() { return 0; }
+
+	float GetElasticity() { return m_elasticity; }
 
 public:
 
@@ -28,5 +30,7 @@ public:
 
 protected:
 	ShapeType m_shapeID;
+	
+	float m_elasticity;
 };
 

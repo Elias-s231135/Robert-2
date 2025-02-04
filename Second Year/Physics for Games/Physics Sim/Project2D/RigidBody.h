@@ -38,5 +38,11 @@ protected:
 	float m_orientation;
 	float m_angularVelocity;
 	float m_moment;
+
+	float m_linearDrag;
+	float m_angularDrag;
+
+	const static float MIN_LINEAR_THRESHOLD;
+	const static float MIN_ANGULAR_THRESHOLD;
 };
 
