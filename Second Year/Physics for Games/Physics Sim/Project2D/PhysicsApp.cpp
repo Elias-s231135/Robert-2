@@ -53,12 +53,14 @@ bool PhysicsApp::startup() {
 
 	//ball->ApplyForce(glm::vec2(30, 0));
 	//negativeBall->ApplyForce(glm::vec2(-15, 0));
-	
+
+		testBox = new Box(glm::vec2(10, 5), glm::vec2(0), 16.0f, glm::vec2(4, 8), glm::vec4(0, 1, 0, 1));
+	m_physicsScene->AddActor(testBox);
+
 	brick = new Box(glm::vec2(40, 40), glm::vec2(0), 16.0f, glm::vec2(4, 8), glm::vec4(0.66, 0.29, 0.26, 1));
 	m_physicsScene->AddActor(brick);
 
-	testBox = new Box(glm::vec2(10, 5), glm::vec2(0), 4.0f, glm::vec2(4, 2), glm::vec4(0, 1, 0, 1));
-	m_physicsScene->AddActor(testBox);
+
 
 
 	Plane* plane1 = new Plane(glm::vec2(0, 1), -50);	//bottom
@@ -127,19 +129,19 @@ void PhysicsApp::update(float deltaTime)
 
 	if (input->wasKeyPressed(aie::INPUT_KEY_F))
 	{
-		testBox->ApplyForce(glm::vec2(-10, 0), glm::vec2(0, 0));
+		testBox->ApplyForce(glm::vec2(-200, 0), glm::vec2(0, 0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_G))
 	{
-		testBox->ApplyForce(glm::vec2(0, -10), glm::vec2(0, 0));
+		testBox->ApplyForce(glm::vec2(0, -200), glm::vec2(0, 0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_H))
 	{
-		testBox->ApplyForce(glm::vec2(10, 0), glm::vec2(0, 0));
+		testBox->ApplyForce(glm::vec2(200, 0), glm::vec2(0, 0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_T))
 	{
-		testBox->ApplyForce(glm::vec2(0, 10), glm::vec2(0, 0));
+		testBox->ApplyForce(glm::vec2(0, 200), glm::vec2(0, 0));
 	}
 
 	// exit the application
