@@ -3,7 +3,7 @@
 #include <vector>
 
 class PhysicsObject;
-
+class RigidBody;
 
 class PhysicsScene
 {
@@ -34,6 +34,8 @@ public:
 
 	float GetTotalEnergy();
 
+	static void ApplyContactForces(RigidBody* body1, RigidBody* body2, glm::vec2 norm, float pen);
+
 protected:
 	static glm::vec2 m_gravity;
 	float m_timestep;
@@ -47,5 +49,4 @@ static fn collisionFunctionArray[] =
 	PhysicsScene::plane2Plane, PhysicsScene::plane2Sphere, PhysicsScene::plane2Box,
 	PhysicsScene::sphere2Plane, PhysicsScene::sphere2Sphere, PhysicsScene::sphere2Box,
 	PhysicsScene::box2Plane, PhysicsScene::box2Sphere, PhysicsScene::box2Box
-
 };

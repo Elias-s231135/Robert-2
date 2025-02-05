@@ -18,17 +18,15 @@ public:
 
 	void SetVelocity(glm::vec2 velocity) { m_velocity = velocity; }
 
-	void ResolveCollision(RigidBody* actor2, glm::vec2 contact, glm::vec2* collisionNormal = nullptr);
+	void ResolveCollision(RigidBody* actor2, glm::vec2 contact, glm::vec2* collisionNormal = nullptr, float pen = 0);
 
 	float GetKineticEnergy();
-
 	float GetPotentialEnergy();
-
 	float GetEnergy() { return GetKineticEnergy() + GetPotentialEnergy(); }
-
 	float GetAngularVelocity() { return m_angularVelocity; }
-
 	float GetMoment() { return m_moment; }
+
+	void SetPosition(glm::vec2 pos) { m_position = pos; }
 
 protected:
 

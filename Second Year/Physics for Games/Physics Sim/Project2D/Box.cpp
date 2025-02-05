@@ -52,7 +52,8 @@ bool Box::CheckBoxCorners(Box& box, glm::vec2& contact, int& numContacts, float&
 			if (first || p0.y < minY) minY = p0.y;
 			if (first || p0.y > maxY) maxY = p0.y;
 
-			if (p0.x >= -m_extents.x && p0.x <= m_extents.x && p0.y >= -m_extents.y && p0.y <= m_extents.y)
+			if (p0.x >= -m_extents.x && p0.x <= m_extents.x &&
+				p0.y >= -m_extents.y && p0.y <= m_extents.y)
 			{
 				numLocalContacts++;
 				localContact += p0;

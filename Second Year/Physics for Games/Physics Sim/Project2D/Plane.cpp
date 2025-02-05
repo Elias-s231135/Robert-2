@@ -4,6 +4,7 @@
 #include "glm/geometric.hpp"
 #include "iostream"
 #include "RigidBody.h"
+#include "PhysicsScene.h"
 
 Plane::Plane() : PhysicsObject(PLANE) 
 {
@@ -45,15 +46,15 @@ void Plane::ResetPosition()
 
 void Plane::ResolveCollision(RigidBody* actor2, glm::vec2 contact)
 {
-	//glm::vec2 normal = m_normal;
-	//glm::vec2 relativeVelocity = actor2->GetVelocity();
+	glm::vec2 normal = m_normal;
+	glm::vec2 relativeVelocity = actor2->GetVelocity();
 
 	glm::vec2 localContact = contact - actor2->GetPosition();
 
 	glm::vec2 vRel = actor2->GetVelocity() + actor2->GetAngularVelocity() * glm::vec2(-localContact.y, localContact.x);
 	float velocityIntoPlane = glm::dot(vRel, m_normal);
 
-	float e = 1;
+	float e = 0;
 
 	float r = glm::dot(localContact, glm::vec2(m_normal.y, -m_normal.x));
 
@@ -61,18 +62,21 @@ void Plane::ResolveCollision(RigidBody* actor2, glm::vec2 contact)
 
 	float j = -(1 + e) * velocityIntoPlane * mass0;
 
-	//if (glm::dot(normal, relativeVelocity) >= 0)
-	//	return;
+	if (glm::dot(normal, relativeVelocity) >= 0)
+		return;
 
-	//float elasticity = 2;
-	//float j = glm::dot(-(1 + elasticity) * relativeVelocity, normal);
-//		(1 / actor2->GetMass());
+	//float elasticity = 10;
+	/*float j = glm::dot(-(1 + elasticity) * relativeVelocity, normal);
+		(1 / actor2->GetMass());*/
 
 	glm::vec2 force = m_normal * j;
 
 	float kePre = actor2->GetKineticEnergy();
 
 	actor2->ApplyForce(force, contact - actor2->GetPosition());
+
+	float pen = glm::dot(contact, m_normal) - m_distanceToOrigin;
+	PhysicsScene::ApplyContactForces(actor2, nullptr, m_normal, pen);
 
 	float kePost = actor2->GetKineticEnergy();
 

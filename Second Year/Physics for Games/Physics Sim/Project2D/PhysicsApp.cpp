@@ -31,10 +31,10 @@ bool PhysicsApp::startup() {
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 	
 	m_physicsScene = new PhysicsScene();
-	PhysicsScene::SetGravity(glm::vec2(0, 0));
+	PhysicsScene::SetGravity(glm::vec2(0, -10));
 	m_physicsScene->SetTimestep(0.01f);
 	
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		Sphere* flyBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 4.0f, 2.5, glm::vec4(0.29, 0.25, 0.16, 1));
 		flyBalls.push_back(flyBall);
@@ -54,8 +54,12 @@ bool PhysicsApp::startup() {
 	//ball->ApplyForce(glm::vec2(30, 0));
 	//negativeBall->ApplyForce(glm::vec2(-15, 0));
 	
-	box = new Box(glm::vec2(40, 40), glm::vec2(0), 16.0f, glm::vec2(4, 8), glm::vec4(0.66, 0.29, 0.26, 1));
-	m_physicsScene->AddActor(box);
+	brick = new Box(glm::vec2(40, 40), glm::vec2(0), 16.0f, glm::vec2(4, 8), glm::vec4(0.66, 0.29, 0.26, 1));
+	m_physicsScene->AddActor(brick);
+
+	testBox = new Box(glm::vec2(10, 5), glm::vec2(0), 4.0f, glm::vec2(4, 2), glm::vec4(0, 1, 0, 1));
+	m_physicsScene->AddActor(testBox);
+
 
 	Plane* plane1 = new Plane(glm::vec2(0, 1), -50);	//bottom
 	Plane* plane2 = new Plane(glm::vec2(1, 0), -90);	//left
@@ -102,6 +106,40 @@ void PhysicsApp::update(float deltaTime)
 		}
 		//waspBall->ApplyForce(glm::vec2(rand() % 1000 - 500, rand() % 1000 - 500), glm::vec2(rand() % 1000 - 500, rand() % 1000 - 500));
 		//bestBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(rand() % 50 - 25, rand() % 50 - 25));
+	}
+
+	if (input->wasKeyPressed(aie::INPUT_KEY_A))
+	{
+		brick->ApplyForce(glm::vec2(-200, 0), glm::vec2(200, 200));
+	}
+	if (input->wasKeyPressed(aie::INPUT_KEY_S))
+	{
+		brick->ApplyForce(glm::vec2(0, -200), glm::vec2(200, 200));
+	}
+	if (input->wasKeyPressed(aie::INPUT_KEY_D))
+	{
+		brick->ApplyForce(glm::vec2(200, 0), glm::vec2(200, 200));
+	}
+	if (input->wasKeyPressed(aie::INPUT_KEY_W))
+	{
+		brick->ApplyForce(glm::vec2(0, 200), glm::vec2(200, 200));
+	}
+
+	if (input->wasKeyPressed(aie::INPUT_KEY_F))
+	{
+		testBox->ApplyForce(glm::vec2(-10, 0), glm::vec2(0, 0));
+	}
+	if (input->wasKeyPressed(aie::INPUT_KEY_G))
+	{
+		testBox->ApplyForce(glm::vec2(0, -10), glm::vec2(0, 0));
+	}
+	if (input->wasKeyPressed(aie::INPUT_KEY_H))
+	{
+		testBox->ApplyForce(glm::vec2(10, 0), glm::vec2(0, 0));
+	}
+	if (input->wasKeyPressed(aie::INPUT_KEY_T))
+	{
+		testBox->ApplyForce(glm::vec2(0, 10), glm::vec2(0, 0));
 	}
 
 	// exit the application

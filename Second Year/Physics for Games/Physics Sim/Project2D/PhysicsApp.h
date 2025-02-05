@@ -31,7 +31,8 @@ protected:
 	Sphere* waspBall;
 	//Sphere* bestBall;
 
-	Box* box;
+	Box* brick;
+	Box* testBox;
 
 	float m_timer;
 };

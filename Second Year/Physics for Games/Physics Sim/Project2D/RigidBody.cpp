@@ -20,8 +20,8 @@ RigidBody::RigidBody(ShapeType shapeID, glm::vec2 position, glm::vec2 velocity, 
 
 	m_angularVelocity = 0;
 
-	m_linearDrag = 0.1f;
-	m_angularDrag = 0.1f;
+	m_linearDrag = 1.0;
+	m_angularDrag = 1.0f;
 
 	m_moment = 0;
 }
@@ -64,7 +64,7 @@ void RigidBody::ApplyForce(glm::vec2 force, glm::vec2 pos)
 //	this->ApplyForce(-force);
 //}
 
-void RigidBody::ResolveCollision(RigidBody* actor2, glm::vec2 contact, glm::vec2* collisionNormal/* = nullptr*/)
+void RigidBody::ResolveCollision(RigidBody* actor2, glm::vec2 contact, glm::vec2* collisionNormal, float pen)
 {
 	glm::vec2 normal = glm::normalize(collisionNormal ? *collisionNormal : 
 		actor2->GetPosition() - m_position);
@@ -92,6 +92,9 @@ void RigidBody::ResolveCollision(RigidBody* actor2, glm::vec2 contact, glm::vec2
 		ApplyForce(-force, contact - m_position);
 		actor2->ApplyForce(force, contact - actor2->m_position);
 	}
+
+	if (pen > 0)
+		PhysicsScene::ApplyContactForces(this, actor2, normal, pen);
 
 	//float elasticity = (GetElasticity() + actor2->GetElasticity()) / 2.0f;
 	//
