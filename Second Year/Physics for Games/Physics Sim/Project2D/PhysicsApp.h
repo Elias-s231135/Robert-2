@@ -4,6 +4,7 @@
 #include "Renderer2D.h"
 #include <vector>
 
+class PhysicsObject;
 class PhysicsScene;
 class Sphere;
 class Box;
@@ -20,6 +21,8 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
+	void ObjectTest();
+	void OnBall2Check(PhysicsObject* other);
 
 protected:
 

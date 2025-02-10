@@ -24,6 +24,8 @@ RigidBody::RigidBody(ShapeType shapeID, glm::vec2 position, glm::vec2 velocity, 
 	m_angularDrag = 1.0f;
 
 	m_moment = 0;
+
+	m_isTrigger = false;
 }
 
 RigidBody::~RigidBody()
@@ -39,6 +41,23 @@ void RigidBody::FixedUpdate(glm::vec2 gravity, float timestep)
 	ApplyForce(gravity * m_mass * timestep, glm::vec2(0, 0));
 
 	m_angularVelocity -= m_angularVelocity * m_angularDrag * timestep;
+
+	if (m_isTrigger)
+	{
+		for (auto it = m_objectsInside.begin(); it != m_objectsInside.end(); it++)
+		{
+			if (std::find(m_objectsInsideThisFrame.begin(), m_objectsInsideThisFrame.end(), *it) == m_objectsInsideThisFrame.end())
+			{
+				if (triggerExit)
+					triggerExit(*it);
+				it = m_objectsInside.erase(it);
+				if (it == m_objectsInside.end())
+					break;
+			}
+		}
+	}
+
+	m_objectsInsideThisFrame.clear();
 
 	if (length(m_velocity) < MIN_LINEAR_THRESHOLD)
 	{
@@ -67,36 +86,52 @@ void RigidBody::ApplyForce(glm::vec2 force, glm::vec2 pos)
 
 void RigidBody::ResolveCollision(RigidBody* actor2, glm::vec2 contact, glm::vec2* collisionNormal, float pen)
 {
-	glm::vec2 normal = glm::normalize(collisionNormal ? *collisionNormal : 
-		actor2->GetPosition() - m_position);
-
-	glm::vec2 relativeVelocity = actor2->GetVelocity() - m_velocity;
-
-	glm::vec2 perp(normal.y, -normal.x);
-
-	if (glm::dot(normal, relativeVelocity) >= 0)
-		return;
-
-	float r1 = glm::dot(contact - m_position, -perp);
-	float r2 = glm::dot(contact - actor2->m_position, perp);
-
-	float v1 = glm::dot(m_velocity, normal) - r1 * m_angularVelocity;
-	float v2 = glm::dot(actor2->m_velocity, normal) + r2 * actor2->m_angularVelocity;
-
-	if (v1 > v2)
+	if (!m_isTrigger && !actor2->m_isTrigger)
 	{
-		float mass1 = 1.0f / (1.0f / m_mass + (r1 * r1) / m_moment);
-		float mass2 = 1.0f / (1.0f / m_mass + (r2 * r2) / actor2->m_moment);
+		m_objectsInsideThisFrame.push_back(actor2);
+		actor2->m_objectsInsideThisFrame.push_back(this);
 
-		glm::vec2 force = (m_elasticity + actor2->GetElasticity()) * mass1 * mass2 / (mass1 + mass2) * (v1 - v2) * normal;
+		glm::vec2 normal = glm::normalize(collisionNormal ? *collisionNormal :
+			actor2->GetPosition() - m_position);
 
-		ApplyForce(-force, contact - m_position);
-		actor2->ApplyForce(force, contact - actor2->m_position);
+		glm::vec2 relativeVelocity = actor2->GetVelocity() - m_velocity;
+
+		glm::vec2 perp(normal.y, -normal.x);
+
+		if (glm::dot(normal, relativeVelocity) >= 0)
+			return;
+
+		float r1 = glm::dot(contact - m_position, -perp);
+		float r2 = glm::dot(contact - actor2->m_position, perp);
+
+		float v1 = glm::dot(m_velocity, normal) - r1 * m_angularVelocity;
+		float v2 = glm::dot(actor2->m_velocity, normal) + r2 * actor2->m_angularVelocity;
+
+		if (v1 > v2)
+		{
+			float mass1 = 1.0f / (1.0f / m_mass + (r1 * r1) / m_moment);
+			float mass2 = 1.0f / (1.0f / m_mass + (r2 * r2) / actor2->m_moment);
+
+			glm::vec2 force = (m_elasticity + actor2->GetElasticity()) * mass1 * mass2 / (mass1 + mass2) * (v1 - v2) * normal;
+
+			ApplyForce(-force, contact - m_position);
+			actor2->ApplyForce(force, contact - actor2->m_position);
+		}
+
+		if (collisionCallback != nullptr)
+			collisionCallback(actor2);
+		if (actor2->collisionCallback)
+			actor2->collisionCallback(this);
+
+		if (pen > 0)
+			PhysicsScene::ApplyContactForces(this, actor2, normal, pen);
 	}
-
-	if (pen > 0)
-		PhysicsScene::ApplyContactForces(this, actor2, normal, pen);
-
+	else
+	{
+		triggerEnter(actor2);
+		actor2->TriggerEnter(this);
+	}
+	
 	//float elasticity = (GetElasticity() + actor2->GetElasticity()) / 2.0f;
 	//
 	//float j = glm::dot(-(1 + elasticity) * relativeVelocity, normal) /
@@ -128,4 +163,14 @@ float RigidBody::GetKineticEnergy()
 float RigidBody::GetPotentialEnergy()
 {
 	return -GetMass() * glm::dot(PhysicsScene::GetGravity(), GetPosition());
+}
+
+void RigidBody::TriggerEnter(PhysicsObject* actor2)
+{
+	if (m_isTrigger && std::find(m_objectsInside.begin(), m_objectsInside.end(), actor2) == m_objectsInside.end())
+	{
+		m_objectsInside.push_back(actor2);
+		if (triggerEnter != nullptr)
+			triggerEnter(actor2);
+	}
 }

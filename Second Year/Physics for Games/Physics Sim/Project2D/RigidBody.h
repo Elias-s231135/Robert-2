@@ -1,5 +1,7 @@
 #pragma once
 #include "PhysicsObject.h"
+#include <functional>
+#include <vector>
 
 class RigidBody : public PhysicsObject
 {
@@ -28,6 +30,14 @@ public:
 
 	void SetPosition(glm::vec2 pos) { m_position = pos; }
 
+	std::function<void(PhysicsObject*)> collisionCallback;
+
+	std::function<void(PhysicsObject*)> triggerEnter;
+	std::function<void(PhysicsObject*)> triggerExit;
+
+	bool IsTrigger() { if (m_isTrigger == true) return true; else return false; }
+	void TriggerEnter(PhysicsObject* actor2);
+
 protected:
 
 	glm::vec2 m_position;
@@ -42,5 +52,9 @@ protected:
 
 	const static float MIN_LINEAR_THRESHOLD;
 	const static float MIN_ANGULAR_THRESHOLD;
+
+	bool m_isTrigger;
+	std::vector<PhysicsObject*> m_objectsInside;
+	std::vector<PhysicsObject*> m_objectsInsideThisFrame;
 };
 
