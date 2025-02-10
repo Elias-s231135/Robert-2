@@ -8,7 +8,7 @@ Box::Box(glm::vec2 position, glm::vec2 velocity, float mass, glm::vec2 extents, 
 	m_colour = glm::vec4(colour);
 	m_orientation = 0;
 
-	m_moment = (1.0f / 100.0f * mass * GetWidth() * GetHeight()) *2;
+	m_moment = (1.0f / 10.0f * mass * GetWidth() * GetHeight()) *2;
 }
 
 void Box::FixedUpdate(glm::vec2 gravity, float timestep)

@@ -31,17 +31,17 @@ bool PhysicsApp::startup() {
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 	
 	m_physicsScene = new PhysicsScene();
-	PhysicsScene::SetGravity(glm::vec2(0, -10));
+	PhysicsScene::SetGravity(glm::vec2(0, 0));
 	m_physicsScene->SetTimestep(0.01f);
 	
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 100; i++)
 	{
-		Sphere* flyBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 4.0f, 2.5, glm::vec4(0.29, 0.25, 0.16, 1));
+		Sphere* flyBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 1.0f, 1.75, glm::vec4(0.29, 0.25, 0.16, 1));
 		flyBalls.push_back(flyBall);
 		m_physicsScene->AddActor(flyBall);
 	}
 
-	waspBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 8.0f, 4, glm::vec4(0.95, 0.72, 0.12, 1));
+	waspBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 2.0f, 2.5, glm::vec4(0.95, 0.72, 0.12, 1));
 	m_physicsScene->AddActor(waspBall);
 
 	/*bestBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 4.0f, 4, glm::vec4(0.29, 0.25, 0.16, 1));
@@ -54,13 +54,11 @@ bool PhysicsApp::startup() {
 	//ball->ApplyForce(glm::vec2(30, 0));
 	//negativeBall->ApplyForce(glm::vec2(-15, 0));
 
-		testBox = new Box(glm::vec2(10, 5), glm::vec2(0), 16.0f, glm::vec2(4, 8), glm::vec4(0, 1, 0, 1));
-	m_physicsScene->AddActor(testBox);
+	//testBox = new Box(glm::vec2(10, 5), glm::vec2(0), 16.0f, glm::vec2(4, 8), glm::vec4(0, 1, 0, 1));
+	//m_physicsScene->AddActor(testBox);
 
 	brick = new Box(glm::vec2(40, 40), glm::vec2(0), 16.0f, glm::vec2(4, 8), glm::vec4(0.66, 0.29, 0.26, 1));
 	m_physicsScene->AddActor(brick);
-
-
 
 
 	Plane* plane1 = new Plane(glm::vec2(0, 1), -50);	//bottom
@@ -92,14 +90,11 @@ void PhysicsApp::update(float deltaTime)
 	m_physicsScene->Update(deltaTime);
 	m_physicsScene->Draw();
 
-	if (input->isKeyDown(aie::INPUT_KEY_M))
-	{
-		for (auto flyBall : flyBalls) {
-			flyBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(50, 50));
-		}
-		waspBall->ApplyForce(glm::vec2(rand() % 200 - 100, rand() % 200 - 100), glm::vec2(200, 200));
-		//bestBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(rand() % 50 - 25, rand() % 50 - 25));
+	for (auto flyBall : flyBalls) {
+		flyBall->ApplyForce(glm::vec2(rand() % 13 - 6.25, rand() % 13 - 6.25), glm::vec2(50, 50));
 	}
+	waspBall->ApplyForce(glm::vec2(rand() % 25 - 12.5, rand() % 25 - 12.5), glm::vec2(200, 200));
+	//bestBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(rand() % 50 - 25, rand() % 50 - 25));
 
 	if (input->isKeyDown(aie::INPUT_KEY_END))
 	{
@@ -112,22 +107,22 @@ void PhysicsApp::update(float deltaTime)
 
 	if (input->wasKeyPressed(aie::INPUT_KEY_A))
 	{
-		brick->ApplyForce(glm::vec2(-200, 0), glm::vec2(200, 200));
+		brick->ApplyForce(glm::vec2(-1000, 0), glm::vec2(0, 0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_S))
 	{
-		brick->ApplyForce(glm::vec2(0, -200), glm::vec2(200, 200));
+		brick->ApplyForce(glm::vec2(0, -1000), glm::vec2(0, 0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_D))
 	{
-		brick->ApplyForce(glm::vec2(200, 0), glm::vec2(200, 200));
+		brick->ApplyForce(glm::vec2(1000, 0), glm::vec2(0, 0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_W))
 	{
-		brick->ApplyForce(glm::vec2(0, 200), glm::vec2(200, 200));
+		brick->ApplyForce(glm::vec2(0, 1000), glm::vec2(0, 0));
 	}
 
-	if (input->wasKeyPressed(aie::INPUT_KEY_F))
+	/*if (input->wasKeyPressed(aie::INPUT_KEY_F))
 	{
 		testBox->ApplyForce(glm::vec2(-200, 0), glm::vec2(0, 0));
 	}
@@ -142,6 +137,13 @@ void PhysicsApp::update(float deltaTime)
 	if (input->wasKeyPressed(aie::INPUT_KEY_T))
 	{
 		testBox->ApplyForce(glm::vec2(0, 200), glm::vec2(0, 0));
+	}*/
+
+	if (input->wasKeyPressed(aie::INPUT_KEY_R))
+	{
+		/*delete brick;
+		m_physicsScene->AddActor(brick);*/
+		brick->ResetPosition();
 	}
 
 	// exit the application
