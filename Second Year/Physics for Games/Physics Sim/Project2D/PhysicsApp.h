@@ -32,7 +32,6 @@ protected:
 
 	std::vector<Sphere*> flyBalls;
 	Sphere* waspBall;
-	//Sphere* bestBall;
 
 	Box* brick;
 	Box* testBox;

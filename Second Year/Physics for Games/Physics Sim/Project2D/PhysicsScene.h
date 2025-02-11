@@ -5,6 +5,8 @@
 class PhysicsObject;
 class RigidBody;
 
+//int score = 0;
+
 class PhysicsScene
 {
 public:
@@ -40,6 +42,7 @@ protected:
 	static glm::vec2 m_gravity;
 	float m_timestep;
 	std::vector<PhysicsObject*> m_actors;
+	//int score = 0;
 };
 
 typedef bool(*fn)(PhysicsObject*, PhysicsObject*);

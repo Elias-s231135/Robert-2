@@ -15,6 +15,8 @@
 
 #include "iostream"
 
+int score = 0;
+
 PhysicsApp::PhysicsApp() {
 
 }
@@ -45,7 +47,7 @@ bool PhysicsApp::startup() {
 	waspBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 2.0f, 5, glm::vec4(0.95, 0.72, 0.12, 1));
 	m_physicsScene->AddActor(waspBall);
 
-	brick = new Box(glm::vec2(40, 40), glm::vec2(0), 16.0f, glm::vec2(4, 8), glm::vec4(0.66, 0.29, 0.26, 1));
+	brick = new Box(glm::vec2(40, 40), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(0.66, 0.29, 0.26, 1));
 	m_physicsScene->AddActor(brick);
 
 	Plane* plane1 = new Plane(glm::vec2(0, 1), -50);	//bottom
@@ -57,6 +59,44 @@ bool PhysicsApp::startup() {
 	m_physicsScene->AddActor(plane2);
 	m_physicsScene->AddActor(plane3);
 	m_physicsScene->AddActor(plane4);
+
+	for (auto flyball : flyBalls)
+	{
+		flyball->collisionCallback = [=](PhysicsObject* other)
+			{
+				
+				if (other->GetShapeType() == BOX)
+				{
+					//flyball hits plane
+					score += 10;
+					//flyBalls.erase();
+					m_physicsScene->RemoveActor(flyball);
+				}
+			};
+	}
+
+	brick->collisionCallback = [=](PhysicsObject* other)
+		{
+			if (other == waspBall)
+			{
+				// game over sequence
+
+				m_physicsScene->RemoveActor(brick);
+
+				// display game over
+				m_2dRenderer->drawText(m_font, "Game Over", 10, 10);
+				std::cout << "Game Over" << std::endl;
+
+				// display final score
+			}
+		};
+
+	/*if (flyBalls.size() < 50 || flyBalls.capacity() < 50)
+	{
+		Sphere* flyBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 1.0f, 1.75, glm::vec4(0.29, 0.25, 0.16, 1));
+		flyBalls.push_back(flyBall);
+		m_physicsScene->AddActor(flyBall);
+	}*/
 
 	return true;
 }
@@ -105,6 +145,17 @@ void PhysicsApp::update(float deltaTime)
 		brick->ApplyForce(glm::vec2(0, 1000), glm::vec2(0, 0));
 	}
 
+	//std::cout << score << std::endl;
+
+	if (input->isKeyDown(aie::INPUT_KEY_N))
+	{
+	
+		Sphere* flyBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 1.0f, 1.75, glm::vec4(0.29, 0.25, 0.16, 1));
+		flyBalls.push_back(flyBall);
+		m_physicsScene->AddActor(flyBall);
+	
+	}
+
 	/*if (input->wasKeyPressed(aie::INPUT_KEY_R))
 	{
 		//reset app
@@ -128,7 +179,7 @@ void PhysicsApp::draw() {
 
 	// output some text, uses the last used colour
 	m_2dRenderer->drawText(m_font, "Press ESC to quit!", 0, 720 - 64);
-
+	m_2dRenderer->drawText(m_font, "Text", 5, 5);
 	// done drawing sprites
 	m_2dRenderer->end();
 }

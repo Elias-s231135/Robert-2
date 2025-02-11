@@ -5,7 +5,6 @@
 #include "Sphere.h"
 #include "RigidBody.h"
 
-
 glm::vec2 PhysicsScene::m_gravity;
 
 PhysicsScene::PhysicsScene() : m_timestep(0.01f)
@@ -49,11 +48,9 @@ void PhysicsScene::Update(float dt)
 
 		accumulatedTime -= m_timestep;
 
-		int actorCount = m_actors.size();
-
-		for (int outer = 0; outer < actorCount - 1; outer++)
+		for (int outer = 0; outer < m_actors.size() - 1; outer++)
 		{
-			for (int inner = outer + 1; inner < actorCount; inner++)
+			for (int inner = outer + 1; inner < m_actors.size(); inner++)
 			{
 				PhysicsObject* object1 = m_actors[outer];
 				PhysicsObject* object2 = m_actors[inner];
@@ -88,6 +85,13 @@ bool PhysicsScene::plane2Plane(PhysicsObject* obj1, PhysicsObject* obj2)
 
 bool PhysicsScene::plane2Sphere(PhysicsObject* obj1, PhysicsObject* obj2)
 {
+	//if (sphere2Plane(obj2, obj1))
+	//{
+	//	score += 5;
+
+	//	return true;
+	//}
+	//return false;
 	return sphere2Plane(obj2, obj1);
 }
 
@@ -150,7 +154,7 @@ bool PhysicsScene::sphere2Plane(PhysicsObject* obj1, PhysicsObject* obj2)
 		float velocityOutOfPlane = glm::dot(sphere->GetVelocity(), plane->GetNormal());
 		if (intersection > 0 && velocityOutOfPlane < 0)
 		{
-			sphere->ApplyForce(-sphere->GetVelocity() * sphere->GetMass(), contact);
+			plane->ResolveCollision(sphere, contact);
 			return true;
 		}
 	}
