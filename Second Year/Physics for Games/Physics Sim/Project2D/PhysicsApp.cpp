@@ -39,15 +39,15 @@ bool PhysicsApp::startup() {
 	
 	for (int i = 0; i < 50; i++)
 	{
-		Sphere* flyBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 1.0f, 1.75, glm::vec4(0.29, 0.25, 0.16, 1));
+		Sphere* flyBall = new Sphere(glm::vec2(0), glm::vec2(0), 1.0f, 1.75, glm::vec4(0.29, 0.25, 0.16, 1));
 		flyBalls.push_back(flyBall);
 		m_physicsScene->AddActor(flyBall);
 	}
 
-	waspBall = new Sphere(glm::vec2(rand() % 30 - 30, rand() % 30 - 30), glm::vec2(0), 2.0f, 5, glm::vec4(0.95, 0.72, 0.12, 1));
+	waspBall = new Sphere(glm::vec2(-90, -50), glm::vec2(0), 2.0f, 5, glm::vec4(0.95, 0.72, 0.12, 1));
 	m_physicsScene->AddActor(waspBall);
 
-	brick = new Box(glm::vec2(40, 40), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(0.66, 0.29, 0.26, 1));
+	brick = new Box(glm::vec2(90, 50), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(0.66, 0.29, 0.26, 1));
 	m_physicsScene->AddActor(brick);
 
 	Plane* plane1 = new Plane(glm::vec2(0, 1), -50);	//bottom
@@ -83,10 +83,13 @@ bool PhysicsApp::startup() {
 
 				m_physicsScene->RemoveActor(brick);
 
-				// display game over
-				m_2dRenderer->drawText(m_font, "Game Over", 10, 10);
-				std::cout << "Game Over" << std::endl;
+				std::cout << "game over" << std::endl;
 
+				shutdown();
+				startup();
+
+				// display game over
+				
 				// display final score
 			}
 		};
@@ -117,9 +120,9 @@ void PhysicsApp::update(float deltaTime)
 	m_physicsScene->Draw();
 
 	for (auto flyBall : flyBalls) {
-		flyBall->ApplyForce(glm::vec2(rand() % 13 - 6.25, rand() % 13 - 6.25), glm::vec2(50, 50));
+		flyBall->ApplyForce(glm::vec2(rand() % 25 - 12.5, rand() % 25 - 12.5), glm::vec2(0, 0));
 	}
-	waspBall->ApplyForce(glm::vec2(rand() % 25 - 12.5, rand() % 25 - 12.5), glm::vec2(200, 200));
+	waspBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(0, 0));
 
 	if (input->isKeyDown(aie::INPUT_KEY_END))
 	{
@@ -156,10 +159,18 @@ void PhysicsApp::update(float deltaTime)
 	
 	}
 
-	/*if (input->wasKeyPressed(aie::INPUT_KEY_R))
+	//if (input->isKeyDown(aie::INPUT_KEY_P))
+	//{
+	//	waspBall = new Sphere(glm::vec2(-90, -50), glm::vec2(0), 2.0f, 5, glm::vec4(0.95, 0.72, 0.12, 1));
+	//	m_physicsScene->AddActor(waspBall);
+	//}
+
+	if (input->wasKeyPressed(aie::INPUT_KEY_R))
 	{
 		//reset app
-	}*/
+		shutdown();
+		startup();
+	}
 
 	// exit the application
 	if (input->isKeyDown(aie::INPUT_KEY_ESCAPE))
