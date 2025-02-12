@@ -38,6 +38,8 @@ public:
 
 	static void ApplyContactForces(RigidBody* body1, RigidBody* body2, glm::vec2 norm, float pen);
 
+	bool FindActor(PhysicsObject* actor);
+
 protected:
 	static glm::vec2 m_gravity;
 	float m_timestep;

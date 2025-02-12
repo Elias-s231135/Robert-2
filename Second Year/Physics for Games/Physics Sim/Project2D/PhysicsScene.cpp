@@ -163,26 +163,26 @@ bool PhysicsScene::sphere2Plane(PhysicsObject* obj1, PhysicsObject* obj2)
 
 bool PhysicsScene::sphere2Sphere(PhysicsObject* obj1, PhysicsObject* obj2)
 {
-	//Sphere* sphere1 = dynamic_cast<Sphere*>(obj1);
-	//Sphere* sphere2 = dynamic_cast<Sphere*>(obj2);
+	Sphere* sphere1 = dynamic_cast<Sphere*>(obj1);
+	Sphere* sphere2 = dynamic_cast<Sphere*>(obj2);
 
-	//if (sphere1 != nullptr && sphere2 != nullptr)
-	//{
-	//	/*if (glm::distance(sphere1->GetPosition(), sphere2->GetPosition()) < (sphere1->GetRadius() + sphere2->GetRadius()))
-	//	{
-	//		sphere1->ResolveCollision(sphere2, 0.5f * (sphere1->GetPosition() + 
-	//			sphere2->GetPosition()));
+	if (sphere1 != nullptr && sphere2 != nullptr)
+	{
+		/*if (glm::distance(sphere1->GetPosition(), sphere2->GetPosition()) < (sphere1->GetRadius() + sphere2->GetRadius()))
+		{
+			sphere1->ResolveCollision(sphere2, 0.5f * (sphere1->GetPosition() + 
+				sphere2->GetPosition()));
 
-	//		return true;
-	//	}*/
-	//	float dist = glm::distance(sphere1->GetPosition(), sphere2->GetPosition());
-	//	float penetration = sphere1->GetRadius() + sphere2->GetRadius() - dist;
-	//	if (penetration > 0)
-	//	{
-	//		sphere1->ResolveCollision(sphere2, (sphere1->GetPosition() + sphere2->GetPosition()) * 0.5f, nullptr, penetration);
-	//		return true;
-	//	}
-	//}
+			return true;
+		}*/
+		float dist = glm::distance(sphere1->GetPosition(), sphere2->GetPosition());
+		float penetration = sphere1->GetRadius() + sphere2->GetRadius() - dist;
+		if (penetration > 0)
+		{
+			sphere1->ResolveCollision(sphere2, (sphere1->GetPosition() + sphere2->GetPosition()) * 0.5f, nullptr, penetration);
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -275,14 +275,23 @@ float PhysicsScene::GetTotalEnergy()
 
 void PhysicsScene::ApplyContactForces(RigidBody* body1, RigidBody* body2, glm::vec2 norm, float pen)
 {
-	if ((body1 && body1->IsTrigger()) || (body2 && body2->IsTrigger()))
+	//if ((body1 && body1->IsTrigger()) || (body2 && body2->IsTrigger()))
 		return;
 
-	float body2Mass = body2 ? body2->GetMass() : INT_MAX;
+	//float body2Mass = body2 ? body2->GetMass() : INT_MAX;
 
-	float body1Factor = body2Mass / (body1->GetMass() + body2Mass);
+	//float body1Factor = body2Mass / (body1->GetMass() + body2Mass);
 
-	body1->SetPosition(body1->GetPosition() - body1Factor * norm * pen);
-	if (body2)
-		body2->SetPosition(body2->GetPosition() + (1 - body1Factor) * norm * pen);
+	//body1->SetPosition(body1->GetPosition() - body1Factor * norm * pen);
+	//if (body2)
+	//	body2->SetPosition(body2->GetPosition() + (1 - body1Factor) * norm * pen);
 }
+
+//bool PhysicsScene::FindActor(PhysicsObject* actor)
+//{
+//	if (std::find(m_actors.begin(), m_actors.end(), actor) == actor)
+//	{
+//		return true;
+//	}
+//	return false;
+//}

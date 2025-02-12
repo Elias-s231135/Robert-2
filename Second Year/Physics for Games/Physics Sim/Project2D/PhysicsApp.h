@@ -31,10 +31,13 @@ protected:
 	PhysicsScene* m_physicsScene;
 
 	std::vector<Sphere*> flyBalls;
-	Sphere* waspBall;
+	std::vector<Sphere*> waspBalls;
 
 	Box* brick;
-	Box* testBox;
+	Box* secondBrick; //= Box(glm::vec2(90, 50), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(r, 0, 0, 1));
+	std::vector<Box*> testBoxes;
 
 	float m_timer;
+
+	bool m_gameOver = false;
 };

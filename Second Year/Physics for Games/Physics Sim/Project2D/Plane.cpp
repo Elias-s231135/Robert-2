@@ -12,11 +12,11 @@ Plane::Plane() : PhysicsObject(PLANE)
 	m_normal = glm::vec2(0, 1);
 }
 
-Plane::Plane(glm::vec2 normal, float distance) : PhysicsObject(PLANE)
+Plane::Plane(glm::vec2 normal, float distance, glm::vec4 colour) : PhysicsObject(PLANE)
 {
 	m_normal = normal;
 	m_distanceToOrigin = distance;
-	m_colour = glm::vec4(1,1,1,1);
+	m_colour = colour;
 }
 
 Plane::~Plane()
