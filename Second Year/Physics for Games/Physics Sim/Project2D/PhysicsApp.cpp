@@ -16,6 +16,7 @@
 #include "iostream"
 
 int score = 0;
+int p2Score = 0;
 
 PhysicsApp::PhysicsApp() {
 
@@ -80,6 +81,9 @@ void PhysicsApp::update(float deltaTime)
 	m_physicsScene->Draw();
 
 	//flyball and waspball movement
+	//float fmr = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 25 - -25));
+	//float wmr = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 50 - -50));
+
 	for (auto flyBall : flyBalls) 
 	{
 		flyBall->ApplyForce(glm::vec2(rand() % 25 - 12.5, rand() % 25 - 12.5), glm::vec2(0, 0));
@@ -153,27 +157,29 @@ void PhysicsApp::update(float deltaTime)
 	// second player
 	if (input->wasKeyPressed(aie::INPUT_KEY_ENTER))
 	{
-		secondBrick = new Box(glm::vec2(90, 50), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(r, 0, 0, 1));
-		m_physicsScene->AddActor(secondBrick);
+		p2Score = 0;
+		p2Brick = new Box(glm::vec2(90, 50), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(r, 0, 0, 1));
+		m_physicsScene->AddActor(p2Brick);
+		m_secondPlayerAlive = true;
 	}
 
 	// second player movement
 	
 	if (input->wasKeyPressed(aie::INPUT_KEY_LEFT))
 	{
-		secondBrick->ApplyForce(glm::vec2(-1000, 0), glm::vec2(0, 0));
+		p2Brick->ApplyForce(glm::vec2(-1000, 0), glm::vec2(0, 0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_DOWN))
 	{
-		secondBrick->ApplyForce(glm::vec2(0, -1000), glm::vec2(0, 0));
+		p2Brick->ApplyForce(glm::vec2(0, -1000), glm::vec2(0, 0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_RIGHT))
 	{
-		secondBrick->ApplyForce(glm::vec2(1000, 0), glm::vec2(0, 0));
+		p2Brick->ApplyForce(glm::vec2(1000, 0), glm::vec2(0, 0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_UP))
 	{
-		secondBrick->ApplyForce(glm::vec2(0, 1000), glm::vec2(0, 0));
+		p2Brick->ApplyForce(glm::vec2(0, 1000), glm::vec2(0, 0));
 	}
 
 	//make more flyballs (obsolete)
@@ -194,9 +200,16 @@ void PhysicsApp::update(float deltaTime)
 
 				if (other->GetShapeType() == BOX)
 				{
-					//flyball hits plane
-					score += 10;
-					//flyBalls.erase();
+					// add to score
+					if (other == brick)
+					{
+						score += 10;
+					}
+					else if (other == p2Brick)
+					{
+						p2Score += 10;
+					}
+
 					for (auto it = flyBalls.begin(); it != flyBalls.end(); it++)
 					{
 						if (*it == flyball)
@@ -225,24 +238,26 @@ void PhysicsApp::update(float deltaTime)
 
 	for (auto waspBall : waspBalls)
 	{
-		brick->collisionCallback = [=](PhysicsObject* other)
+		waspBall->collisionCallback = [=](PhysicsObject* other)
 			{
-				if (other == waspBall)
+				if (other == brick)
 				{
 					// game over sequence
 					m_physicsScene->RemoveActor(brick);
 
 					m_gameOver = true;
 				}
+				if (m_secondPlayerAlive)
+				{
+					if (other == p2Brick)
+					{
+						//player 2 death
+						m_physicsScene->RemoveActor(p2Brick);
+
+						m_secondPlayerAlive = false;
+					}
+				}
 			};
-		//secondBrick->collisionCallback = [=](PhysicsObject* other)
-		//	{
-		//		if (other == waspBall)
-		//		{
-		//			//destroy second player
-		//			m_physicsScene->RemoveActor(secondBrick);
-		//		}
-		//	};
 	}
 
 	//if (input->isKeyDown(aie::INPUT_KEY_P))
@@ -255,6 +270,8 @@ void PhysicsApp::update(float deltaTime)
 	if (input->wasKeyPressed(aie::INPUT_KEY_R))
 	{
 		//reset app
+		score = 0;
+
 		shutdown();
 		startup();
 
@@ -283,7 +300,7 @@ void PhysicsApp::draw() {
 	// display score
 	std::string sScore = std::to_string(score);
 	char const* charScore = sScore.c_str();
-	m_2dRenderer->drawText(m_font, charScore, 0, 720 - 64);
+	m_2dRenderer->drawText(m_font, charScore, 0, 656);
 
 	// display game over
 	if (m_gameOver)
@@ -291,6 +308,34 @@ void PhysicsApp::draw() {
 		m_2dRenderer->drawText(m_font, "Game Over", 800, 450);
 		m_2dRenderer->drawText(m_font, "Press R to restart", 800, 350);
 	}
+
+	// player 2 score
+	std::string sP2Score = std::to_string(p2Score);
+	char const* charP2Score = sP2Score.c_str();
+
+	if (m_secondPlayerAlive)
+	{
+		m_2dRenderer->drawText(m_font, charP2Score, 0, 626);
+	}
+
+	// display P1 x coords
+	std::string sCoordsX = std::to_string(brick->GetPosition().x);
+	char const* cCoordsX = sCoordsX.c_str();
+	m_2dRenderer->drawText(m_font, cCoordsX, 0, 530);
+
+	// display P1 y coords
+	std::string sCoordsY = std::to_string(brick->GetPosition().y);
+	char const* cCoordsY = sCoordsY.c_str();
+	m_2dRenderer->drawText(m_font, cCoordsY, 0, 500);
+
+	// display waspBall coords
+	/*std::string sWaspX = std::to_string(waspBalls->begin()->GetPosition().x);
+	char const* cWaspX = sWaspX.c_str();
+	m_2dRenderer->drawText(m_font, cCoordsX, 0, 440);
+
+	std::string sWaspY = std::to_string(waspBalls->begin()->GetPosition().y);
+	char const* cWaspY = sCoordsY.c_str();
+	m_2dRenderer->drawText(m_font, cCoordsY, 0, 410);*/
 
 	// done drawing sprites
 	m_2dRenderer->end();
