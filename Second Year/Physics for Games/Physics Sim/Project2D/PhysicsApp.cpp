@@ -45,7 +45,7 @@ bool PhysicsApp::startup() {
 		m_physicsScene->AddActor(flyBall);
 	}
 
-	Sphere* waspBall = new Sphere(glm::vec2(-90, -50), glm::vec2(0), 2.0f, 5, glm::vec4(0.95, 0.72, 0.12, 1));
+	Sphere* waspBall = new Sphere(glm::vec2(-90, -50), glm::vec2(0), waspMass, 5, glm::vec4(0.95, 0.72, 0.12, 1));
 	waspBalls.push_back(waspBall);
 	m_physicsScene->AddActor(waspBall);
 
@@ -61,6 +61,8 @@ bool PhysicsApp::startup() {
 	m_physicsScene->AddActor(plane2);
 	m_physicsScene->AddActor(plane3);
 	m_physicsScene->AddActor(plane4);
+
+	waveCounter = 1;
 
 	return true;
 }
@@ -80,24 +82,51 @@ void PhysicsApp::update(float deltaTime)
 	m_physicsScene->Update(deltaTime);
 	m_physicsScene->Draw();
 
+	//activate debug mode?
+	if (debugCounter == 8)
+	{
+		debugMode = true;
+	}
+
+	if (input->wasKeyPressed(aie::INPUT_KEY_8))
+	{
+		debugCounter++;
+	}
+
+	//if there are no flyballs, make more and add another waspball. makes gameplay "infinite" while also increasing difficulty
+	if (flyBalls.empty())
+	{
+		for (int i = 0; i < 50; i++)
+		{
+			Sphere* flyBall = new Sphere(glm::vec2(0), glm::vec2(0), 1.0f, 1.75, glm::vec4(0.29, 0.25, 0.16, 1));
+			flyBalls.push_back(flyBall);
+			m_physicsScene->AddActor(flyBall);
+		}
+		Sphere* waspBall = new Sphere(glm::vec2(-90, -50), glm::vec2(0), waspMass, 5, glm::vec4(0.95, 0.72, 0.12, 1));
+		waspBalls.push_back(waspBall);
+		m_physicsScene->AddActor(waspBall);
+
+		waveCounter++;
+	}
+
 	//flyball and waspball movement
 	//float fmr = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 25 - -25));
 	//float wmr = static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 50 - -50));
 
 	for (auto flyBall : flyBalls) 
 	{
-		flyBall->ApplyForce(glm::vec2(rand() % 25 - 12.5, rand() % 25 - 12.5), glm::vec2(0, 0));
+		flyBall->ApplyForce(glm::vec2(glm::linearRand(-12.5f, 12.5f), glm::linearRand(-12.5f, 12.5f)), glm::vec2(0, 0));
 	}
 	for (auto waspBall : waspBalls)
 	{
-		waspBall->ApplyForce(glm::vec2(rand() % 50 - 25, rand() % 50 - 25), glm::vec2(0, 0));
+		waspBall->ApplyForce(glm::vec2(glm::linearRand(-25.0f, 25.0f), glm::linearRand(-25.0f, 25.0f)), glm::vec2(0, 0));
 	}
 
 	//flyball speed boost
 	if (input->isKeyDown(aie::INPUT_KEY_END))
 	{
 		for (auto flyBall : flyBalls) {
-			flyBall->ApplyForce(glm::vec2(rand() % 1000 - 500, rand() % 1000 - 500), glm::vec2(rand() % 1000 - 500, rand() % 1000 - 500));
+			flyBall->ApplyForce(glm::vec2(glm::linearRand(-500.0f, 500.0f), glm::linearRand(-500.0f, 500.0f)), glm::vec2(0));
 		}
 	}
 
@@ -123,13 +152,16 @@ void PhysicsApp::update(float deltaTime)
 	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 
 	//make testBox. testBox cannot be destroyed by waspballs, allowing unimpeded testing of gameplay 
-	if (input->wasKeyPressed(aie::INPUT_KEY_T))
+	if (debugMode)
 	{
-		for (int i = 0; i < 1; i++)
+		if (input->wasKeyPressed(aie::INPUT_KEY_T))
 		{
-			Box* testBox = new Box(glm::vec2(90, 50), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(0, r, r, 1));
-			testBoxes.push_back(testBox);
-			m_physicsScene->AddActor(testBox);
+			for (int i = 0; i < 1; i++)
+			{
+				Box* testBox = new Box(glm::vec2(90, 50), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(0, r, r, 1));
+				testBoxes.push_back(testBox);
+				m_physicsScene->AddActor(testBox);
+			}
 		}
 	}
 
@@ -157,6 +189,7 @@ void PhysicsApp::update(float deltaTime)
 	// second player
 	if (input->wasKeyPressed(aie::INPUT_KEY_ENTER))
 	{
+		m_physicsScene->RemoveActor(p2Brick);
 		p2Score = 0;
 		p2Brick = new Box(glm::vec2(90, 50), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(r, 0, 0, 1));
 		m_physicsScene->AddActor(p2Brick);
@@ -197,7 +230,6 @@ void PhysicsApp::update(float deltaTime)
 	{
 		flyball->collisionCallback = [=](PhysicsObject* other)
 			{
-
 				if (other->GetShapeType() == BOX)
 				{
 					// add to score
@@ -219,19 +251,6 @@ void PhysicsApp::update(float deltaTime)
 						}
 					}
 					m_physicsScene->RemoveActor(flyball);
-				}
-				//if there are no flyballs, make more and add another waspball. makes gameplay "infinite" while also increasing difficulty
-				if (flyBalls.empty())
-				{
-					for (int i = 0; i < 50; i++)
-					{
-						Sphere* flyBall = new Sphere(glm::vec2(0), glm::vec2(0), 1.0f, 1.75, glm::vec4(0.29, 0.25, 0.16, 1));
-						flyBalls.push_back(flyBall);
-						m_physicsScene->AddActor(flyBall);
-					}
-					Sphere* waspBall = new Sphere(glm::vec2(-90, -50), glm::vec2(0), 2.0f, 5, glm::vec4(0.95, 0.72, 0.12, 1));
-					waspBalls.push_back(waspBall);
-					m_physicsScene->AddActor(waspBall);
 				}
 			};
 	}
@@ -260,20 +279,88 @@ void PhysicsApp::update(float deltaTime)
 			};
 	}
 
-	//if (input->isKeyDown(aie::INPUT_KEY_P))
-	//{
-	//	waspBall = new Sphere(glm::vec2(-90, -50), glm::vec2(0), 2.0f, 5, glm::vec4(0.95, 0.72, 0.12, 1));
-	//	m_physicsScene->AddActor(waspBall);
-	//}
+	// pause game
+	if (input->wasKeyPressed(aie::INPUT_KEY_P))
+	{
+		if (pause)
+		{
+			pause = false;
+		}
+		else if (!pause)
+		{
+			pause = true;
+		}
+	}
+	
+	if (pause)
+	{
+		// set all velocity to 0
+		for (auto f : flyBalls)
+		{
+			f->SetVelocity(glm::vec2(0));
+		}
+		for (auto w : waspBalls)
+		{
+			w->SetVelocity(glm::vec2(0));
+		}
+		for (auto t : testBoxes)
+		{
+			t->SetVelocity(glm::vec2(0));
+			t->SetAngularVelocity(0);
+		}
+		brick->SetVelocity(glm::vec2(0));
+		brick->SetAngularVelocity(0);
+		p2Brick->SetVelocity(glm::vec2(0));
+		p2Brick->SetAngularVelocity(0);
+	}
 
 	// restart game
 	if (input->wasKeyPressed(aie::INPUT_KEY_R))
 	{
 		//reset app
+		pause = false;
 		score = 0;
+		p2Score = 0;
 
-		shutdown();
-		startup();
+		for (auto waspball : waspBalls)
+		{
+			m_physicsScene->RemoveActor(waspball);
+		}
+		waspBalls.clear();
+
+		for (auto flyball : flyBalls)
+		{
+			m_physicsScene->RemoveActor(flyball);
+		}
+
+		flyBalls.clear();
+
+		m_physicsScene->RemoveActor(brick);
+		m_physicsScene->RemoveActor(p2Brick);
+		for (auto testbox : testBoxes)
+		{
+			m_physicsScene->RemoveActor(testbox);
+		}
+
+		// add everything back
+
+		for (int i = 0; i < 50; i++)
+		{
+			Sphere* flyBall = new Sphere(glm::vec2(0), glm::vec2(0), 1.0f, 1.75, glm::vec4(0.29, 0.25, 0.16, 1));
+			flyBalls.push_back(flyBall);
+			m_physicsScene->AddActor(flyBall);
+		}
+
+		Sphere* waspBall = new Sphere(glm::vec2(-90, -50), glm::vec2(0), waspMass, 5, glm::vec4(0.95, 0.72, 0.12, 1));
+		waspBalls.push_back(waspBall);
+		m_physicsScene->AddActor(waspBall);
+
+		m_physicsScene->AddActor(brick);
+		brick->SetPosition(glm::vec2(90, 50));
+		brick->SetVelocity(glm::vec2(0));
+		brick->SetOrientation(0);
+
+		waveCounter = 1;
 
 		m_gameOver = false;
 	}
@@ -295,7 +382,7 @@ void PhysicsApp::draw() {
 	aie::Gizmos::draw2D(glm::ortho<float>(-100, 100, -100 / aspectRatio, 100 / aspectRatio, -1.0f, 1.0f));
 
 	// output some text, uses the last used colour
-	m_2dRenderer->drawText(m_font, "Press ESC to quit!", 5, 5);
+	m_2dRenderer->drawText(m_font, "Press P to Pause, Enter for P2, and ESC to quit!", 5, 5);
 
 	// display score
 	std::string sScore = std::to_string(score);
@@ -308,6 +395,11 @@ void PhysicsApp::draw() {
 		m_2dRenderer->drawText(m_font, "Game Over", 800, 450);
 		m_2dRenderer->drawText(m_font, "Press R to restart", 800, 350);
 	}
+	
+	if (pause)
+	{
+		m_2dRenderer->drawText(m_font, "Paused", 800, 400);
+	}
 
 	// player 2 score
 	std::string sP2Score = std::to_string(p2Score);
@@ -318,6 +410,12 @@ void PhysicsApp::draw() {
 		m_2dRenderer->drawText(m_font, charP2Score, 0, 626);
 	}
 
+	//Debug info
+	
+	std::string sCounter = std::to_string(waveCounter);
+	char const* cCounter = sCounter.c_str();
+	m_2dRenderer->drawText(m_font, cCounter, 0, 420);
+
 	// display P1 x coords
 	std::string sCoordsX = std::to_string(brick->GetPosition().x);
 	char const* cCoordsX = sCoordsX.c_str();
@@ -327,6 +425,14 @@ void PhysicsApp::draw() {
 	std::string sCoordsY = std::to_string(brick->GetPosition().y);
 	char const* cCoordsY = sCoordsY.c_str();
 	m_2dRenderer->drawText(m_font, cCoordsY, 0, 500);
+
+	//std::string sVelocityX = std::to_string(brick->GetVelocity().x);
+	//char const* cVelocityX = sVelocityX.c_str();
+	//m_2dRenderer->drawText(m_font, cVelocityX, 0, 450);
+
+	//std::string sVelocityY = std::to_string(brick->GetVelocity().y);
+	//char const* cVelocityY = sVelocityY.c_str();
+	//m_2dRenderer->drawText(m_font, cVelocityY, 0, 420);
 
 	// display waspBall coords
 	/*std::string sWaspX = std::to_string(waspBalls->begin()->GetPosition().x);
@@ -341,40 +447,40 @@ void PhysicsApp::draw() {
 	m_2dRenderer->end();
 }
 
-void PhysicsApp::ObjectTest()
-{
-	m_physicsScene->SetGravity(glm::vec2(0, -9.82f));
-
-	Sphere* ball1 = new Sphere(glm::vec2(-20, 0), glm::vec2(0), 4.0f, 4, glm::vec4(1, 0, 0, 1));
-	Sphere* ball2 = new Sphere(glm::vec2(10, -20), glm::vec2(0), 4.0f, 4, glm::vec4(0, 1, 0, 1));
-
-	m_physicsScene->AddActor(ball1);
-	m_physicsScene->AddActor(ball2);
-	m_physicsScene->AddActor(new Plane(glm::vec2(0, 1), -30, glm::vec4(1, 1, 1, 1)));
-	m_physicsScene->AddActor(new Plane(glm::vec2(1, 0), -50, glm::vec4(1, 1, 1, 1)));
-	m_physicsScene->AddActor(new Plane(glm::vec2(-1, 0), -50, glm::vec4(1, 1, 1, 1)));
-	m_physicsScene->AddActor(new Box(glm::vec2(20, 10), glm::vec2(3, 0), 0.5f, glm::vec2(4, 8), glm::vec4(1, 1, 1, 1)));
-	m_physicsScene->AddActor(new Box(glm::vec2(-40, 10), glm::vec2(3, 0), 0.5f, glm::vec2(4, 8), glm::vec4(1, 1, 1, 1)));
-
-	ball2->triggerEnter = [=](PhysicsObject* other) {std::cout << "Enter:" << other << std::endl; };
-	ball2->triggerExit = [=](PhysicsObject* other) {std::cout << "Exit:" << other << std::endl; };
-
-	ball1->collisionCallback = [=](PhysicsObject* other)
-		{
-			if (other == ball2)
-			{
-				std::cout << "No way? No way!" << std::endl;
-			}
-			return;
-		};
-
-	ball2->collisionCallback = std::bind(&PhysicsApp::OnBall2Check, this, 
-		std::placeholders::_1);
-}
-
-void PhysicsApp::OnBall2Check(PhysicsObject* other)
-{
-	Plane* plane = dynamic_cast<Plane*>(other);
-	if (plane != nullptr)
-		std::cout << "Blue Spheres!" << std::endl;
-}
+//void PhysicsApp::ObjectTest()
+//{
+//	m_physicsScene->SetGravity(glm::vec2(0, -9.82f));
+//
+//	Sphere* ball1 = new Sphere(glm::vec2(-20, 0), glm::vec2(0), 4.0f, 4, glm::vec4(1, 0, 0, 1));
+//	Sphere* ball2 = new Sphere(glm::vec2(10, -20), glm::vec2(0), 4.0f, 4, glm::vec4(0, 1, 0, 1));
+//
+//	m_physicsScene->AddActor(ball1);
+//	m_physicsScene->AddActor(ball2);
+//	m_physicsScene->AddActor(new Plane(glm::vec2(0, 1), -30, glm::vec4(1, 1, 1, 1)));
+//	m_physicsScene->AddActor(new Plane(glm::vec2(1, 0), -50, glm::vec4(1, 1, 1, 1)));
+//	m_physicsScene->AddActor(new Plane(glm::vec2(-1, 0), -50, glm::vec4(1, 1, 1, 1)));
+//	m_physicsScene->AddActor(new Box(glm::vec2(20, 10), glm::vec2(3, 0), 0.5f, glm::vec2(4, 8), glm::vec4(1, 1, 1, 1)));
+//	m_physicsScene->AddActor(new Box(glm::vec2(-40, 10), glm::vec2(3, 0), 0.5f, glm::vec2(4, 8), glm::vec4(1, 1, 1, 1)));
+//
+//	ball2->triggerEnter = [=](PhysicsObject* other) {std::cout << "Enter:" << other << std::endl; };
+//	ball2->triggerExit = [=](PhysicsObject* other) {std::cout << "Exit:" << other << std::endl; };
+//
+//	ball1->collisionCallback = [=](PhysicsObject* other)
+//		{
+//			if (other == ball2)
+//			{
+//				std::cout << "No way? No way!" << std::endl;
+//			}
+//			return;
+//		};
+//
+//	ball2->collisionCallback = std::bind(&PhysicsApp::OnBall2Check, this, 
+//		std::placeholders::_1);
+//}
+//
+//void PhysicsApp::OnBall2Check(PhysicsObject* other)
+//{
+//	Plane* plane = dynamic_cast<Plane*>(other);
+//	if (plane != nullptr)
+//		std::cout << "Blue Spheres!" << std::endl;
+//}

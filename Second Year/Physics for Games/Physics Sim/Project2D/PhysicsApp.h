@@ -21,8 +21,8 @@ public:
 	virtual void update(float deltaTime);
 	virtual void draw();
 
-	void ObjectTest();
-	void OnBall2Check(PhysicsObject* other);
+	//void ObjectTest();
+	//void OnBall2Check(PhysicsObject* other);
 
 protected:
 
@@ -33,12 +33,24 @@ protected:
 	std::vector<Sphere*> flyBalls;
 	std::vector<Sphere*> waspBalls;
 
+	float waspMass = 3.0f;
+
 	Box* brick;
 	Box* p2Brick; //= Box(glm::vec2(90, 50), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(r, 0, 0, 1));
 	std::vector<Box*> testBoxes;
 
-	float m_timer;
+	//float m_timer;
 
 	bool m_gameOver = false;
 	bool m_secondPlayerAlive = false;
+
+	// activates debug mode at 8
+	int debugCounter = 0;
+	bool debugMode = false;
+
+	// increases every 50 flies defeated
+	int waveCounter = 0;
+
+	// pause
+	bool pause = false;
 };

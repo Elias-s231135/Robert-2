@@ -38,6 +38,9 @@ public:
 	bool IsTrigger() { if (m_isTrigger == true) return true; else return false; }
 	void TriggerEnter(PhysicsObject* actor2);
 
+	void SetOrientation(float o) { m_orientation = o; }
+	void SetAngularVelocity(float a) { m_angularVelocity = a; }
+
 protected:
 
 	glm::vec2 m_position;
