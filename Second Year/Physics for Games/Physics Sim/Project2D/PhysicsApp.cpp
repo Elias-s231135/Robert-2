@@ -35,7 +35,7 @@ bool PhysicsApp::startup() {
 	m_font = new aie::Font("./font/consolas.ttf", 32);
 	
 	m_physicsScene = new PhysicsScene();
-	PhysicsScene::SetGravity(glm::vec2(0, 0));
+	PhysicsScene::SetGravity(glm::vec2(0));
 	m_physicsScene->SetTimestep(0.01f);
 	
 	for (int i = 0; i < 50; i++)
@@ -49,8 +49,8 @@ bool PhysicsApp::startup() {
 	waspBalls.push_back(waspBall);
 	m_physicsScene->AddActor(waspBall);
 
-	brick = new Box(glm::vec2(90, 50), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(0.66, 0.29, 0.26, 1));
-	m_physicsScene->AddActor(brick);
+	p1Brick = new Box(glm::vec2(90, 50), glm::vec2(0), 32.0f, glm::vec2(5, 10), glm::vec4(0.66, 0.29, 0.26, 1));
+	m_physicsScene->AddActor(p1Brick);
 
 	Plane* plane1 = new Plane(glm::vec2(0, 1), -50, glm::vec4(0.5, 0.5, 1, 1));		//bottom
 	Plane* plane2 = new Plane(glm::vec2(1, 0), -90, glm::vec4(0.5, 0.5, 1, 1));		//left
@@ -81,6 +81,47 @@ void PhysicsApp::update(float deltaTime)
 
 	m_physicsScene->Update(deltaTime);
 	m_physicsScene->Draw();
+
+	// random float
+	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+
+
+	//if (input->wasKeyPressed(aie::INPUT_KEY_1))
+	//{
+	//	colourMode = 0;
+	//}
+	//if (input->wasKeyPressed(aie::INPUT_KEY_2))
+	//{
+	//	colourMode = 1;
+	//}
+
+	////colour mode
+	//if (colourMode = 0)
+	//{
+	//	for (auto f : flyBalls)
+	//	{
+	//		f->SetColour(coinColour);
+	//	}
+	//	for (auto w : waspBalls)
+	//	{
+	//		w->SetColour(enemyColour);
+	//	}
+	//	p1Brick->SetColour(p1Colour);
+	//	p2Brick->SetColour(p2Colour);
+	//}
+	//else if (colourMode = 1)
+	//{
+	//	for (auto f : flyBalls)
+	//	{
+	//		f->SetColour(flyColour);
+	//	}
+	//	for (auto w : waspBalls)
+	//	{
+	//		w->SetColour(waspColour);
+	//	}
+	//	p1Brick->SetColour(p1BrickColour);
+	//	p2Brick->SetColour(p2BrickColour);
+	//}
 
 	//activate debug mode?
 	if (debugCounter == 8)
@@ -115,41 +156,41 @@ void PhysicsApp::update(float deltaTime)
 
 	for (auto flyBall : flyBalls) 
 	{
-		flyBall->ApplyForce(glm::vec2(glm::linearRand(-12.5f, 12.5f), glm::linearRand(-12.5f, 12.5f)), glm::vec2(0, 0));
+		flyBall->ApplyForce(glm::vec2(glm::linearRand(-12.5f, 12.5f), glm::linearRand(-12.5f, 12.5f)), glm::vec2(0));
 	}
 	for (auto waspBall : waspBalls)
 	{
-		waspBall->ApplyForce(glm::vec2(glm::linearRand(-25.0f, 25.0f), glm::linearRand(-25.0f, 25.0f)), glm::vec2(0, 0));
+		waspBall->ApplyForce(glm::vec2(glm::linearRand(-25.0f, 25.0f), glm::linearRand(-25.0f, 25.0f)), glm::vec2(0));
 	}
 
-	//flyball speed boost
-	if (input->isKeyDown(aie::INPUT_KEY_END))
+	//flyball speed boost, debug only
+	if (debugMode)
 	{
-		for (auto flyBall : flyBalls) {
-			flyBall->ApplyForce(glm::vec2(glm::linearRand(-500.0f, 500.0f), glm::linearRand(-500.0f, 500.0f)), glm::vec2(0));
+		if (input->isKeyDown(aie::INPUT_KEY_END))
+		{
+			for (auto flyBall : flyBalls) {
+				flyBall->ApplyForce(glm::vec2(glm::linearRand(-500.0f, 500.0f), glm::linearRand(-500.0f, 500.0f)), glm::vec2(0));
+			}
 		}
 	}
 
 	//brick movement
 	if (input->wasKeyPressed(aie::INPUT_KEY_A))
 	{
-		brick->ApplyForce(glm::vec2(-1000, 0), glm::vec2(0, 0));
+		p1Brick->ApplyForce(glm::vec2(-1000, 0), glm::vec2(0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_S))
 	{
-		brick->ApplyForce(glm::vec2(0, -1000), glm::vec2(0, 0));
+		p1Brick->ApplyForce(glm::vec2(0, -1000), glm::vec2(0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_D))
 	{
-		brick->ApplyForce(glm::vec2(1000, 0), glm::vec2(0, 0));
+		p1Brick->ApplyForce(glm::vec2(1000, 0), glm::vec2(0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_W))
 	{
-		brick->ApplyForce(glm::vec2(0, 1000), glm::vec2(0, 0));
+		p1Brick->ApplyForce(glm::vec2(0, 1000), glm::vec2(0));
 	}
-
-	//random float
-	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 
 	//make testBox. testBox cannot be destroyed by waspballs, allowing unimpeded testing of gameplay 
 	if (debugMode)
@@ -170,19 +211,19 @@ void PhysicsApp::update(float deltaTime)
 	{
 		if (input->wasKeyPressed(aie::INPUT_KEY_G))
 		{
-			testBox->ApplyForce(glm::vec2(-1000, 0), glm::vec2(0, 0));
+			testBox->ApplyForce(glm::vec2(-1000, 0), glm::vec2(0));
 		}
 		if (input->wasKeyPressed(aie::INPUT_KEY_H))
 		{
-			testBox->ApplyForce(glm::vec2(0, -1000), glm::vec2(0, 0));
+			testBox->ApplyForce(glm::vec2(0, -1000), glm::vec2(0));
 		}
 		if (input->wasKeyPressed(aie::INPUT_KEY_J))
 		{
-			testBox->ApplyForce(glm::vec2(1000, 0), glm::vec2(0, 0));
+			testBox->ApplyForce(glm::vec2(1000, 0), glm::vec2(0));
 		}
 		if (input->wasKeyPressed(aie::INPUT_KEY_Y))
 		{
-			testBox->ApplyForce(glm::vec2(0, 1000), glm::vec2(0, 0));
+			testBox->ApplyForce(glm::vec2(0, 1000), glm::vec2(0));
 		}
 	}
 
@@ -200,19 +241,19 @@ void PhysicsApp::update(float deltaTime)
 	
 	if (input->wasKeyPressed(aie::INPUT_KEY_LEFT))
 	{
-		p2Brick->ApplyForce(glm::vec2(-1000, 0), glm::vec2(0, 0));
+		p2Brick->ApplyForce(glm::vec2(-1000, 0), glm::vec2(0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_DOWN))
 	{
-		p2Brick->ApplyForce(glm::vec2(0, -1000), glm::vec2(0, 0));
+		p2Brick->ApplyForce(glm::vec2(0, -1000), glm::vec2(0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_RIGHT))
 	{
-		p2Brick->ApplyForce(glm::vec2(1000, 0), glm::vec2(0, 0));
+		p2Brick->ApplyForce(glm::vec2(1000, 0), glm::vec2(0));
 	}
 	if (input->wasKeyPressed(aie::INPUT_KEY_UP))
 	{
-		p2Brick->ApplyForce(glm::vec2(0, 1000), glm::vec2(0, 0));
+		p2Brick->ApplyForce(glm::vec2(0, 1000), glm::vec2(0));
 	}
 
 	//make more flyballs (obsolete)
@@ -233,7 +274,7 @@ void PhysicsApp::update(float deltaTime)
 				if (other->GetShapeType() == BOX)
 				{
 					// add to score
-					if (other == brick)
+					if (other == p1Brick)
 					{
 						score += 10;
 					}
@@ -259,10 +300,10 @@ void PhysicsApp::update(float deltaTime)
 	{
 		waspBall->collisionCallback = [=](PhysicsObject* other)
 			{
-				if (other == brick)
+				if (other == p1Brick)
 				{
 					// game over sequence
-					m_physicsScene->RemoveActor(brick);
+					m_physicsScene->RemoveActor(p1Brick);
 
 					m_gameOver = true;
 				}
@@ -308,8 +349,8 @@ void PhysicsApp::update(float deltaTime)
 			t->SetVelocity(glm::vec2(0));
 			t->SetAngularVelocity(0);
 		}
-		brick->SetVelocity(glm::vec2(0));
-		brick->SetAngularVelocity(0);
+		p1Brick->SetVelocity(glm::vec2(0));
+		p1Brick->SetAngularVelocity(0);
 		p2Brick->SetVelocity(glm::vec2(0));
 		p2Brick->SetAngularVelocity(0);
 	}
@@ -335,7 +376,7 @@ void PhysicsApp::update(float deltaTime)
 
 		flyBalls.clear();
 
-		m_physicsScene->RemoveActor(brick);
+		m_physicsScene->RemoveActor(p1Brick);
 		m_physicsScene->RemoveActor(p2Brick);
 		for (auto testbox : testBoxes)
 		{
@@ -355,10 +396,10 @@ void PhysicsApp::update(float deltaTime)
 		waspBalls.push_back(waspBall);
 		m_physicsScene->AddActor(waspBall);
 
-		m_physicsScene->AddActor(brick);
-		brick->SetPosition(glm::vec2(90, 50));
-		brick->SetVelocity(glm::vec2(0));
-		brick->SetOrientation(0);
+		m_physicsScene->AddActor(p1Brick);
+		p1Brick->SetPosition(glm::vec2(90, 50));
+		p1Brick->SetVelocity(glm::vec2(0));
+		p1Brick->SetOrientation(0);
 
 		waveCounter = 1;
 
@@ -417,12 +458,12 @@ void PhysicsApp::draw() {
 	m_2dRenderer->drawText(m_font, cCounter, 0, 420);
 
 	// display P1 x coords
-	std::string sCoordsX = std::to_string(brick->GetPosition().x);
+	std::string sCoordsX = std::to_string(p1Brick->GetPosition().x);
 	char const* cCoordsX = sCoordsX.c_str();
 	m_2dRenderer->drawText(m_font, cCoordsX, 0, 530);
 
 	// display P1 y coords
-	std::string sCoordsY = std::to_string(brick->GetPosition().y);
+	std::string sCoordsY = std::to_string(p1Brick->GetPosition().y);
 	char const* cCoordsY = sCoordsY.c_str();
 	m_2dRenderer->drawText(m_font, cCoordsY, 0, 500);
 

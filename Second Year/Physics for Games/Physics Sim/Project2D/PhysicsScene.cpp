@@ -9,7 +9,7 @@ glm::vec2 PhysicsScene::m_gravity;
 
 PhysicsScene::PhysicsScene() : m_timestep(0.01f)
 {
-	SetTimestep(0.01f), SetGravity(glm::vec2(0, 0));
+	SetTimestep(0.01f), SetGravity(glm::vec2(0));
 }
 
 PhysicsScene::~PhysicsScene()

@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/vec2.hpp>
+#include <glm/vec4.hpp>
 
 enum ShapeType {
 	PLANE = 0,
@@ -22,6 +23,10 @@ public:
 
 	float GetElasticity() { return m_elasticity; }
 
+	glm::vec4 GetColour() { return m_colour; }
+
+	void SetColour(glm::vec4(colour)) { m_colour = colour; }
+
 public:
 
 	virtual void FixedUpdate(glm::vec2 gravity, float timestep) = 0;
@@ -32,5 +37,7 @@ protected:
 	ShapeType m_shapeID;
 	
 	float m_elasticity;
+
+	glm::vec4 m_colour;
 };
 
