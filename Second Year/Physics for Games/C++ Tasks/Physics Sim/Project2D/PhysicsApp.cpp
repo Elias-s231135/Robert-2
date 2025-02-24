@@ -453,19 +453,19 @@ void PhysicsApp::draw() {
 
 	//Debug info
 	
-	std::string sCounter = std::to_string(waveCounter);
-	char const* cCounter = sCounter.c_str();
-	m_2dRenderer->drawText(m_font, cCounter, 0, 420);
+	//std::string sCounter = std::to_string(waveCounter);
+	//char const* cCounter = sCounter.c_str();
+	//m_2dRenderer->drawText(m_font, cCounter, 0, 420);
 
-	// display P1 x coords
-	std::string sCoordsX = std::to_string(p1Brick->GetPosition().x);
-	char const* cCoordsX = sCoordsX.c_str();
-	m_2dRenderer->drawText(m_font, cCoordsX, 0, 530);
+	//// display P1 x coords
+	//std::string sCoordsX = std::to_string(p1Brick->GetPosition().x);
+	//char const* cCoordsX = sCoordsX.c_str();
+	//m_2dRenderer->drawText(m_font, cCoordsX, 0, 530);
 
-	// display P1 y coords
-	std::string sCoordsY = std::to_string(p1Brick->GetPosition().y);
-	char const* cCoordsY = sCoordsY.c_str();
-	m_2dRenderer->drawText(m_font, cCoordsY, 0, 500);
+	//// display P1 y coords
+	//std::string sCoordsY = std::to_string(p1Brick->GetPosition().y);
+	//char const* cCoordsY = sCoordsY.c_str();
+	//m_2dRenderer->drawText(m_font, cCoordsY, 0, 500);
 
 	//std::string sVelocityX = std::to_string(brick->GetVelocity().x);
 	//char const* cVelocityX = sVelocityX.c_str();
